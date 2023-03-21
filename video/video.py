@@ -64,7 +64,7 @@ class Video(object):
         for i, start_time in enumerate(range(0, int(video_clip.duration), clip_duration)):
             end_time = min(start_time + clip_duration, video_clip.duration)
             clip = video_clip.subclip(start_time, end_time)
-            clip_path = f"ruta/al/archivo/clip_{i+1}.mp4"
+            clip_path = f"cancion{i+1}.mp4"
             clip.write_videofile(clip_path)
             clips.append(clip)
 
