@@ -1,5 +1,5 @@
 import cv2 
-
+from moviepy.video.io.VideoFileClip import VideoFileClip
 
 class Video(object):
 
@@ -24,6 +24,61 @@ class Video(object):
 
         # Liberar el video
         cap.release()
+
+    def dividir_video_clips(self):
+        # Ruta del archivo de video original
+        video_path = "cancion.mp4"
+
+        # Tamaño de la parte del archivo que se leerá en cada iteración
+        chunk_size = 1024 * 1024  # 1 MB
+
+        # Abrir el archivo de video
+        with open(video_path, "rb") as video:
+            # Inicializar el objeto de archivo de video
+            video_clip = None
+            video_pos = 0
+
+            # Leer y procesar el archivo en partes
+            while True:
+                # Leer una parte del archivo
+                chunk = video.read(chunk_size)
+                if not chunk:
+                    break  # Fin del archivo
+
+                # Procesar la parte del archivo
+                if video_clip is None:
+                    # Cargar el archivo de video
+                    video_clip = VideoFileClip(chunk)
+                else:
+                    # Agregar la parte del archivo al clip
+                    video_clip = video_clip.set_start(video_pos).append(VideoFileClip(chunk))
+
+                # Actualizar la posición actual del archivo de video
+                video_pos += len(chunk)
+
+        # Duración de cada clip en segundos
+        clip_duration = 30
+
+        # Generar lista de clips
+        clips = []
+        for i, start_time in enumerate(range(0, int(video_clip.duration), clip_duration)):
+            end_time = min(start_time + clip_duration, video_clip.duration)
+            clip = video_clip.subclip(start_time, end_time)
+            clip_path = f"ruta/al/archivo/clip_{i+1}.mp4"
+            clip.write_videofile(clip_path)
+            clips.append(clip)
+
+        # Liberar recursos
+        video_clip.close()
+        for clip in clips:
+            clip.close()
+
+
+        # Liberar recursos
+        video_clip.close()
+        for clip in clips:
+            clip.close()
+           
 
     def sensurar_video(self, ruta_video):
         import cv2
@@ -79,4 +134,4 @@ class Video(object):
 
 
 a = Video()
-a.sensurar_video("C:/Users/home/Desktop/webDepresion/webDepresion/video/k.mp4")
+a.dividir_video_clips()
