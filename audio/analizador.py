@@ -1,3 +1,4 @@
+import os
 import re
 import speech_recognition as sr
 
@@ -44,20 +45,25 @@ def save_conversations(conversations, filename):
             f.write(f"{i+1}\n{start_time:.2f} --> {end_time:.2f}\n{speaker}: {conversation}\n\n")
 
 
-# archivo de entrada
-filename = "nueva/prub.0.wav"
+# obtener una lista de archivos en la carpeta 'audio_files'
+folder_path = '../video/wavs'
+file_names = [f for f in os.listdir(folder_path) if f.endswith('.wav')]
 
-# leer archivo y reconocer texto con la librería SpeechRecognition
-r = sr.Recognizer()
-with sr.AudioFile('nueva/prub.0.wav') as source:
-    audio_data = r.record(source)
+# iterar sobre los archivos de audio y procesar cada uno
+for file_name in file_names:
+    # construir la ruta completa del archivo
+    file_path = os.path.join(folder_path, file_name)
 
-# encontrar conversaciones en el texto y guardar en archivo
-print("ANTES DE ENCONTRAR A LOS SUJETOS:")
-conversations = find_conversations(audio_data)
-print(conversations, "DESPUES")
-save_conversations(conversations, 'conversaciones.txt')
+    # leer el archivo y reconocer texto con la librería SpeechRecognition
+    r = sr.Recognizer()
+    with sr.AudioFile(file_path) as source:
+        audio_data = r.record(source)
 
-# imprimir conversaciones
-for speaker, conversation in conversations:
-    print(f"{speaker}: {conversation}")
+    # encontrar conversaciones en el texto y guardar en archivo
+    conversations = find_conversations(audio_data)
+    save_conversations(conversations, f'{file_name}.txt')
+
+    # imprimir conversaciones
+    print(f"Conversaciones en {file_name}:")
+    for speaker, conversation in conversations:
+        print(f"{speaker}: {conversation}")

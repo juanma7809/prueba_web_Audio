@@ -1,5 +1,6 @@
 from io import BytesIO
 from moviepy.video.io.VideoFileClip import VideoFileClip
+import os
 
 class Video(object):
 
@@ -10,12 +11,17 @@ class Video(object):
         # Cargar el archivo de video
         video_clip = VideoFileClip(video_path)
 
+        # Crear directorio para guardar los clips
+        output_dir = "wavs"
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
         # Generar lista de clips
         clips = []
         for i, start_time in enumerate(range(0, int(video_clip.duration), clip_duration)):
             end_time = min(start_time + clip_duration, video_clip.duration)
             clip = video_clip.subclip(start_time, end_time)
-            clip_path = f"cancion{i+1}.mp4"
+            clip_path = os.path.join(output_dir, f"cancion{i+1}.mp4")
             clip.write_videofile(clip_path)
             clips.append(clip)
 
@@ -79,4 +85,4 @@ class Video(object):
 
 
 a = Video()
-a.dividir_video_clips("cancion.mp4", 180)
+a.dividir_video_clips("contenedor/cancion.mp4", 180)
