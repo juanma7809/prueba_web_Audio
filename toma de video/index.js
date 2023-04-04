@@ -42,7 +42,7 @@ navigator.mediaDevices.getUserMedia({ audio: true, video: true })
       document.body.appendChild(a);
       a.style = 'display: none';
       a.href = url;
-      a.download = 'captura.webm';
+      a.download = 'captura.mp4';
       a.click();
       window.URL.revokeObjectURL(url);
     };
