@@ -1,7 +1,7 @@
 import os
 from moviepy.editor import AudioFileClip
 
-class Convertir:
+class Conversor:
     
     def __init__(self):
         pass

@@ -1,5 +1,6 @@
 from io import BytesIO
 from moviepy.video.io.VideoFileClip import VideoFileClip
+from cryptography.fernet import Fernet
 import os
 
 class Video(object):
@@ -30,6 +31,35 @@ class Video(object):
         for clip in clips:
             clip.close()
 
+
+    def encriptar_video(self):
+        # Generar clave de cifrado
+        key = Fernet.generate_key()
+        # Cargar archivo de video como bytes
+        with open('video.mp4', 'rb') as f:
+            video_bytes = f.read()
+
+        # Cifrar los bytes del video
+        cipher = Fernet(key)
+        encrypted_video = cipher.encrypt(video_bytes)
+
+        # Guardar el archivo cifrado
+        with open('video_encrypted.mp4', 'wb') as f:
+            f.write(encrypted_video)
+    
+    def desencriptar_video(self):
+        # Generar clave de cifrado
+        key = Fernet.generate_key()
+
+        with open('video.mp4', 'rb') as f:
+            encrypted_video = f.read()
+        # Descifrar los bytes del video cifrado
+        cipher = Fernet(key)
+        decrypted_video = cipher.decrypt(encrypted_video)
+
+        # Guardar el archivo descifrado
+        with open('video_decrypted.mp4', 'wb') as f:
+            f.write(decrypted_video)
 
     def sensurar_video(self, ruta_video):
         import cv2
