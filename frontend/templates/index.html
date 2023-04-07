@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,16 +7,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="estilos/normalize.css">
-    <link rel="stylesheet" href="estilos/index.css">
+    <link rel="stylesheet" href="{% static 'estilos/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'estilos/index.css' %}">
 </head>
 <body>
     <div class="background">
         <header class="navbar">
             <div class="navbar--opciones">
                 <div class="navbar--toogle">
-                    <h1 class="navbar--titulo"><img src="/Imagenes/LogoNuevo.png" alt=""></h1>
-                    <button id="btn--hamburguesa" type="button"><img src="Imagenes/hamburguesa.png" alt="Menu hamburguesa"></button>
+                    <h1 class="navbar--titulo"><img src="{% static '/Imagenes/LogoNuevo.png' %}" alt=""></h1>
+                    <button id="btn--hamburguesa" type="button"><img src="{% static 'Imagenes/hamburguesa.png' %}" alt="Menu hamburguesa"></button>
                 </div>
                 <nav id="menu" class="menu">
                     <ul class="navegacion">
@@ -41,7 +43,7 @@
                 </nav>
             </div>
             <div id="navbar--logout" class="navbar--logout">
-                <img src="Imagenes/logout.png" alt="Logout icono"><a href="#">Salir</a>
+                <img src="{% static 'Imagenes/logout.png' %}" alt="Logout icono"><a href="#">Salir</a>
             </div>
         </header>
         <aside class="banner">
@@ -50,11 +52,11 @@
                     <form class="formulario">
                         <div class="campo">
                             <input type="search" placeholder="Buscar..">
-                            <a href="#"><img src="Imagenes/lupa.svg" alt="Icono lupa"></a>
+                            <a href="#"><img src="{% static 'Imagenes/lupa.svg' %}" alt="Icono lupa"></a>
                         </div>
                     </form>
                     <div class="user">
-                        <img src="Imagenes/user.png" alt="Icono user">
+                        <img src="{% static 'Imagenes/user.png' %}" alt="Icono user">
                     </div>
                 </div>
                 <div class="banner--contenido">
@@ -64,7 +66,7 @@
                             <video id="video" width="640" height="480"></video>
                             <button id="boton-grabar">Grabar</button>
                             <button id="boton-detener">Detener</button>
-                            <script src="index.js"></script>  
+                            <script src="{% static 'index.js' %}"></script>  
                         </div>
                     </div>
     
