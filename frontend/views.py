@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 import hashlib
 import os
-
-
+from audio import *
+from video.video import Video
 # Create your views here.
 
 class TomaVideo(TemplateView):
@@ -32,6 +32,24 @@ def upload_video(request):
             for chunk in video.chunks():
                 sha1_hash.update(chunk)
                 destination.write(chunk)
+        preprocesar(filename)
         return render(request, 'index.html')
     return render(request, 'index.html')
+
+
+def preprocesar(video):
+    v = Video()
+
+    # Se divide el video en pequeños clips de 180 s (3 min)
+    v.dividir_video_clips(video, 180)
+
+    '''
+    .
+    .
+    .
+    Realizar todo el proceso
+    '''
+
+    #Encriptar el video
+    v.encriptar_video(video)
 

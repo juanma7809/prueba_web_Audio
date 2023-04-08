@@ -22,7 +22,7 @@ class Video(object):
         for i, start_time in enumerate(range(0, int(video_clip.duration), clip_duration)):
             end_time = min(start_time + clip_duration, video_clip.duration)
             clip = video_clip.subclip(start_time, end_time)
-            clip_path = os.path.join(output_dir, f"cancion{i+1}.mp4")
+            clip_path = os.path.join(output_dir, video_path + f"CLIP{i+1}.mp4")
             clip.write_videofile(clip_path)
             clips.append(clip)
 
@@ -32,11 +32,11 @@ class Video(object):
             clip.close()
 
 
-    def encriptar_video(self):
+    def encriptar_video(self, video):
         # Generar clave de cifrado
         key = Fernet.generate_key()
         # Cargar archivo de video como bytes
-        with open('video.mp4', 'rb') as f:
+        with open(video, 'rb') as f:
             video_bytes = f.read()
 
         # Cifrar los bytes del video
@@ -44,14 +44,14 @@ class Video(object):
         encrypted_video = cipher.encrypt(video_bytes)
 
         # Guardar el archivo cifrado
-        with open('video_encrypted.mp4', 'wb') as f:
+        with open(video + '_encrypted.mp4', 'wb') as f:
             f.write(encrypted_video)
     
-    def desencriptar_video(self):
+    def desencriptar_video(self, video):
         # Generar clave de cifrado
         key = Fernet.generate_key()
 
-        with open('video.mp4', 'rb') as f:
+        with open(video, 'rb') as f:
             encrypted_video = f.read()
         # Descifrar los bytes del video cifrado
         cipher = Fernet(key)
@@ -113,6 +113,3 @@ class Video(object):
         video.release()
         cv2.destroyAllWindows()
 
-
-a = Video()
-a.dividir_video_clips("contenedor/cancion.mp4", 180)
