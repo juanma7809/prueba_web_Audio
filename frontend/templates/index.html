@@ -66,9 +66,11 @@
                             <video id="video" width="640" height="480"></video>
                             <button id="boton-grabar">Grabar</button>
                             <button id="boton-detener">Detener</button>
-                            <form action="#" method="post">
+                            <form action="" method="POST" enctype="multipart/form-data">
+                                {% csrf_token %}
                                 <label for="video">Enviar video a procesar</label>
-                                <input type="file" id="video" accept="video/*">
+                                <input type="file" id="video" accept="video/*" name="video">
+                                <button class="submit">Enviar</button>
                             </form>
                             <script src="{% static 'index.js' %}"></script>  
                         </div>
