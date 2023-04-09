@@ -26,7 +26,7 @@ def upload_video(request):
                 sha1_hash.update(chunk)
                 destination.write(chunk)
         hash_str = sha1_hash.hexdigest()
-        filename = f"videos/{hash_str}.mp4"
+        filename = f"videos\{hash_str}.mp4"
         os.remove('video.mp4')
         with open(filename, 'wb+') as destination:
             for chunk in video.chunks():
