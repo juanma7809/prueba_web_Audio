@@ -31,7 +31,7 @@ def upload_video(request):
         filename = f"videos\{hash_str}"
         # Carga el archivo de entrada
        
-        with open(filename, 'wb+') as destination:
+        with open(filename+".webm", 'wb+') as destination:
                 for chunk in video.chunks():
                     sha1_hash.update(chunk)
                     destination.write(chunk)
