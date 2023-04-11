@@ -5,6 +5,8 @@ import os
 from audio import *
 from video.video import Video
 import ffmpeg
+from moviepy.editor import VideoFileClip
+
 # Create your views here.
 
 class TomaVideo(TemplateView):
@@ -39,21 +41,30 @@ def upload_video(request):
         input_path = filename + ".webm"
         output_path = filename + ".mp4"
 
-        input_stream = ffmpeg.input(input_path)
+        input_path = 'video.webm'
+        output_path = 'video.mp4'
 
-        # Crea el stream de salida y define los codecs
-        output_stream = ffmpeg.output(
-            input_stream, 
-            output_path, 
-            codec='libx264', 
-            preset='medium', 
-            movflags='faststart', 
-            pix_fmt='yuv420p', 
-            crf=23
-        )
+        # Carga el archivo de entrada
+        clip = VideoFileClip(input_path)
 
-        # Ejecuta la conversión
-        ffmpeg.run(output_stream)
+        # Guarda el archivo de salida en el formato especificado
+        clip.write_videofile(output_path, codec='libx264', audio_codec='aac', remove_temp=False)
+
+        # input_stream = ffmpeg.input(input_path)
+
+        # # Crea el stream de salida y define los codecs
+        # output_stream = ffmpeg.output(
+        #     input_stream, 
+        #     output_path, 
+        #     codec='libx264', 
+        #     preset='medium', 
+        #     movflags='faststart', 
+        #     pix_fmt='yuv420p', 
+        #     crf=23
+        # )
+
+        # # Ejecuta la conversión
+        # ffmpeg.run(output_stream)
 
         os.remove('videos/video.webm')
         os.remove(f'videos/{filename}.webm')
