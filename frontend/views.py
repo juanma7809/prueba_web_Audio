@@ -30,7 +30,7 @@ def upload_video(request):
                 sha1_hash.update(chunk)
                 destination.write(chunk)
         hash_str = sha1_hash.hexdigest()
-        filename = f"videos\{hash_str}"
+        filename = f"videos/{hash_str}"
         # Carga el archivo de entrada
        
         with open(filename+".webm", 'wb+') as destination:
@@ -61,7 +61,7 @@ def upload_video(request):
         # ffmpeg.run(output_stream)
 
         os.remove('videos/video.webm')
-        os.remove(f'videos/{filename}.webm')
+        os.remove(f'{filename}.webm')
 
         preprocesar(filename)
         return render(request, 'index.html')
