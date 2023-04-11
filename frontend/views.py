@@ -5,7 +5,7 @@ import os
 from audio import *
 from video.video import Video
 import ffmpeg
-from moviepy.editor import VideoFileClip
+import subprocess
 
 # Create your views here.
 
@@ -41,11 +41,8 @@ def upload_video(request):
         input_path = filename + ".webm"
         output_path = filename + ".mp4"
 
-        # Carga el archivo de entrada
-        clip = VideoFileClip(input_path)
-
-        # Guarda el archivo de salida en el formato especificado
-        clip.write_videofile(output_path, codec='libx264', audio_codec='aac', remove_temp=False)
+        # Ejecuta el comando ffmpeg para la conversión
+        subprocess.run(['ffmpeg', '-i', input_path, '-codec', 'copy', output_path])
 
         # input_stream = ffmpeg.input(input_path)
 
