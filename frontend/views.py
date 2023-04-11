@@ -41,9 +41,6 @@ def upload_video(request):
         input_path = filename + ".webm"
         output_path = filename + ".mp4"
 
-        input_path = 'video.webm'
-        output_path = 'video.mp4'
-
         # Carga el archivo de entrada
         clip = VideoFileClip(input_path)
 
