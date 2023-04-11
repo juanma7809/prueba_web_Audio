@@ -42,7 +42,8 @@ def upload_video(request):
         output_path = filename + ".mp4"
 
         # Ejecuta el comando ffmpeg para la conversión
-        subprocess.run(['ffmpeg', '-i', input_path, '-codec', 'copy', output_path])
+        subprocess.run(['ffmpeg', '-i', input_path, '-c:v', 'libx264', '-c:a', 'copy', output_path])
+
 
         # input_stream = ffmpeg.input(input_path)
 
@@ -63,7 +64,7 @@ def upload_video(request):
         os.remove('videos/video.webm')
         os.remove(f'{filename}.webm')
 
-        preprocesar(filename)
+        preprocesar(filename +".mp4")
         return render(request, 'index.html')
     return render(request, 'index.html')
 
