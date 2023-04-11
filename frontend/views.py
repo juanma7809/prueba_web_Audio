@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 import hashlib
 import os
-from audio import *
+from audio.conversor import Conversor
 from video.video import Video
 import ffmpeg
 import subprocess
@@ -30,7 +30,7 @@ def upload_video(request):
                 sha1_hash.update(chunk)
                 destination.write(chunk)
         hash_str = sha1_hash.hexdigest()
-        filename = f"videos/{hash_str}"
+        filename = f"{hash_str}"
         # Carga el archivo de entrada
        
         with open(filename+".webm", 'wb+') as destination:
@@ -38,8 +38,8 @@ def upload_video(request):
                     sha1_hash.update(chunk)
                     destination.write(chunk)
         
-        input_path = filename + ".webm"
-        output_path = filename + ".mp4"
+        input_path =  "videos/" + filename + ".webm"
+        output_path = "videos/" + filename + ".mp4"
 
         # Ejecuta el comando ffmpeg para la conversión
         subprocess.run(['ffmpeg', '-i', input_path, '-c:v', 'libx264', '-c:a', 'copy', output_path])
@@ -64,7 +64,7 @@ def upload_video(request):
         os.remove('videos/video.webm')
         os.remove(f'{filename}.webm')
 
-        preprocesar(filename +".mp4")
+        preprocesar(filename)
         return render(request, 'index.html')
     return render(request, 'index.html')
 
@@ -73,14 +73,14 @@ def preprocesar(video):
     v = Video()
 
     # Se divide el video en pequeños clips de 180 s (3 min)
-    v.dividir_video_clips(video, 5)
+    v.dividir_video_clips("videos/", video, 5, ".mp4")
 
-    '''
-    .
-    .
-    .
-    Realizar todo el proceso
-    '''
+    # Se convierten cada uno de esos videos en .wavs
+    con = Conversor()
+    # Retorna una lista con los audios
+    audios = con.convert_all_mp4_to_wav("wavs-" + video)
+
+
 
     #Encriptar el video
     v.encriptar_video(video)

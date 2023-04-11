@@ -8,17 +8,19 @@ class Video(object):
     def __init__(self):
         self.ruta = "C:/Users/home/Desktop/webDepresion/webDepresion/video/"
 
-    def dividir_video_clips(self, video_path, clip_duration):
+    def dividir_video_clips(self, folder, video, clip_duration, ext):
         # Cargar el archivo de video
+        video_path = folder + video + ext
         video_clip = VideoFileClip(video_path)
 
         # Crear directorio para guardar los clips
-        output_dir = "wavs"
+        output_dir = "wavs-" + video 
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
         # Generar lista de clips
         clips = []
+        video_path = video + ext
         for i, start_time in enumerate(range(0, int(video_clip.duration), clip_duration)):
             end_time = min(start_time + clip_duration, video_clip.duration)
             clip = video_clip.subclip(start_time, end_time)
@@ -30,6 +32,7 @@ class Video(object):
         video_clip.close()
         for clip in clips:
             clip.close()
+        
 
 
     def encriptar_video(self, video):

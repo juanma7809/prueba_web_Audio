@@ -17,11 +17,16 @@ class Conversor:
         audio_clip.close()
     
     def convert_all_mp4_to_wav(self, folder_path):
+        audios_paths = []
         for filename in os.listdir(folder_path):
             if filename.endswith('.mp4'):
                 input_file = os.path.join(folder_path, filename)
                 output_file = os.path.splitext(input_file)[0] + '.wav'
                 self.convert_mp4_to_wav(input_file, output_file)
+                audios_paths.append(output_file)
+                os.remove(folder_path+"/"+filename)
+        
+        return audios_paths
 
 """def main():
     name = "../video/wavs/"
