@@ -33,7 +33,7 @@ def upload_video(request):
         filename = f"{hash_str}"
         # Carga el archivo de entrada
        
-        with open(filename+".webm", 'wb+') as destination:
+        with open("videos/"+filename+".webm", 'wb+') as destination:
                 for chunk in video.chunks():
                     sha1_hash.update(chunk)
                     destination.write(chunk)
@@ -62,7 +62,7 @@ def upload_video(request):
         # ffmpeg.run(output_stream)
 
         os.remove('videos/video.webm')
-        os.remove(f'{filename}.webm')
+        os.remove(f'videos/{filename}.webm')
 
         preprocesar(filename)
         return render(request, 'index.html')
@@ -77,6 +77,7 @@ def preprocesar(video):
 
     # Se convierten cada uno de esos videos en .wavs
     con = Conversor()
+
     # Retorna una lista con los audios
     audios = con.convert_all_mp4_to_wav("wavs-" + video)
 
