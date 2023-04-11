@@ -84,5 +84,5 @@ def preprocesar(video):
 
 
     #Encriptar el video
-    v.encriptar_video(video)
+    v.encriptar_video("videos/"+video+".mp4")
 
