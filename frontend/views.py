@@ -6,6 +6,7 @@ from audio.conversor import Conversor
 from video.video import Video
 import ffmpeg
 import subprocess
+from audio.analizador import *
 
 # Create your views here.
 
@@ -80,6 +81,9 @@ def preprocesar(video):
 
     # Retorna una lista con los audios
     audios = con.convert_all_mp4_to_wav("wavs-" + video)
+
+    print(audios)
+    process_audio_files(audios)
 
 
 
