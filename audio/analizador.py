@@ -14,7 +14,7 @@ def find_conversations(audio_data):
     lines = text.split('\n')
     print("aqui")
     if len(lines) == 1:
-        conversations.append(('Desconocido', lines[0], 0, audio_data.duration))
+        conversations.append(('Desconocido', lines[0], 0, 1))
         return conversations
     speaker = ''
     conversation = ''
@@ -65,5 +65,3 @@ def process_audio_files(folder_path):
 
         # imprimir conversaciones
         print(f"Conversaciones en {file_name}:")
-        for speaker, conversation in conversations:
-            print(f"{speaker}: {conversation}")

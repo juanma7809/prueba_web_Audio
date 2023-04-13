@@ -23,7 +23,6 @@ class Conversor:
                 input_file = os.path.join(folder_path, filename)
                 output_file = os.path.splitext(input_file)[0] + '.wav'
                 self.convert_mp4_to_wav(input_file, output_file)
-                audios_paths.append(output_file)
                 os.remove(folder_path+"/"+filename)
         
         return folder_path
