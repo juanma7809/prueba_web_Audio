@@ -42,7 +42,7 @@ class Permiso:
     def actualizar(self, atributo, nuevo_valor, id_permiso):
         try:
             cursor = self.conexion.cursor()
-            consulta = f"UPDATE permisos SET {atributo} = '{nuevo_valor}' WHERE id_rol = {id_permiso}"
+            consulta = f"UPDATE permisos SET {atributo} = '{nuevo_valor}' WHERE id_permiso = {id_permiso}"
             cursor.execute(consulta)
             conexion.cnx.commit()
         except Exception as e:

@@ -42,7 +42,7 @@ class Formulario:
     def actualizar(self, atributo, nuevo_valor, id_entrevista):
         try:
             cursor = self.conexion.cursor()
-            consulta = f"UPDATE entrevista SET {atributo} = '{nuevo_valor}' WHERE id_rol = {id_entrevista}"
+            consulta = f"UPDATE entrevista SET {atributo} = '{nuevo_valor}' WHERE id_entrevista = {id_entrevista}"
             cursor.execute(consulta)
             conexion.cnx.commit()
         except Exception as e:
