@@ -8,9 +8,10 @@ class Rol:
 
     def crear(self, id_rol, nombre_rol):
         try:
+            cursor = self.conexion.cursor()
             consulta = "INSERT INTO rol (id_rol, nombre_rol) VALUES (%s, %s)"
             values = (id_rol, nombre_rol)
-            self.conexion.cursor.execute(consulta, values)
+            cursor.execute(consulta, values)
             self.conexion.commit()
             return self.conexion.cursor.lastrowid
         except Exception as e:
@@ -22,6 +23,20 @@ class Rol:
             values = (id_rol,)
             self.conexion.cursor.execute(consulta, values)
             return self.conexion.cursor.fetchone()
+        except Exception as e:
+            print(e)
+    
+    def obtener_por_nombre(self, nombre_rol):
+        try:
+            cursor = self.conexion.cursor()
+            consulta = "SELECT * FROM rol WHERE nombre_rol = %s"
+            valores = (nombre_rol,)
+            cursor.execute(consulta, valores)
+            row = cursor.fetchone()
+            if row:
+                return row
+            else:
+                return "Permiso no encontrado."
         except Exception as e:
             print(e)
     
@@ -56,4 +71,5 @@ class Rol:
 
     def __del__(self):
         self.conexion.close()
+
 

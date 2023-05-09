@@ -27,6 +27,17 @@ class RolPermisos:
         except Exception as e:
             print(e)
     
+
+    def validar_permiso_rol(self, id_permiso, id_rol):
+        try:
+            cursor = self.conexion.cursor
+            consulta = "SELECT * FROM rol_permisos WHERE id_permiso = %s AND id_rol = %s"
+            valores = (id_permiso, id_rol,)
+            cursor.execute(consulta, valores)
+            return cursor.fetchone()
+        except Exception as e:
+            print(e)
+    
     def obtener_todos(self):
         try:
             cursor = self.conexion.cursor()
@@ -59,3 +70,4 @@ class RolPermisos:
 
     def __del__(self):
         self.conexion.close()
+

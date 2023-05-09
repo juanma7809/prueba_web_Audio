@@ -38,6 +38,20 @@ class Permiso:
                 print("Permiso no encontrado.")
         except Exception as e:
             print(e)
+    
+    def obtener_por_nombre(self, nombre_permiso):
+        try:
+            cursor = self.conexion.cursor()
+            consulta = "SELECT * FROM permiso WHERE nombre_permiso = %s"
+            valores = (nombre_permiso,)
+            cursor.execute(consulta, valores)
+            row = cursor.fetchone()
+            if row:
+                return row
+            else:
+                return "Permiso no encontrado."
+        except Exception as e:
+            print(e)
             
     def actualizar(self, atributo, nuevo_valor, id_permiso):
         try:
@@ -62,3 +76,6 @@ class Permiso:
     def __del__(self):
         self.conexion.close()
 
+p = Permiso()
+f = p.obtener_por_nombre("crear_paciente")
+print(f[0])
