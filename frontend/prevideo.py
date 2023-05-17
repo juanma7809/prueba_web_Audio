@@ -83,5 +83,5 @@ def preprocesar(video):
     #Encriptar el video
     v.encriptar_video("videos/"+video+".mp4")
     vr = VideoNoSQL()
-    vr.guardar_video_encriptado("videos/"+video+"_encrypted.mp4")
+    vr.guardar_video_encriptado("videos/"+video+"_encrypted.mp4", video)
 

@@ -11,7 +11,7 @@ class VideoNoSQL():
         # crear una colección para cada objeto
         self.coleccion = self.database['video']
 
-    def guardar_video_encriptado(self, ruta_video):
+    def guardar_video_encriptado(self, ruta_video, hash):
         # Tamaño del fragmento en bytes (1M)
         chunk_size = 1024 * 1024
         video_data = b''  # Variable para almacenar los datos del video
@@ -30,7 +30,8 @@ class VideoNoSQL():
     
         video_doc = {
             'filename': ruta_video,
-            'data': video_data
+            'data': video_data,
+            'hash': hash
         }
         
         video_id = self.coleccion.insert_one(video_doc).inserted_id
@@ -39,6 +40,24 @@ class VideoNoSQL():
         # Imprimir el ID asignado al video guardado
         print("Video guardado con ID:", video_id)
 
+    def obtener_video_por_id(self):
+        # Consulta para obtener el documento
+        document = self.coleccion.find_one({"filename": "p.mp4"})
+
+        # Verificación de existencia del documento
+        if document:
+            # Obtención del nombre del archivo
+            filename = document.get("filename")
+
+            # Obtención de los datos del archivo
+            file_data = document.get("data")
+
+            # Escritura de los datos en un archivo
+            with open(filename, "wb") as file:
+                file.write(file_data)
+                print(f"Archivo guardado correctamente: {filename}")
+        else:
+            print("El documento no existe en la base de datos.")
 
 
 
@@ -46,3 +65,6 @@ class VideoNoSQL():
         cliente.close()
 
 
+v = VideoNoSQL()
+
+v.obtener_video_por_id('6464e43444a6ad5b658c1f45')
