@@ -6,6 +6,7 @@ from video.video import Video
 import ffmpeg
 import subprocess
 from audio.analizador import *
+from modelsNoSQL.Video import VideoNoSQL
 
 # Create your views here.
 
@@ -33,6 +34,7 @@ def upload_video(request):
         input_path =  "videos/" + filename + ".webm"
         output_path = "videos/" + filename + ".mp4"
 
+        print(filename)
         # Ejecuta el comando ffmpeg para la conversión
         subprocess.run(['ffmpeg', '-i', input_path, '-c:v', 'libx264', '-c:a', 'copy', output_path])
 
@@ -80,4 +82,6 @@ def preprocesar(video):
 
     #Encriptar el video
     v.encriptar_video("videos/"+video+".mp4")
+    vr = VideoNoSQL()
+    vr.guardar_video_encriptado("videos/"+video+"_encrypted.mp4")
 

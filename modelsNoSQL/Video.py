@@ -45,7 +45,4 @@ class VideoNoSQL():
     def __del__(self):
         cliente.close()
 
-v =VideoNoSQL()
-
-v.guardar_video_encriptado("p.mp4")
 

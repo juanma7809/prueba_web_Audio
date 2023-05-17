@@ -1,1 +1,0 @@
-# En esta carpeta se almacenarán los videos de manera provicional para la prueba
