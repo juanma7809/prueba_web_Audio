@@ -49,6 +49,7 @@ def process_audio_files(folder_path):
     # obtener una lista de archivos en la carpeta 'audio_files'
     file_names = [f for f in os.listdir(folder_path) if f.endswith('.wav')]
 
+    convs = []
     # iterar sobre los archivos de audio y procesar cada uno
     for file_name in file_names:
         # construir la ruta completa del archivo
@@ -62,6 +63,8 @@ def process_audio_files(folder_path):
         # encontrar conversaciones en el texto y guardar en archivo
         conversations = find_conversations(audio_data)
         save_conversations(conversations, f'{file_name}.txt')
-
+        convs.append(f'{file_name}.txt')
         # imprimir conversaciones
         print(f"Conversaciones en {file_name}:")
+    
+    return convs

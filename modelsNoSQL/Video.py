@@ -40,9 +40,9 @@ class VideoNoSQL():
         # Imprimir el ID asignado al video guardado
         print("Video guardado con ID:", video_id)
 
-    def obtener_video_por_id(self, ):
+    def obtener_video_por_hash(self, hash):
         # Consulta para obtener el documento
-        document = self.coleccion.find_one({"filename": "p.mp4"})
+        document = self.coleccion.find_one({"hash": hash})
 
         # Verificación de existencia del documento
         if document:
@@ -59,8 +59,4 @@ class VideoNoSQL():
         else:
             print("El documento no existe en la base de datos.")
 
-
-
-    def __del__(self):
-        cliente.close()
 

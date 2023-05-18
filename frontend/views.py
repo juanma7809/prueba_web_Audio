@@ -8,6 +8,8 @@ import ffmpeg
 import subprocess
 from audio.analizador import *
 from modelsNoSQL.Video import VideoNoSQL
+from modelsNoSQL.Audio import AudioNoSQL
+from modelsNoSQL.Texto import TextoNoSQL
 
 # Create your views here.
 
@@ -71,27 +73,43 @@ def upload_video(request):
     return render(request, 'index.html')
 
 
-def preprocesar(video):
+def preprocesar(hash):
     v = Video()
 
     # Se divide el video en pequeños clips de 180 s (3 min)
-    v.dividir_video_clips("videos/", video, 5, ".mp4")
+    v.dividir_video_clips("videos/", hash, 5, ".mp4")
 
     # Se convierten cada uno de esos videos en .wavs
     con = Conversor()
 
     # Retorna una lista con los audios
-    audios = con.convert_all_mp4_to_wav("wavs-" + video)
+    audios = con.convert_all_mp4_to_wav("wavs-" + hash)
 
     print(audios)
-    process_audio_files(audios)
+    textos = process_audio_files(audios)
 
 
 
     #Encriptar el video
-    v.encriptar_video("videos/"+video+".mp4")
+    v.encriptar_video("videos/"+hash+".mp4")
+
+    #Guardar video en base de datos No SQL
     vi = VideoNoSQL()
-    vi.guardar_video_encriptado("videos/"+video+".mp4_encrypted.mp4", video)
+    vi.guardar_video_encriptado("videos/"+hash+".mp4_encrypted.mp4", hash)
+
+    #Guardar audios en base de datos No SQL
+    audio_names = [f for f in os.listdir(audios) if f.endswith('.wav')]
+
+    a = AudioNoSQL()
+    for audio_name in audio_names:
+        a.guardar_audio(audios + "/" + audio_name, hash)
+    
+    ti = TextoNoSQL()
+    for t in textos:
+        print(t)
+        ti.guardar_texto(t, hash)
+        #os.remove(t)
+
 
 # def verificar_permiso(rol_nombre, permiso_nombre):
 #     try:
