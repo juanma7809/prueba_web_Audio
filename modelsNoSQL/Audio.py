@@ -45,5 +45,3 @@ class AudioNoSQL():
     def __del__(self):
         cliente.close()
 
-a = AudioNoSQL()
-a.guardar_audio("p/p.wav")

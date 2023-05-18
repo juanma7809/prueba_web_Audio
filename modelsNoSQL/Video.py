@@ -40,7 +40,7 @@ class VideoNoSQL():
         # Imprimir el ID asignado al video guardado
         print("Video guardado con ID:", video_id)
 
-    def obtener_video_por_id(self):
+    def obtener_video_por_id(self, ):
         # Consulta para obtener el documento
         document = self.coleccion.find_one({"filename": "p.mp4"})
 
@@ -64,7 +64,3 @@ class VideoNoSQL():
     def __del__(self):
         cliente.close()
 
-
-v = VideoNoSQL()
-
-v.obtener_video_por_id('6464e43444a6ad5b658c1f45')

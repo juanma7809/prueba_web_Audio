@@ -31,13 +31,17 @@ def upload_video(request):
                     sha1_hash.update(chunk)
                     destination.write(chunk)
         
-        input_path =  "videos/" + filename + ".webm"
-        output_path = "videos/" + filename + ".mp4"
+        input_path =  os.path.abspath("videos/" + filename + ".webm")
+        output_path = os.path.abspath("videos/" + filename + ".mp4")
 
         print(filename)
+        # stream = ffmpeg.input(input_path)
+        # stream = ffmpeg.output(stream, output_path)
+        # ffmpeg.run(stream)
         # Ejecuta el comando ffmpeg para la conversión x
-        subprocess.run(['ffmpeg', '-i', input_path, '-c:v', 'libx264', '-c:a', 'copy', output_path])
-
+        comando = 'ffmpeg -i ' + input_path +  ' ' + output_path
+        subprocess.run(comando, shell=True)
+ 
 
         # input_stream = ffmpeg.input(input_path)
 

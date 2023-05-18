@@ -1,0 +1,7 @@
+django
+mysql
+pymongo
+moviepy
+cryptography
+ffmpeg
+SpeechRecognition

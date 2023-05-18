@@ -45,5 +45,3 @@ class TextoNoSQL():
     def __del__(self):
         cliente.close()
 
-a = TextoNoSQL()
-a.guardar_texto("p/p.wav")
