@@ -35,7 +35,7 @@ def upload_video(request):
         output_path = "videos/" + filename + ".mp4"
 
         print(filename)
-        # Ejecuta el comando ffmpeg para la conversión
+        # Ejecuta el comando ffmpeg para la conversión x
         subprocess.run(['ffmpeg', '-i', input_path, '-c:v', 'libx264', '-c:a', 'copy', output_path])
 
 
