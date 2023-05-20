@@ -23,6 +23,16 @@ class TomaVideo(TemplateView):
     def get(self, request):
         return render(request, self.template_name) 
 
+
+def login(request):
+    return render(request, 'login.html')
+
+def registro(request):
+    return render(request, 'registro.html')
+
+def recuperar_contrasena(request):
+    return render(request, 'recuperar_con.html')
+
 def upload_video(request):
     if request.method == 'POST' and request.FILES['video']:
         video = request.FILES['video']

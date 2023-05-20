@@ -25,4 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     #path('web/', include('web.urls')),
     path('', views.upload_video, name="index"),
+    path('login/', views.login, name="login"),
+    path('registro/', views.registro, name="registro"),
+    path('recuperar_clave/', views.recuperar_contrasena, name="recuperar"),
 ]

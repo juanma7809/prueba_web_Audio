@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Recover Password</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.3/animate.min.css'><link rel="stylesheet" href="{% static 'estilos/style_recuperar_con.css' %}">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class='box'>
+  <div class='box-form'>
+    <div class='box-recuperar-tab'></div>
+    <div class='box-recuperar-title'>
+      <div class='i i-recuperar'></div><h2>Recover</h2>
+    </div>
+    <div class='box-recuperar'>
+      <div class= 'logo'></div>
+      
+      <div class='fieldset-body' id='recuperar_form'>
+        <button onclick="openrecuperarInfo();" class='b b-form i i-more' title='Mas Informacion'></button>
+        <div class= 'logo'>
+          <img src="{% static '/Imagenes/LogoNuevo.png' %}"
+            alt=""
+            width="100"
+            height="100">
+          </div>
+          <p class='field'>
+          <label for='user'>Correo Electronico</label>
+          <input type='text' id='user' name='user' title='Username' />
+          <span id='valida' class='i i-warning'></span>
+         <!--<label class='checkbox'>
+            <input type='checkbox' value='TRUE' title='Keep me Signed in' /> Keep me Signed in
+          </label>-->
+
+        	<input type='submit' id='do_recuperar' value='Recuperar Contraseña' title='Recuperar Contraseña' />
+      </div>
+    </div>
+  </div>
+  <div class='box-info'>
+		<p><button onclick="closerecuperarInfo();" class='b b-info i i-left' title='Back to Sign In'></button>
+        </p>
+        <button onclick="" class='b-support' title='Contact Support'> Contacto Soporte</button>
+        <div class='line-wh'></div>
+        <button onclick="location.href='/login/index.html'" class='b-cta' title='Login'>Iniciar Sesion</button>
+  	</div>
+</div>
+
+<!-- partial -->
+  <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js'></script>
+<script  src="{% static 'script_recuperar_con.js' %}"></script>
+
+
+</body>
+</html>
