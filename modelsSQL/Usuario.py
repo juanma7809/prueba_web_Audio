@@ -1,4 +1,5 @@
-from Database import conexion
+from modelsSQL.Database import conexion
+import hashlib
 
 class Usuario:
     def __init__(self):
@@ -7,10 +8,12 @@ class Usuario:
 
     def crear(self, id_rol, nombres, apellidos, correo, contrasena, cedula, fecha_nacimiento):
         try:
+            cursor = self.conexion.cursor()
+            readable_hash = hashlib.sha256(contrasena.encode()).hexdigest()
             consulta = "INSERT INTO usuario (id_rol, nombres, apellidos, correo, contrasena, cedula, fecha_nacimiento) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-            valores = (id_rol, nombres, apellidos, correo, contrasena, cedula, fecha_nacimiento)
-            self.conexion.cursor.execute(consulta, valores)
-            self.conexion.self.conexion.commit()
+            valores = (id_rol, nombres, apellidos, correo, readable_hash, cedula, fecha_nacimiento)
+            cursor.execute(consulta, valores)
+            self.conexion.commit()
         except Exception as e:
             print(e)
 
@@ -43,6 +46,22 @@ class Usuario:
         except Exception as e:
             print(e)
 
+    def validar_usuario(self, correo, contrasena):
+        try:
+            cursor = self.conexion.cursor()
+            contrasena = readable_hash = hashlib.sha256(contrasena.encode()).hexdigest()
+            print(correo, contrasena)
+            consulta = "SELECT * FROM usuario WHERE correo = %s and contrasena = %s"
+            values = (correo, str(contrasena),)
+            cursor.execute(consulta, values)
+            result = cursor.fetchone()
+            if result:
+                return True
+            else:
+                return False 
+        except Exception as e:
+            print(e)        
+
     def obtener_todos(self):
         try:
             consulta = "SELECT * FROM usuario"
@@ -51,6 +70,3 @@ class Usuario:
             return resultados
         except Exception as e:
                 print(e)
-    
-    def __del__(self):
-        self.conexion.close()

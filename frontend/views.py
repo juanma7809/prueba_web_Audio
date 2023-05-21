@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 import hashlib
 import os
@@ -10,6 +10,8 @@ from audio.analizador import *
 from modelsNoSQL.Video import VideoNoSQL
 from modelsNoSQL.Audio import AudioNoSQL
 from modelsNoSQL.Texto import TextoNoSQL
+from modelsSQL.Usuario import Usuario
+
 
 # Create your views here.
 
@@ -25,10 +27,35 @@ class TomaVideo(TemplateView):
 
 
 def login(request):
-    return render(request, 'login.html')
+    if request.method == 'POST' and request.POST['user'] and request.POST['pass']:
+        u = Usuario()
+        if u.validar_usuario(request.POST['user'], request.POST['pass']):
+            return redirect('/video/')
+        else:
+            return render(request, 'login.html')
+    else:
+        return render(request, 'login.html')
 
 def registro(request):
-    return render(request, 'registro.html')
+    print(request.method)
+    if request.method == 'POST' and (request.POST['names'] and request.POST['lastnames'] and request.POST['borndate'] and request.POST['id'] and request.POST['mail'] and request.POST['pass']):
+        if request.POST['pass'] == request.POST['pass2']:
+            u = Usuario()
+           
+            u.crear(
+                id_rol=1,
+                nombres=request.POST['names'],
+                apellidos=request.POST['lastnames'],
+                correo=request.POST['mail'],
+                contrasena=request.POST['pass'],
+                cedula=request.POST['id'],
+                fecha_nacimiento=request.POST['borndate']
+            )
+            return redirect('/')
+        else: 
+            return render(request, 'registro.html')
+    else:
+        return render(request, 'registro.html')
 
 def recuperar_contrasena(request):
     return render(request, 'recuperar_con.html')

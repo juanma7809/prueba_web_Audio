@@ -5,3 +5,4 @@ moviepy
 cryptography
 ffmpeg
 SpeechRecognition
+mysql-connector-python
