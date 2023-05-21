@@ -25,6 +25,17 @@ class Usuario:
             conexion.cnx.commit()
         except Exception as e:
             print(e)
+    
+    def actualizar_contrasena(self, correo, nueva_contrasena):
+        try:
+            cursor = self.conexion.cursor()
+            nueva_contrasena = hashlib.sha256(nueva_contrasena.encode()).hexdigest()
+            consulta = "UPDATE usuario SET contrasena = %s WHERE correo = %s"
+            valores = (nueva_contrasena, correo,)
+            cursor.execute(consulta, valores)
+            self.conexion.commit()
+        except Exception as e:
+            print(e)
 
     def borrar(self):
         try:
@@ -59,6 +70,17 @@ class Usuario:
                 return True
             else:
                 return False 
+        except Exception as e:
+            print(e)
+
+    def obtener_nombre_usuario(self, correo):
+        try:
+            cursor = self.conexion.cursor()
+            consulta = "SELECT nombres, apellidos FROM usuario WHERE correo = %s"
+            values = (correo,)
+            cursor.execute(consulta, values)
+            result = cursor.fetchone()
+            return result
         except Exception as e:
             print(e)        
 
