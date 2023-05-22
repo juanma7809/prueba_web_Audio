@@ -6,3 +6,4 @@ cryptography
 ffmpeg
 SpeechRecognition
 mysql-connector-python
+email

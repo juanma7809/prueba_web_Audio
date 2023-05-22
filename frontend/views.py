@@ -11,7 +11,7 @@ from modelsNoSQL.Video import VideoNoSQL
 from modelsNoSQL.Audio import AudioNoSQL
 from modelsNoSQL.Texto import TextoNoSQL
 from modelsSQL.Usuario import Usuario
-
+from utilidades.Envio_correo import *
 
 # Create your views here.
 
@@ -62,7 +62,25 @@ def registro(request):
         return render(request, 'registro.html')
 
 def recuperar_contrasena(request):
-    return render(request, 'recuperar_con.html')
+    if request.method == 'POST' and request.POST['user']:
+        u = Usuario()
+        nombre = u.obtener_nombre_usuario(request.POST['user'])   
+        if nombre:
+            
+            nombre = nombre[0] + nombre[1]
+            nueva = enviar_correo_recuperacion_contrasena(
+            destino = '',
+            contrasena = '',
+            correo = request.POST['user'],
+            usuario = nombre)
+
+            u.actualizar_contrasena(request.POST['user'], nueva)
+
+            return redirect('/')
+        else:
+            return render(request, 'recuperar_con.html')    
+    else:
+        return render(request, 'recuperar_con.html')
 
 def upload_video(request):
     if request.method == 'POST' and request.FILES['video']:
