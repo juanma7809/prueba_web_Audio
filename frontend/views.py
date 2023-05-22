@@ -63,10 +63,10 @@ def recuperar_contrasena(request):
         nombre = u.obtener_nombre_usuario(request.POST['user'])   
         if nombre:
             
-            nombre = nombre[0] + nombre[1]
+            nombre = nombre[0] + " " +  nombre[1]
             nueva = enviar_correo_recuperacion_contrasena(
-            destino = '',
-            contrasena = '',
+            destino = 'juanjose.aroca@utp.edu.co',
+            contrasena = '12mfy45-',
             correo = request.POST['user'],
             usuario = nombre)
 
