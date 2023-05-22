@@ -26,6 +26,7 @@ urlpatterns = [
     #path('web/', include('web.urls')),
     path('video/', views.upload_video, name="index"),
     path('', views.login, name="login"),
+    path('dashboard/', views.dashboard, name="dashboard"),
     path('registro/', views.registro, name="registro"),
     path('recuperar_clave/', views.recuperar_contrasena, name="recuperar"),
 ]

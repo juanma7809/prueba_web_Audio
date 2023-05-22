@@ -36,6 +36,10 @@ def login(request):
     else:
         return render(request, 'login.html')
 
+def dashboard(request):
+    return render(request, 'dashboard.html')
+
+
 def registro(request):
     print(request.method)
     if request.method == 'POST' and (request.POST['names'] and request.POST['lastnames'] and request.POST['borndate'] and request.POST['id'] and request.POST['mail'] and request.POST['pass']):

@@ -1,0 +1,116 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Dashboard UI </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel="stylesheet" href="{% static 'estilos/style_dashboard.css' }">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<header class="header">
+	<div class="header-content responsive-wrapper">
+		<div class="header-logo">
+			<a href="#">
+				<div>
+					<img src="{% static '/Imagenes/LogoNuevo.png' %}" width="45" height="45">
+				</div>
+			</a>
+		</div>
+		<div class="header-navigation">
+			<nav class="header-navigation-links">
+				<a href="#"> Inicio </a>
+				<a href="#"> Cerrar sesión </a>
+				<a href="#"> Modificar cuenta </a>
+			</nav>
+
+		</div>
+		<a href="#" class="button">
+			<i class="ph-list-bold"></i>
+			<span>Menu</span>
+		</a>
+	</div>
+</header>
+<main class="main">
+
+		<div class="content">
+
+			<div class="content-main">
+				<div class="card-grid">
+					<article class="card">
+						<div class="card-header">
+							<div>
+								<span><img src="{% static '/Imagenes/doctores.png'}" width="100"></span>
+								<h3>Doctores</h3>
+							</div>
+						
+						</div>
+						<div class="card-body">
+							<p>Gestionar Doctores</p>
+						</div>
+						<div class="card-footer">
+							<a href="#">Ir</a>
+						</div>
+					</article>
+					
+					<article class="card">
+						<div class="card-header">
+							<div>
+								<span><img src="{% static '/Imagenes/pacientes.png'}"pacientes.png" /></span>
+								<h3>Pacientes</h3>
+							</div>
+						
+						</div>
+						<div class="card-body">
+							<p>Gestionar pacientes</p>
+						</div>
+						<div class="card-footer">
+							<a href="#">Ir</a>
+						</div>
+					</article>
+
+					<article class="card">
+						<div class="card-header">
+							<div>
+								<span><img src="{% static '/Imagenes/entrevista.png'}" /></span>
+								<h3>Entrevista</h3>
+							</div>
+						
+						</div>
+						<div class="card-body">
+							<p>Realizar entrevista del paciente</p>
+						</div>
+						<div class="card-footer">
+							<a href="#">Ir</a>
+						</div>
+					</article>
+
+					<article class="card">
+						<div class="card-header">
+							<div>
+								<span><img src="{% static '/Imagenes/entrevista.png'}" /></span>
+								<h3>Entrevista</h3>
+							</div>
+						
+						</div>
+						<div class="card-body">
+							<p>Realizar entrevista del doctor</p>
+						</div>
+						<div class="card-footer">
+							<a href="#">Ir</a>
+						</div>
+					</article>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+<!-- partial -->
+  <script src='https://unpkg.com/phosphor-icons'></script><script  src="./script.js"></script>
+
+</body>
+</html>
