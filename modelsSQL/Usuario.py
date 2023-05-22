@@ -61,7 +61,6 @@ class Usuario:
         try:
             cursor = self.conexion.cursor()
             contrasena = readable_hash = hashlib.sha256(contrasena.encode()).hexdigest()
-            print(correo, contrasena)
             consulta = "SELECT * FROM usuario WHERE correo = %s and contrasena = %s"
             values = (correo, str(contrasena),)
             cursor.execute(consulta, values)

@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <title>CodePen - Dashboard UI </title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-<link rel="stylesheet" href="{% static 'estilos/style_dashboard.css' }">
+<link rel="stylesheet" href="{% static 'estilos/style_dashboard.css' %}">
 
 </head>
 <body>
@@ -43,7 +43,7 @@
 					<article class="card">
 						<div class="card-header">
 							<div>
-								<span><img src="{% static '/Imagenes/doctores.png'}" width="100"></span>
+								<span><img src="{% static '/Imagenes/doctores.png' %}" width="100"></span>
 								<h3>Doctores</h3>
 							</div>
 						
@@ -59,7 +59,7 @@
 					<article class="card">
 						<div class="card-header">
 							<div>
-								<span><img src="{% static '/Imagenes/pacientes.png'}"pacientes.png" /></span>
+								<span><img src="{% static '/Imagenes/pacientes.png' %}"pacientes.png" /></span>
 								<h3>Pacientes</h3>
 							</div>
 						
@@ -75,7 +75,7 @@
 					<article class="card">
 						<div class="card-header">
 							<div>
-								<span><img src="{% static '/Imagenes/entrevista.png'}" /></span>
+								<span><img src="{% static '/Imagenes/entrevista.png' %}" /></span>
 								<h3>Entrevista</h3>
 							</div>
 						
@@ -84,14 +84,14 @@
 							<p>Realizar entrevista del paciente</p>
 						</div>
 						<div class="card-footer">
-							<a href="#">Ir</a>
+							<a href="/video/">Ir</a>
 						</div>
 					</article>
 
 					<article class="card">
 						<div class="card-header">
 							<div>
-								<span><img src="{% static '/Imagenes/entrevista.png'}" /></span>
+								<span><img src="{% static '/Imagenes/entrevista.png' %}" /></span>
 								<h3>Entrevista</h3>
 							</div>
 						
@@ -110,7 +110,8 @@
 	</div>
 </main>
 <!-- partial -->
-  <script src='https://unpkg.com/phosphor-icons'></script><script  src="./script.js"></script>
+  <script src='https://unpkg.com/phosphor-icons'></script>
+  <script  src="{% static 'script_dashboard.js' %}"></script>
 
 </body>
 </html>

@@ -30,7 +30,7 @@ def login(request):
     if request.method == 'POST' and request.POST['user'] and request.POST['pass']:
         u = Usuario()
         if u.validar_usuario(request.POST['user'], request.POST['pass']):
-            return redirect('/video/')
+            return redirect('/dashboard/')
         else:
             return render(request, 'login.html')
     else:
@@ -47,7 +47,7 @@ def registro(request):
             u = Usuario()
            
             u.crear(
-                id_rol=1,
+                id_rol=3,
                 nombres=request.POST['names'],
                 apellidos=request.POST['lastnames'],
                 correo=request.POST['mail'],
