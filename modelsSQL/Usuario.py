@@ -66,9 +66,9 @@ class Usuario:
             cursor.execute(consulta, values)
             result = cursor.fetchone()
             if result:
-                return True
+                return True, result
             else:
-                return False 
+                return False, None 
         except Exception as e:
             print(e)
 

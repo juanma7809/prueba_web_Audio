@@ -1,4 +1,4 @@
-from Database import conexion
+from modelsSQL.Database import conexion
 
 
 class RolPermisos:
@@ -48,6 +48,17 @@ class RolPermisos:
         except Exception as e:
             print(e)
 
+    def obtener_permisos_rol(self, id_rol):
+        try:
+            cursor = self.conexion.cursor()
+            consulta = "SELECT id_permiso FROM rol_permisos WHERE id_rol = %s"
+            valores = (id_rol,)
+            cursor.execute(consulta, valores)
+            resultado = cursor.fetchall()
+            return resultado
+        except Exception as e:
+            print(e)
+
     def actualizar(self, atributo, nuevo_valor, id_rol_permisos):
         try:
             cursor = self.conexion.cursor()
@@ -68,6 +79,5 @@ class RolPermisos:
         except Exception as e:
             print(e)
 
-    def __del__(self):
-        self.conexion.close()
+
 

@@ -1,4 +1,4 @@
-from Database import conexion
+from modelsSQL.Database import conexion
 
 class Permiso:
     def __init__(self):
@@ -31,13 +31,15 @@ class Permiso:
             consulta = "SELECT * FROM permiso WHERE id_permiso = %s"
             valores = (id_permiso,)
             cursor.execute(consulta, valores)
-            row = cursor.fetchone()
+            row = cursor.fetchall()
             if row:
-                print(row)
+                return row
             else:
-                print("Permiso no encontrado.")
+                return None
         except Exception as e:
             print(e)
+    
+    
     
     def obtener_por_nombre(self, nombre_permiso):
         try:
@@ -73,9 +75,3 @@ class Permiso:
         except Exception as e:
             print(e)
     
-    def __del__(self):
-        self.conexion.close()
-
-p = Permiso()
-f = p.obtener_por_nombre("crear_paciente")
-print(f[0])

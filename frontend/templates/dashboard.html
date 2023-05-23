@@ -40,70 +40,25 @@
 
 			<div class="content-main">
 				<div class="card-grid">
+					{% if d %}  
+    				{% for i in d %}
 					<article class="card">
 						<div class="card-header">
 							<div>
-								<span><img src="{% static '/Imagenes/doctores.png' %}" width="100"></span>
-								<h3>Doctores</h3>
+								<span><img src="{{i.imagen}}" width="100"></span>
+								<h3>{{i.titulo}}</h3>
 							</div>
-						
 						</div>
 						<div class="card-body">
-							<p>Gestionar Doctores</p>
+							<p>{{i.permiso}}</p>
 						</div>
 						<div class="card-footer">
-							<a href="#">Ir</a>
+							<a href="{{i.enlace}}">Ir</a>
 						</div>
 					</article>
+					{% endfor %}
+    				{% endif %}
 					
-					<article class="card">
-						<div class="card-header">
-							<div>
-								<span><img src="{% static '/Imagenes/pacientes.png' %}"pacientes.png" /></span>
-								<h3>Pacientes</h3>
-							</div>
-						
-						</div>
-						<div class="card-body">
-							<p>Gestionar pacientes</p>
-						</div>
-						<div class="card-footer">
-							<a href="#">Ir</a>
-						</div>
-					</article>
-
-					<article class="card">
-						<div class="card-header">
-							<div>
-								<span><img src="{% static '/Imagenes/entrevista.png' %}" /></span>
-								<h3>Entrevista</h3>
-							</div>
-						
-						</div>
-						<div class="card-body">
-							<p>Realizar entrevista del paciente</p>
-						</div>
-						<div class="card-footer">
-							<a href="/video/">Ir</a>
-						</div>
-					</article>
-
-					<article class="card">
-						<div class="card-header">
-							<div>
-								<span><img src="{% static '/Imagenes/entrevista.png' %}" /></span>
-								<h3>Entrevista</h3>
-							</div>
-						
-						</div>
-						<div class="card-body">
-							<p>Realizar entrevista del doctor</p>
-						</div>
-						<div class="card-footer">
-							<a href="#">Ir</a>
-						</div>
-					</article>
-
 				</div>
 			</div>
 		</div>

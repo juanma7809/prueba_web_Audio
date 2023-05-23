@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 import hashlib
 import os
+import json
 from audio.conversor import Conversor
 from video.video import Video
 import ffmpeg
@@ -11,6 +12,8 @@ from modelsNoSQL.Video import VideoNoSQL
 from modelsNoSQL.Audio import AudioNoSQL
 from modelsNoSQL.Texto import TextoNoSQL
 from modelsSQL.Usuario import Usuario
+from modelsSQL.RolPermisos import RolPermisos
+from modelsSQL.Permiso import Permiso
 from utilidades.Envio_correo import *
 
 # Create your views here.
@@ -29,15 +32,51 @@ class TomaVideo(TemplateView):
 def login(request):
     if request.method == 'POST' and request.POST['user'] and request.POST['pass']:
         u = Usuario()
-        if u.validar_usuario(request.POST['user'], request.POST['pass']):
-            return redirect('/dashboard/')
+        valido, resultado = u.validar_usuario(request.POST['user'], request.POST['pass'])
+        
+        
+        if valido:
+            context = {
+            'id_usuario': resultado[0],
+            'id_rol': resultado[1],
+            'nombre_completo': resultado[2] + resultado[3]
+        }
+            return redirect('/dashboard/?id={}&rol={}'.format(context['id_usuario'], context['id_rol']))
         else:
             return render(request, 'login.html')
     else:
         return render(request, 'login.html')
 
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    id = request.GET.get('id')
+    rol = request.GET.get('rol')
+    rp = RolPermisos()
+    tuplas = rp.obtener_permisos_rol(rol)
+
+    lista_ids_permisos = [tupla[0] for tupla in tuplas]
+
+    p = Permiso()
+    permisos = [p.obtener_por_id(i) for i in lista_ids_permisos]
+
+    lista_permisos = []
+
+    for sublist in permisos:
+        data_dict = {
+            'id': sublist[0][0],
+            'permiso': sublist[0][1],
+            'titulo': sublist[0][2],
+            'imagen': sublist[0][3],
+            'enlace': sublist[0][4]
+        }
+        lista_permisos.append(data_dict)
+    
+    data = lista_permisos
+
+    context = {
+        'd': data
+    }
+
+    return render(request, 'dashboard.html', context)
 
 
 def registro(request):
