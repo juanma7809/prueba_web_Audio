@@ -121,6 +121,12 @@ def recuperar_contrasena(request):
     else:
         return render(request, 'recuperar_con.html')
 
+def perfil_paciente(request):
+    return render(request, 'profile.html')
+
+def perfil_doctor(request):
+    return render(request, 'doctor_profile.html')
+
 def upload_video(request):
     if request.method == 'POST' and request.FILES['video']:
         video = request.FILES['video']
@@ -196,11 +202,11 @@ def preprocesar(hash):
     vi.guardar_video_encriptado("videos/"+hash+".mp4_encrypted.mp4", hash)
 
     #Guardar audios en base de datos No SQL
-    audio_names = [f for f in os.listdir(audios) if f.endswith('.wav')]
+    audio_names = [(f, n) for n, f in enumerate(os.listdir(audios), start=1) if f.endswith('.wav')]
 
     a = AudioNoSQL()
-    for audio_name in audio_names:
-        a.guardar_audio(audios + "/" + audio_name, hash)
+    for audio in audio_names:
+        a.guardar_audio(audios + "/" + audio[0], hash, audio[1])
     
     ti = TextoNoSQL()
     for t in textos:

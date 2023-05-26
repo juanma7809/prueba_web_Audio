@@ -11,7 +11,7 @@ class AudioNoSQL():
         # crear una colección para cada objeto
         self.coleccion = self.database['audio']
 
-    def guardar_audio(self, ruta_audio, hash):
+    def guardar_audio(self, ruta_audio, hash, order):
         # Tamaño del fragmento en bytes (1M)
         chunk_size = 1024 * 1024
         audio_data = b''  # Variable para almacenar los datos del audio
@@ -31,7 +31,8 @@ class AudioNoSQL():
         audio_doc = {
             'filename': ruta_audio,
             'data': audio_data,
-            'hash': hash
+            'hash': hash,
+            'order': order
         }
         
         audio_id = self.coleccion.insert_one(audio_doc).inserted_id

@@ -1,0 +1,3 @@
+## FrontEnd
+    - Hacer que el registro tenga campo para seleccionar género
+

@@ -24,10 +24,11 @@
       </div>
       <div class='box-login'>
         <div class='logo'></div>
+        <button onclick="openLoginInfo();" class='b b-form i i-more' title='Mas Informacion'></button>
         <form action="" method="POST" enctype="multipart/form-data">
           {% csrf_token %}
           <div class='fieldset-body' id='login_form'>
-            <button onclick="openLoginInfo();" class='b b-form i i-more' title='Mas Informacion'></button>
+            
             <div class='logo'>
               <img src="{% static '/Imagenes/LogoNuevo.png' %}" alt="" width="100" height="100">
             </div>

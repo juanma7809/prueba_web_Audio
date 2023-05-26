@@ -29,4 +29,6 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name="dashboard"),
     path('registro/', views.registro, name="registro"),
     path('recuperar_clave/', views.recuperar_contrasena, name="recuperar"),
+    path('perfil_paciente/', views.perfil_paciente, name="perfil_paciente"),
+    path('perfil_doctor/', views.perfil_doctor, name="perfil_doctor"),
 ]
