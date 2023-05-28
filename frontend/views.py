@@ -80,7 +80,6 @@ def dashboard(request):
 
 
 def registro(request):
-    print(request.method)
     if request.method == 'POST' and (request.POST['names'] and request.POST['lastnames'] and request.POST['borndate'] and request.POST['id'] and request.POST['mail'] and request.POST['pass']):
         if request.POST['pass'] == request.POST['pass2']:
             u = Usuario()
@@ -92,7 +91,8 @@ def registro(request):
                 correo=request.POST['mail'],
                 contrasena=request.POST['pass'],
                 cedula=request.POST['id'],
-                fecha_nacimiento=request.POST['borndate']
+                fecha_nacimiento=request.POST['borndate'],
+                genero=request.POST['genero']
             )
             return redirect('/')
         else: 
@@ -121,11 +121,53 @@ def recuperar_contrasena(request):
     else:
         return render(request, 'recuperar_con.html')
 
-def perfil_paciente(request):
-    return render(request, 'profile.html')
+def perfil(request):
+    u = Usuario()
+    id = request.GET.get('id')
+    rol = request.GET.get('rol')
+    if rol == "1":
+        nombre_rol ="Admin"
+    elif rol == "2":
+        nombre_rol = "Doctor"
+    elif rol == "3":
+        nombre_rol = "Paciente"
+    datos = u.obtener_por_id(id)
+    data = {
+        "nombres":  datos[2],
+        "apellidos": datos[3],
+        "correo": datos[4],
+        "direccion": datos[5],
+        "telefono": datos[6],
+        "cedula": datos[8],
+        "fecha_nacimiento": datos[9],
+        "rol": nombre_rol
+
+    }
+
+    context = {
+        "d": data
+    }
+
+    if request.method == 'POST':
+        u.actualizar_perfil_usuario(
+            nombres=request.POST['nombres'],
+            apellidos=request.POST['apellidos'],
+            correo=request.POST['correo'],
+            direccion=request.POST['direccion'],
+            telefono=request.POST['telefono'],
+            cedula=request.POST['cedula'],
+            fecha_nacimiento=request.POST['fecha_nacimiento'],
+            id_usuario=id
+        )
+
+        return redirect('/dashboard/?id={}&rol={}'.format(id, rol))
+
+    return render(request, 'profile.html', context)
 
 def perfil_doctor(request):
     return render(request, 'doctor_profile.html')
+
+
 
 def upload_video(request):
     if request.method == 'POST' and request.FILES['video']:

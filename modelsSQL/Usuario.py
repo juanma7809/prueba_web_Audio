@@ -6,12 +6,12 @@ class Usuario:
 
         self.conexion = conexion
 
-    def crear(self, id_rol, nombres, apellidos, correo, contrasena, cedula, fecha_nacimiento):
+    def crear(self, id_rol, nombres, apellidos, correo, contrasena, cedula, fecha_nacimiento, genero):
         try:
             cursor = self.conexion.cursor()
             readable_hash = hashlib.sha256(contrasena.encode()).hexdigest()
-            consulta = "INSERT INTO usuario (id_rol, nombres, apellidos, correo, contrasena, cedula, fecha_nacimiento) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-            valores = (id_rol, nombres, apellidos, correo, readable_hash, cedula, fecha_nacimiento)
+            consulta = "INSERT INTO usuario (id_rol, nombres, apellidos, correo, contrasena, cedula, fecha_nacimiento, genero) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+            valores = (id_rol, nombres, apellidos, correo, readable_hash, cedula, fecha_nacimiento, genero)
             cursor.execute(consulta, valores)
             self.conexion.commit()
         except Exception as e:
@@ -23,6 +23,17 @@ class Usuario:
             consulta = f"UPDATE usuario SET {atributo} = '{nuevo_valor}' WHERE id_usuario = {id_usuario}"
             cursor.execute(consulta)
             conexion.cnx.commit()
+        except Exception as e:
+            print(e)
+    
+    def actualizar_perfil_usuario(self, nombres, apellidos, correo, direccion, telefono, cedula, fecha_nacimiento, id_usuario):
+        try:
+            cursor = self.conexion.cursor()
+    
+            consulta = "UPDATE usuario SET nombres = %s, apellidos = %s, correo = %s, direccion = %s, telefono = %s, cedula = %s, fecha_nacimiento  = %s WHERE id_usuario = %s"
+            valores = (nombres, apellidos, correo, direccion, telefono, cedula, fecha_nacimiento, id_usuario,)
+            cursor.execute(consulta, valores)
+            self.conexion.commit()
         except Exception as e:
             print(e)
     
@@ -49,10 +60,11 @@ class Usuario:
 
     def obtener_por_id(self, id_usuario):
         try:
+            cursor = self.conexion.cursor()
             consulta = "SELECT * FROM usuario WHERE id_usuario = %s"
             valor = (id_usuario,)
-            self.conexion.cursor.execute(consulta, valor)
-            resultado = self.conexion.cursor.fetchone()
+            cursor.execute(consulta, valor)
+            resultado = cursor.fetchone()
             return resultado
         except Exception as e:
             print(e)

@@ -23,8 +23,8 @@
 		<div class="header-navigation">
 			<nav class="header-navigation-links">
 				<a href="#"> Inicio </a>
-				<a href="#"> Cerrar sesión </a>
-				<a href="#"> Modificar cuenta </a>
+				<a href="/"> Cerrar sesión </a>
+				<a  href="#" onclick="modificarCuenta()"  id="modificar"> Modificar cuenta </a>
 			</nav>
 
 		</div>
@@ -67,6 +67,20 @@
 <!-- partial -->
   <script src='https://unpkg.com/phosphor-icons'></script>
   <script  src="{% static 'script_dashboard.js' %}"></script>
+  <script type="text/javascript">
+	function modificarCuenta() {
+		document.getElementById('modificar').addEventListener('click', function() {
+			var parametros = new URLSearchParams(window.location.search);
+
+		// Obtener el valor de un parámetro específico
+			var id = parametros.get('id');
+			var rol = parametros.get('rol');
+			var url = "/perfil/?id=" + id + "&rol=" + rol;
+			window.location.href = url;
+		});
+	}
+
+  </script>
 
 </body>
 </html>

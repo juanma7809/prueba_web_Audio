@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-05-2023 a las 22:02:25
+-- Tiempo de generación: 28-05-2023 a las 03:23:32
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -435,17 +435,23 @@ CREATE TABLE `usuario` (
   `nombres` varchar(255) DEFAULT NULL,
   `apellidos` varchar(255) DEFAULT NULL,
   `correo` varchar(255) DEFAULT NULL,
+  `direccion` varchar(255) NOT NULL,
+  `telefono` varchar(255) NOT NULL,
   `contrasena` varchar(255) DEFAULT NULL,
   `cedula` varchar(255) DEFAULT NULL,
-  `fecha_nacimiento` varchar(255) DEFAULT NULL
+  `fecha_nacimiento` varchar(255) DEFAULT NULL,
+  `genero` varchar(255) NOT NULL,
+  `activo` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`id_usuario`, `id_rol`, `nombres`, `apellidos`, `correo`, `contrasena`, `cedula`, `fecha_nacimiento`) VALUES
-(1, 1, 'Juan José', 'Aroca Ariza', 'juanjose.aroca@utp.edu.co', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '1192713043', '2000-02-14');
+INSERT INTO `usuario` (`id_usuario`, `id_rol`, `nombres`, `apellidos`, `correo`, `direccion`, `telefono`, `contrasena`, `cedula`, `fecha_nacimiento`, `genero`, `activo`) VALUES
+(1, 1, 'Juan José', 'Aroca Ariza', 'juanjose.aroca@utp.edu.co', 'Tu corazón de melón', '3228752890', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '1192713043', '2000-02-14', 'Masculino', 1),
+(3, 3, 'Camilo', 'Erira ', 'camilo.erira@utp.edu.co', 'Pasto', '911', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '10002355644', '1999-01-01', 'Masculino', 1),
+(5, 3, 'Juan Manuel', 'Restrepo', 'juanmanuel.restrepo@utp.edu.co', 'Vallenato', '3228752890', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '101235566', '2001-02-01', 'Masculino', 1);
 
 --
 -- Índices para tablas volcadas
@@ -552,7 +558,9 @@ ALTER TABLE `rol_permisos`
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`id_usuario`);
+  ADD PRIMARY KEY (`id_usuario`),
+  ADD UNIQUE KEY `correo` (`correo`),
+  ADD UNIQUE KEY `cedula` (`cedula`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -640,7 +648,7 @@ ALTER TABLE `rol_permisos`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
