@@ -31,4 +31,5 @@ urlpatterns = [
     path('recuperar_clave/', views.recuperar_contrasena, name="recuperar"),
     path('perfil/', views.perfil, name="perfil"),
     path('perfil_doctor/', views.perfil_doctor, name="perfil_doctor"),
+    path('entrevista/', views.entrevista, name="entrevista"),
 ]

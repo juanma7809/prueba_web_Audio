@@ -14,6 +14,8 @@ from modelsNoSQL.Texto import TextoNoSQL
 from modelsSQL.Usuario import Usuario
 from modelsSQL.RolPermisos import RolPermisos
 from modelsSQL.Permiso import Permiso
+from modelsSQL.TestPHQ9 import TestPHQ9
+from modelsSQL.RespuestasPHQ9 import RespuestasPHQ9
 from utilidades.Envio_correo import *
 
 # Create your views here.
@@ -167,7 +169,29 @@ def perfil(request):
 def perfil_doctor(request):
     return render(request, 'doctor_profile.html')
 
+def entrevista(request):
+    t = TestPHQ9()
+    r = RespuestasPHQ9()
+    preguntas = t.obtener_todos()
+    lista_preguntas = []
 
+    for tupla in preguntas:
+        id_pregunta, pregunta = tupla
+        diccionario = {"id": id_pregunta, "pregunta": pregunta}
+        lista_preguntas.append(diccionario)
+    
+    respuestas = r.obtener_todos()
+    lista_respuestas = []
+    for tupla in respuestas:
+        id_respuesta, respuesta, valor = tupla
+        diccionario = {"id": id_respuesta, "respuesta": respuesta, "valor": valor}
+        lista_respuestas.append(diccionario)
+    
+    context = {
+        'p': lista_preguntas,
+        'r': lista_respuestas
+    }
+    return render(request, 'test.html', context)
 
 def upload_video(request):
     if request.method == 'POST' and request.FILES['video']:

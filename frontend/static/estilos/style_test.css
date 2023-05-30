@@ -11,15 +11,19 @@
 
 body {
 	font-family: Poppins, sans-serif;
-	background: url(https://source.unsplash.com/ZK1WQDMQvik) no-repeat center
-		center fixed;
+	background: rgba(30,29,31,1);
+background: -moz-linear-gradient(-45deg, rgb(241, 239, 243) 0%, rgb(9, 53, 115) 100%);
+background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(30,29,31,1)), color-stop(100%, rgb(9, 53, 115)));
+background: -webkit-linear-gradient(-45deg, rgb(241, 239, 243) 0%, rgb(9, 53, 115) 100%);
+background: -o-linear-gradient(-45deg, rgb(241, 239, 243) 0%, rgb(9, 53, 115) 100%);
+background: -ms-linear-gradient(-45deg, rgb(241, 239, 243) 0%, rgb(9, 53, 115) 100%);
 	background-size: cover;
 }
 
 h1 {
 	text-align: center;
-	color: green;
-	text-shadow: 0.5px 0.5px 1px green;
+	color: #A6541E;
+	text-shadow: 0.5px 0.5px 1px #A6541E;
 	font-weight: bold;
 }
 
@@ -74,7 +78,7 @@ button,
 select,
 textarea {
 	padding: 12px 20px;
-	border: 2px solid green;
+	border: 2px solid #A6541E;
 	border-radius: 10px;
 	background-color: white;
 }
@@ -86,19 +90,19 @@ input[type="select"]:focus,
 button:focus,
 select:focus,
 textarea:focus {
-	border: 3px solid mediumspringgreen;
+	border: 3px solid mediumspring#A6541E;
 }
 
 #survey-form > button {
 	margin: 2%;
-	background-color: green;
+	background-color: #A6541E;
 	text-align: center;
 	font-size: 17px;
 	color: white;
 }
 
 #survey-form > button:hover {
-	color: green;
+	color: #A6541E;
 	cursor: pointer;
 	background-color: white;
 }
@@ -108,3 +112,11 @@ textarea:focus {
 		width: 90%;
 	}
 }
+
+.center {
+	width: 200px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+  }

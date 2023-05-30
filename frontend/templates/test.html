@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Entrevista virtual</title>
+  <link rel="stylesheet" href="{% static 'estilos/style_test.css' %}">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+
+<main>
+	<h1 id="title">Bienvenido a nuestra entrevista virtual</h1>
+	
+	<div class="survey-form-container">
+		<img src="{% static '/Imagenes/test.png' %}" alt="" class="center" style="width: 200px; display: block; margin-left: auto; margin-right: auto;">
+		
+		<form action="" method="post" id="survey-form">
+			<p id="description">Por favor responda las siguientes preguntas de selección multiple, indique con qué frecuencia le han afectado los siguientes problemas durante las últimas dos semanas. Lea atentamente cada inciso y encierre en un círculo su respuesta.</p>
+			
+			{% if p %}  
+    		{% for i in p %}
+			<label for="dropdown" id="current-role-label">
+				<h2>{{i.pregunta}}</h2>
+				<select id="dropdown">
+					{% if r %}
+					{% for j in r %}
+					<option value="{{j.valor}}">{{j.respuesta}}</option>
+					{% endfor %}
+    				{% endif %}
+				</select>
+			</label>
+			{% endfor %}
+    		{% endif %}
+			<label for="feedback" id="feedback-label">
+				<h2>Any comments or suggestions?</h2>
+				<textarea name="feedback" id="feedback" rows="5" placeholder="Enter your comment here..."></textarea>
+			</label>
+			<button id="submit" type="submit" form="survey-form">Enviar</button>
+		</form>
+	</div>
+</main>
+<!-- partial -->
+  
+</body>
+</html>
