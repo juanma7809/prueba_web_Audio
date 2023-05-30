@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-05-2023 a las 03:23:32
+-- Tiempo de generación: 30-05-2023 a las 04:43:32
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -365,6 +365,28 @@ CREATE TABLE `preguntas_formualrio` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `respuestas_phq9`
+--
+
+CREATE TABLE `respuestas_phq9` (
+  `id_respuesta` int(11) NOT NULL,
+  `respuesta` text NOT NULL,
+  `valor` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `respuestas_phq9`
+--
+
+INSERT INTO `respuestas_phq9` (`id_respuesta`, `respuesta`, `valor`) VALUES
+(1, 'Nunca', 0),
+(2, 'Varios días', 1),
+(3, 'Más de la mitad de los días', 2),
+(4, 'Casi todos los días', 3);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `respuesta_depresion`
 --
 
@@ -426,6 +448,32 @@ INSERT INTO `rol_permisos` (`id_rol_permisos`, `id_rol`, `id_permiso`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `test_phq9`
+--
+
+CREATE TABLE `test_phq9` (
+  `id_test` int(11) NOT NULL,
+  `pregunta` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `test_phq9`
+--
+
+INSERT INTO `test_phq9` (`id_test`, `pregunta`) VALUES
+(1, 'Poco interés o agrado al hacer las cosas.'),
+(2, 'Se ha sentido triste, deprimido o desesperado.'),
+(3, 'Ha tenido problemas para dormir, mantenerse despierto o duerme demasiado.'),
+(4, 'Se siente cansado o tiene poca energía.'),
+(5, 'Tiene poco o excesivo apetito.'),
+(6, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.'),
+(7, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.'),
+(8, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.'),
+(9, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuario`
 --
 
@@ -449,9 +497,10 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `id_rol`, `nombres`, `apellidos`, `correo`, `direccion`, `telefono`, `contrasena`, `cedula`, `fecha_nacimiento`, `genero`, `activo`) VALUES
-(1, 1, 'Juan José', 'Aroca Ariza', 'juanjose.aroca@utp.edu.co', 'Tu corazón de melón', '3228752890', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '1192713043', '2000-02-14', 'Masculino', 1),
+(1, 1, 'Juan José', 'Aroca Ariza', 'juanjose.aroca@utp.edu.co', 'Tu corazón', '3228752890', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '1192713043', '2000-02-14', 'Masculino', 1),
 (3, 3, 'Camilo', 'Erira ', 'camilo.erira@utp.edu.co', 'Pasto', '911', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '10002355644', '1999-01-01', 'Masculino', 1),
-(5, 3, 'Juan Manuel', 'Restrepo', 'juanmanuel.restrepo@utp.edu.co', 'Vallenato', '3228752890', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '101235566', '2001-02-01', 'Masculino', 1);
+(5, 3, 'Juan Manuel', 'Restrepo Urrego', 'juanmanuel.restrepo@utp.edu.co', 'Vallenato (Diomedes)', '350000233', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '101235566', '2002-02-16', 'Masculino', 1),
+(6, 3, 'Manuela', 'Vargas', 'manu@ucp.com', 'Tu corazón', '3228752890', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '10235659', '2000-09-13', 'Femenino', 1);
 
 --
 -- Índices para tablas volcadas
@@ -543,6 +592,12 @@ ALTER TABLE `permiso`
   ADD PRIMARY KEY (`id_permiso`);
 
 --
+-- Indices de la tabla `respuestas_phq9`
+--
+ALTER TABLE `respuestas_phq9`
+  ADD PRIMARY KEY (`id_respuesta`);
+
+--
 -- Indices de la tabla `rol`
 --
 ALTER TABLE `rol`
@@ -553,6 +608,12 @@ ALTER TABLE `rol`
 --
 ALTER TABLE `rol_permisos`
   ADD PRIMARY KEY (`id_rol_permisos`);
+
+--
+-- Indices de la tabla `test_phq9`
+--
+ALTER TABLE `test_phq9`
+  ADD PRIMARY KEY (`id_test`);
 
 --
 -- Indices de la tabla `usuario`
@@ -633,6 +694,12 @@ ALTER TABLE `permiso`
   MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT de la tabla `respuestas_phq9`
+--
+ALTER TABLE `respuestas_phq9`
+  MODIFY `id_respuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
@@ -645,10 +712,16 @@ ALTER TABLE `rol_permisos`
   MODIFY `id_rol_permisos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT de la tabla `test_phq9`
+--
+ALTER TABLE `test_phq9`
+  MODIFY `id_test` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas
