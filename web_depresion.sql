@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-05-2023 a las 04:43:32
+-- Tiempo de generación: 31-05-2023 a las 02:42:58
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -141,6 +141,30 @@ CREATE TABLE `auth_user_user_permissions` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `diagnostico_phq9`
+--
+
+CREATE TABLE `diagnostico_phq9` (
+  `id_diagnostico` int(11) NOT NULL,
+  `rango1` int(11) NOT NULL,
+  `rango2` int(11) NOT NULL,
+  `diagnostico` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `diagnostico_phq9`
+--
+
+INSERT INTO `diagnostico_phq9` (`id_diagnostico`, `rango1`, `rango2`, `diagnostico`) VALUES
+(1, 0, 4, 'Mínimo'),
+(2, 5, 9, 'Leve'),
+(3, 10, 14, 'Moderado'),
+(4, 15, 19, 'Moderado a grave'),
+(5, 20, 27, 'Grave');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `django_admin_log`
 --
 
@@ -254,9 +278,22 @@ CREATE TABLE `entrevista` (
 --
 
 CREATE TABLE `formulario` (
-  `id_formulario` int(11) DEFAULT NULL,
-  `nombre_formulario` varchar(255) DEFAULT NULL
+  `id_formulario` int(11) NOT NULL,
+  `nombre_formulario` varchar(255) DEFAULT NULL,
+  `id_paciente` int(11) NOT NULL,
+  `puntos` int(11) DEFAULT NULL,
+  `diagnostico` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `formulario`
+--
+
+INSERT INTO `formulario` (`id_formulario`, `nombre_formulario`, `id_paciente`, `puntos`, `diagnostico`) VALUES
+(1, 'jj', 1, 12, 'nada'),
+(2, 'jj', 1, NULL, NULL),
+(3, 'Entrevista Manuela Vargas', 6, 6, 'Leve'),
+(4, 'Entrevista Manuela Vargas', 6, 1, 'Mínimo');
 
 -- --------------------------------------------------------
 
@@ -286,19 +323,6 @@ CREATE TABLE `paciente_audio` (
   `id_paciente_audio` int(11) DEFAULT NULL,
   `id_paciente` int(11) DEFAULT NULL,
   `id_audio` int(11) DEFAULT NULL,
-  `id_entrevista` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `paciente_formulario`
---
-
-CREATE TABLE `paciente_formulario` (
-  `id_paciente_formulario` int(11) DEFAULT NULL,
-  `id_paciente` int(11) DEFAULT NULL,
-  `id_formulario` int(11) DEFAULT NULL,
   `id_entrevista` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -353,14 +377,39 @@ CREATE TABLE `pregunta` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `preguntas_formualrio`
+-- Estructura de tabla para la tabla `preguntas_formulario`
 --
 
-CREATE TABLE `preguntas_formualrio` (
-  `id_formulario_preguntas` int(11) DEFAULT NULL,
+CREATE TABLE `preguntas_formulario` (
+  `id_formulario_preguntas` int(11) NOT NULL,
   `id_formulario` int(11) DEFAULT NULL,
-  `id_pregunta` int(11) DEFAULT NULL
+  `pregunta` text DEFAULT NULL,
+  `respuesta` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `preguntas_formulario`
+--
+
+INSERT INTO `preguntas_formulario` (`id_formulario_preguntas`, `id_formulario`, `pregunta`, `respuesta`) VALUES
+(2, 3, 'Poco interés o agrado al hacer las cosas.', 'Más de la mitad de los días'),
+(3, 3, 'Se ha sentido triste, deprimido o desesperado.', 'Casi todos los días'),
+(4, 3, 'Ha tenido problemas para dormir, mantenerse despierto o duerme demasiado.', 'Varios días'),
+(5, 3, 'Se siente cansado o tiene poca energía.', 'Nunca'),
+(6, 3, 'Tiene poco o excesivo apetito.', 'Nunca'),
+(7, 3, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'Nunca'),
+(8, 3, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'Nunca'),
+(9, 3, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'Nunca'),
+(10, 3, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'Nunca'),
+(11, 4, 'Poco interés o agrado al hacer las cosas.', 'Varios días'),
+(12, 4, 'Se ha sentido triste, deprimido o desesperado.', 'Nunca'),
+(13, 4, 'Ha tenido problemas para dormir, mantenerse despierto o duerme demasiado.', 'Nunca'),
+(14, 4, 'Se siente cansado o tiene poca energía.', 'Nunca'),
+(15, 4, 'Tiene poco o excesivo apetito.', 'Nunca'),
+(16, 4, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'Nunca'),
+(17, 4, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'Nunca'),
+(18, 4, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'Nunca'),
+(19, 4, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'Nunca');
 
 -- --------------------------------------------------------
 
@@ -500,7 +549,8 @@ INSERT INTO `usuario` (`id_usuario`, `id_rol`, `nombres`, `apellidos`, `correo`,
 (1, 1, 'Juan José', 'Aroca Ariza', 'juanjose.aroca@utp.edu.co', 'Tu corazón', '3228752890', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '1192713043', '2000-02-14', 'Masculino', 1),
 (3, 3, 'Camilo', 'Erira ', 'camilo.erira@utp.edu.co', 'Pasto', '911', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '10002355644', '1999-01-01', 'Masculino', 1),
 (5, 3, 'Juan Manuel', 'Restrepo Urrego', 'juanmanuel.restrepo@utp.edu.co', 'Vallenato (Diomedes)', '350000233', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '101235566', '2002-02-16', 'Masculino', 1),
-(6, 3, 'Manuela', 'Vargas', 'manu@ucp.com', 'Tu corazón', '3228752890', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '10235659', '2000-09-13', 'Femenino', 1);
+(6, 3, 'Manuela', 'Vargas', 'manu@ucp.com', 'Tu corazón', '3228752890', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '10235659', '2000-09-13', 'Femenino', 1),
+(7, 3, 'Shakira', '.', 'shakira@gmail.com', 'Piqué', '350000233', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '1000223', '1990-02-01', 'Femenino', 1);
 
 --
 -- Índices para tablas volcadas
@@ -552,6 +602,12 @@ ALTER TABLE `auth_user_user_permissions`
   ADD KEY `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` (`permission_id`);
 
 --
+-- Indices de la tabla `diagnostico_phq9`
+--
+ALTER TABLE `diagnostico_phq9`
+  ADD PRIMARY KEY (`id_diagnostico`);
+
+--
 -- Indices de la tabla `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
@@ -580,6 +636,12 @@ ALTER TABLE `django_session`
   ADD KEY `django_session_expire_date_a5c62663` (`expire_date`);
 
 --
+-- Indices de la tabla `formulario`
+--
+ALTER TABLE `formulario`
+  ADD PRIMARY KEY (`id_formulario`);
+
+--
 -- Indices de la tabla `paciente`
 --
 ALTER TABLE `paciente`
@@ -590,6 +652,12 @@ ALTER TABLE `paciente`
 --
 ALTER TABLE `permiso`
   ADD PRIMARY KEY (`id_permiso`);
+
+--
+-- Indices de la tabla `preguntas_formulario`
+--
+ALTER TABLE `preguntas_formulario`
+  ADD PRIMARY KEY (`id_formulario_preguntas`);
 
 --
 -- Indices de la tabla `respuestas_phq9`
@@ -664,6 +732,12 @@ ALTER TABLE `auth_user_user_permissions`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `diagnostico_phq9`
+--
+ALTER TABLE `diagnostico_phq9`
+  MODIFY `id_diagnostico` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT de la tabla `django_admin_log`
 --
 ALTER TABLE `django_admin_log`
@@ -682,6 +756,12 @@ ALTER TABLE `django_migrations`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
+-- AUTO_INCREMENT de la tabla `formulario`
+--
+ALTER TABLE `formulario`
+  MODIFY `id_formulario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
@@ -692,6 +772,12 @@ ALTER TABLE `paciente`
 --
 ALTER TABLE `permiso`
   MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `preguntas_formulario`
+--
+ALTER TABLE `preguntas_formulario`
+  MODIFY `id_formulario_preguntas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `respuestas_phq9`
@@ -721,7 +807,7 @@ ALTER TABLE `test_phq9`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas

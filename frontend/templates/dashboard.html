@@ -4,7 +4,7 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - Dashboard UI </title>
+  <title>Dashboard</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 <link rel="stylesheet" href="{% static 'estilos/style_dashboard.css' %}">
 
@@ -52,9 +52,18 @@
 						<div class="card-body">
 							<p>{{i.permiso}}</p>
 						</div>
+						{% if i.permiso == 'Entrevista virtual' %}
+						<div class="card-footer">
+							<a id="entrevista" href="#" onclick="test()">Ir</a>
+
+						</div>
+						{% endif %}
+						
+						{% if i.permiso != 'Entrevista virtual' %}
 						<div class="card-footer">
 							<a href="{{i.enlace}}">Ir</a>
 						</div>
+						{% endif %}
 					</article>
 					{% endfor %}
     				{% endif %}
@@ -76,6 +85,18 @@
 			var id = parametros.get('id');
 			var rol = parametros.get('rol');
 			var url = "/perfil/?id=" + id + "&rol=" + rol;
+			window.location.href = url;
+		});
+	}
+
+	function test() {
+		document.getElementById('entrevista').addEventListener('click', function() {
+			var parametros = new URLSearchParams(window.location.search);
+
+		// Obtener el valor de un parámetro específico
+			var id = parametros.get('id');
+			var rol = parametros.get('rol');
+			var url = "/entrevista/?id=" + id + "&rol=" + rol;
 			window.location.href = url;
 		});
 	}

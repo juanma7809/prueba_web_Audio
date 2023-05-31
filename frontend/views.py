@@ -16,6 +16,9 @@ from modelsSQL.RolPermisos import RolPermisos
 from modelsSQL.Permiso import Permiso
 from modelsSQL.TestPHQ9 import TestPHQ9
 from modelsSQL.RespuestasPHQ9 import RespuestasPHQ9
+from modelsSQL.Formulario import Formulario
+from modelsSQL.PreguntasFormulario import PreguntaFormulario
+from modelsSQL.DiagnosticoPHQ9 import DiagnosticoPHQ9
 from utilidades.Envio_correo import *
 
 # Create your views here.
@@ -170,6 +173,8 @@ def perfil_doctor(request):
     return render(request, 'doctor_profile.html')
 
 def entrevista(request):
+    id = request.GET.get('id')
+    rol = request.GET.get('rol')
     t = TestPHQ9()
     r = RespuestasPHQ9()
     preguntas = t.obtener_todos()
@@ -191,6 +196,36 @@ def entrevista(request):
         'p': lista_preguntas,
         'r': lista_respuestas
     }
+
+    if request.method == 'POST':
+        lista_valores = [request.POST[str(i)] for i in range(1,10) ]
+        
+        puntos = 0
+        for i in lista_valores:
+            puntos += int(i)
+        
+        u = Usuario()
+        datos_usuario = u.obtener_por_id(id)
+        nombre = datos_usuario[2] + " " + datos_usuario[3]
+        form = Formulario()
+        id_form = form.crear("Entrevista " + nombre, id)
+
+        for i in range(len(lista_valores)):
+            p = TestPHQ9()
+            pregunta = p.obtener_por_id(str(i+1))
+            r = RespuestasPHQ9()
+            respuesta = r.obtener_por_valor(str(lista_valores[i]))
+            pform = PreguntaFormulario()
+            pform.crear(id_form, pregunta, respuesta)
+
+        d = DiagnosticoPHQ9()
+
+        diagnostico = d.obtener_diagnostico(str(puntos))
+
+        form.actualizar_diagnostico(str(puntos), diagnostico, id_form)
+
+
+        return redirect('/dashboard/?id={}&rol={}'.format(id, rol))
     return render(request, 'test.html', context)
 
 def upload_video(request):
