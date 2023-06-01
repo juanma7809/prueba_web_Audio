@@ -95,11 +95,22 @@ class Usuario:
         except Exception as e:
             print(e)        
 
-    def obtener_todos(self):
+    def obtener_doctores(self):
         try:
-            consulta = "SELECT * FROM usuario"
-            self.conexion.cursor.execute(consulta)
-            resultados = self.conexion.cursor.fetchall()
+            cursor = self.conexion.cursor()
+            consulta = "SELECT id_usuario, nombres, apellidos, cedula, correo, telefono FROM usuario WHERE id_rol = 2"
+            cursor.execute(consulta)
+            resultados = cursor.fetchall()
+            return resultados
+        except Exception as e:
+                print(e)
+
+    def obtener_pacientes(self):
+        try:
+            cursor = self.conexion.cursor()
+            consulta = "SELECT id_usuario, nombres, apellidos, cedula, correo, telefono FROM usuario WHERE id_rol = 3"
+            cursor.execute(consulta)
+            resultados = cursor.fetchall()
             return resultados
         except Exception as e:
                 print(e)

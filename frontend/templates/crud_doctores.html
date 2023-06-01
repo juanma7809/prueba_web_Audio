@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'estilos/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'estilos/crud_doctores.css' %}">
+</head>
+<body>
+    <div class="background">
+        <aside class="banner">
+            <div class="banner--contenedor">
+                <div class="opciones">
+                    <form class="formulario">
+                        <div class="campo">
+                            <input type="search" id="searchTerm" onkeyup="doSearch()" placeholder="Buscar..">
+                            <a href="#"><img src="{% static 'Imagenes/lupa.svg' %}" alt="Icono lupa"></a>
+                        </div>
+                    </form>
+                    <div class="user">
+                        <img src="{% static 'Imagenes/user.png' %}" alt="Icono user">
+                    </div>
+                </div>
+                <div class="banner--contenido">
+                    <div class="flyer">
+                        <h1>Lista de Doctores</h1>
+                        <button type="button" class="btn btn-info m-1" onclick="abrirForm(0)">NUEVO</button>
+                        <button type="button" class="btn btn-primary m-1" onclick="listar()">BUSCAR</button>
+                        <div class="flyer--info">
+                            <table class= "table tabla-bordered" id="tablaDoctores">
+                                <thead>
+                                    <tr>
+                                        <th>NOMBRES Y APELLIDOS</th>
+                                        <th>IDENTIFICACION(C.C,T.I)</th>
+                                        <th>CORREO</th>
+                                        <th>TELEFONO</th>
+                                        <th>ACCIONES</th>
+                                    </tr>
+                                    </tr>
+                                </thead>
+                                <tbody id="dataDoctores">
+                                    {% if d %}  
+                                    {% for i in d %}
+                                    <tr>
+                                        <td>
+                                            {{i.nombre}} {{i.apellido}}
+                                        </td>
+                                        <td>
+                                            {{i.cedula}}
+                                        </td>
+                                        <td>
+                                            {{i.correo}}
+                                        </td>
+                                        <td>
+                                            {{i.telefono}}
+                                        </td>
+                                        <td>
+                                            <button type='button' class='btn btn-warning' onclick='abrirForm("{{i.id}}")'>EDITAR</button>
+                                            <button type='button' class='btn btn-info' onclick='eliminarItem("{{i.id}}")'>ELIMINAR</button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+    				                {% endif %}
+
+
+                                </tbody>
+                            </table>
+                            <script src="{% static 'crud_doctores.js' %}"></script>  
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+        </aside>
+    </div>
+
+</body>
+</html>

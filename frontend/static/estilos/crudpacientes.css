@@ -1,0 +1,286 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-family: 'Roboto', sans-serif;
+}
+img{
+    object-fit: cover;
+}
+ul{
+    list-style: none;
+    padding-left: 0;
+}
+a{
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    font-size: 20px;
+}
+button{
+    background-color: transparent;
+}
+/* Estilos bar scroll */
+::-webkit-scrollbar{
+    width: 15px;
+}
+::-webkit-scrollbar-track{
+    -webkit-box-shadow:inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: rgb(255, 255, 254);
+}
+::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    -webkit-box-shadow:inset 0 0 6px rgb(0,0,0,.3);
+    background-color: rgb(17, 0, 255);
+}
+/* Contenedor */
+.background{
+    overflow: hidden;
+    background-color: rgb(255, 255, 255);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+}
+@media (min-width:768px) {
+    .background{
+        flex-direction: row;
+        height: 100vh;
+    }
+}
+/* Navbar */
+.navbar{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    background-color: rgb(117,104,217);
+}
+.navbar--opciones{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+/* Responsive */
+.navbar--toogle{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+}
+.navbar--toogle button img{
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+}
+@media (min-width:768px) {
+    .navbar--toogle button{
+        display: none;
+    }
+}
+.navbar--titulo{
+    width: 100px;
+    height: 100px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.navbar--titulo img{
+    width: 100%;
+}
+@media (min-width:768px) {
+    .navbar--titulo{
+        margin-top: 20px;
+    }
+}
+.navbar--titulo::after{
+    content: ' ';
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: rgb(52, 92, 140);
+}
+@media (min-width:768px) {
+    .navbar--titulo::after{
+        margin-top: 20px;
+    }
+}
+/* Menu enlaces */
+.menu{
+    display: none;
+    width: 100%;
+}
+.navegacion{
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding-left: 10px;
+}
+.navegacion::after{
+    margin: auto;
+    content: ' ';
+    width: 80%;
+    height: 2px;
+    background-color: rgb(71, 28, 7);
+}
+.navegacion a{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    border-right: 5px solid transparent;
+}
+@media (min-width:768px) {
+    .navegacion a{
+        justify-content: start;
+    }
+}
+.navegacion svg{
+    height: 30px;
+    width: 30px;
+}
+.navegacion p{
+    padding-right:10px;
+}
+.navegacion a:first-child svg g,
+.navegacion a:first-child
+{
+    color: rgb(45, 30, 166);
+    fill: rgb(45, 30, 166);
+    border-right-color: rgb(169, 196, 240);
+}
+.navegacion a:hover svg g,
+.navegacion a:hover
+{
+    color: rgb(166,84,30);
+    fill: rgb(128, 93, 31);
+    border-right-color: rgb(128, 93, 31);
+}
+.navbar--logout{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 10px;
+    display: none;
+}
+@media (min-width:768px) {
+    .navbar--logout{
+        padding-left: 30px;
+        justify-content: start;
+    }
+}
+.navbar--logout img{
+    width: 30px;
+    height: 30px;
+}
+/*  Banner */
+.banner{
+    flex: 1;
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0.23);
+}
+.banner--contenedor{
+    margin-top: 20px;
+    width: 90%;
+    height: 95%;
+    margin-inline:auto;
+}
+.opciones{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+.campo{
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(85,82,255,068);
+    border-radius: 10px;
+    overflow: hidden;
+}
+.campo input{
+    background-color: transparent;
+    border-radius: 10px 0px 0px 10px;
+    width: 100%;
+    padding-block: 5px;
+    padding-inline: 10px;
+    border: none;
+    color: white;
+}
+.campo input::placeholder{
+    color: rgb(232,232,232);
+}
+.campo a img{
+    background-color: transparent;
+    width: 30px;
+}
+.user img{
+    width: 60px;
+    height: 60px;
+}
+@media (min-width:768px) {
+    .user img{
+        width: 50px;
+        height: 50px;
+    }
+}
+.banner--contenido{
+    height: 88%;
+    padding-right: 5px;
+    padding-bottom: 10px;
+    overflow-y: scroll;
+}
+/* Estilos generales de la tabla */
+.table {
+    width: 100%; /* Asegura que la tabla ocupe todo el ancho disponible */
+    border-collapse: collapse; /* Combina los bordes de las celdas */
+    font-family: Arial, sans-serif; /* Cambia la fuente de la tabla */
+}
+
+/* Estilos para los encabezados de la tabla */
+.table thead th {
+    background-color: rgb(45, 30, 166); /* Cambia el color de fondo de los encabezados */
+    color: white; /* Cambia el color del texto de los encabezados */
+    padding: 10px; /* Añade un poco de espacio alrededor del texto */
+    text-align: left; /* Alinea el texto a la izquierda */
+}
+
+/* Estilos para las celdas de la tabla */
+.table tbody td {
+    padding: 10px; /* Añade un poco de espacio alrededor del texto */
+    border: 1px solid #ddd; /* Añade un borde a las celdas */
+}
+
+/* Estilos para las filas de la tabla al pasar el ratón por encima */
+.table tbody tr:hover {
+    background-color: #f5f5f5; /* Cambia el color de fondo de la fila */
+}
+
+/* Estilos para los botones */
+.btn {
+    padding: 10px 20px; /* Añade un poco de espacio alrededor del texto */
+    border: none; /* Elimina el borde del botón */
+    color: white; /* Cambia el color del texto del botón */
+    cursor: pointer; /* Cambia el cursor al pasar el ratón por encima */
+    background-color: rgb(166,84,30); /* Cambia el color de fondo del botón */
+}
+
+/* Estilos para los botones al pasar el ratón por encima */
+.btn:hover {
+    background-color: rgb(128, 93, 31); /* Cambia el color de fondo del botón al pasar el ratón por encima */
+}
+
+/* Estilos para el margen del botón */
+.m-1 {
+    margin: 0.25rem; /* Añade un poco de margen alrededor del botón */
+}
+

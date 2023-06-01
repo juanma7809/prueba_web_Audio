@@ -228,6 +228,30 @@ def entrevista(request):
         return redirect('/dashboard/?id={}&rol={}'.format(id, rol))
     return render(request, 'test.html', context)
 
+def pacientes(request):
+    u = Usuario()
+    pacientes = u.obtener_pacientes()
+    claves = ['id', 'nombre', 'apellido', 'cedula', 'correo', 'telefono']
+
+    datos = [dict(zip(claves, row)) for row in pacientes]
+
+    context =  {
+        'd': datos
+    }
+    return render(request, 'crud_pacientes.html', context)
+
+def doctores(request):
+    u = Usuario()
+    pacientes = u.obtener_doctores()
+    claves = ['id', 'nombre', 'apellido', 'cedula', 'correo', 'telefono']
+
+    datos = [dict(zip(claves, row)) for row in pacientes]
+
+    context =  {
+        'd': datos
+    }
+    return render(request, 'crud_doctores.html', context)
+
 def upload_video(request):
     if request.method == 'POST' and request.FILES['video']:
         video = request.FILES['video']
