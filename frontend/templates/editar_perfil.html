@@ -53,10 +53,10 @@
                             <div class="col-md-12"><label class="labels">Direccion de residencia</label><input
                                     type="text" class="form-control" placeholder="" value="{{d.direccion}}"
                                     name="direccion"></div>
-                            <div class="col-md-12"><label class="labels">Teléfono de contacto</label><input type="number"
+                            <div class="col-md-12"><label class="labels">Teléfono de contacto</label><input type="text"
                                     class="form-control" placeholder="" value="{{d.telefono}}" name="telefono"></div>
 
-                            <div class="col-md-12"><label class="labels">Cédula</label><input type="number"
+                            <div class="col-md-12"><label class="labels">Cédula</label><input type="text"
                                     class="form-control" placeholder="No. Documento" value="{{d.cedula}}" name="cedula">
                             </div>
                             <div class="col-md-12"><label class="labels">Fecha nacimiento</label><input type="date"
@@ -69,16 +69,7 @@
                 </div>
     </form>
 
-    {% if d.rol == 'Paciente' %}
-    <div class="col-md-4">
-        <div class="p-3 py-5">
-            <div class="col-md-12"><label class="labels">En este apartado usted encontrará el diagnostico brindado
-                </label><textarea type="" class="form-control" value="" style="WIDTH: 228px; HEIGHT: 200px" disabled></textarea>
-            </div> <br>
 
-        </div>
-    </div>
-    {% endif %}
     </div>
     </div>
     {% endif %}

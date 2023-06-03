@@ -9,15 +9,37 @@ function abrirForm(idForm){
     window.location.replace("Doctores-form.html");
 }
 
-function eliminarItem(idItem){
-    for(const i in tablaDoctor){
-        var vasrDoctor = JSON.parse(tablaDoctor[i]);
-        if(vasrDoctor.idDoctor == idItem){
-            tablaDoctor.splice(i,1);
-            localStorage.setItem("tablaDoctorStorage", JSON.stringify(tablaDoctor));
-        }
-    }
-    listar()
+function eliminarItem(idItem, activo){
+    var parametros = new URLSearchParams(window.location.search);
+
+    // Obtener el valor de un parámetro específico
+    var id = parametros.get('id');
+    var rol = parametros.get('rol');
+    console.log(idItem, activo)
+    var url = "/habilitar-deshabilitar-doctor/?id=" + id + "&rol=" + rol + "&id_usu=" + idItem + "&activo=" + activo;
+    window.location.href = url;
+}
+
+function volver() {
+    var parametros = new URLSearchParams(window.location.search);
+
+    // Obtener el valor de un parámetro específico
+    var id = parametros.get('id');
+    var rol = parametros.get('rol');
+    var url = "/dashboard/?id=" + id + "&rol=" + rol;
+    window.location.href = url;
+
+}
+
+function editarPerfil(idItem){
+
+    var parametros = new URLSearchParams(window.location.search);
+
+    // Obtener el valor de un parámetro específico
+    var id = parametros.get('id');
+    var rol = parametros.get('rol');
+    var url = "/editar_perfil/?id=" + id + "&rol=" + rol + "&id_usu=" + idItem;
+    window.location.href = url;
 }
 
 function doSearch()

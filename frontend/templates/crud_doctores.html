@@ -25,10 +25,9 @@
                     </div>
                 </div>
                 <div class="banner--contenido">
+                    <button onclick="volver();" class="btn btn-info m-1">Volver al inicio</button>
                     <div class="flyer">
                         <h1>Lista de Doctores</h1>
-                        <button type="button" class="btn btn-info m-1" onclick="abrirForm(0)">NUEVO</button>
-                        <button type="button" class="btn btn-primary m-1" onclick="listar()">BUSCAR</button>
                         <div class="flyer--info">
                             <table class= "table tabla-bordered" id="tablaDoctores">
                                 <thead>
@@ -37,6 +36,7 @@
                                         <th>IDENTIFICACION(C.C,T.I)</th>
                                         <th>CORREO</th>
                                         <th>TELEFONO</th>
+                                        <th>ACTIVO</th>
                                         <th>ACCIONES</th>
                                     </tr>
                                     </tr>
@@ -58,8 +58,25 @@
                                             {{i.telefono}}
                                         </td>
                                         <td>
-                                            <button type='button' class='btn btn-warning' onclick='abrirForm("{{i.id}}")'>EDITAR</button>
-                                            <button type='button' class='btn btn-info' onclick='eliminarItem("{{i.id}}")'>ELIMINAR</button>
+                                            {% if i.activo == 1 %}
+                                            Sí
+                                            {% endif %}
+                                            {% if i.activo == 0 %}
+                                            No
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <button type='button' class='btn btn-warning' onclick='editarPerfil("{{i.id}}")'>EDITAR</button>
+                                            {% if r %}
+                                            {% if r.rol == '1' %}
+                                            <button type='button' class='btn btn-info' onclick='eliminarItem("{{i.id}}", "{{i.activo}}")'>{% if i.activo == 1 %}
+                                                Deshabilitar
+                                                {% endif %}
+                                                {% if i.activo == 0 %}
+                                                Habilitar
+                                                {% endif %}</button>
+                                            {% endif %}
+                                            {% endif %}
                                         </td>
                                     </tr>
                                     {% endfor %}

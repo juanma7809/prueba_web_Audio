@@ -58,12 +58,28 @@
 
 						</div>
 						{% endif %}
-						
-						{% if i.permiso != 'Entrevista virtual' %}
+
+						{% if i.permiso == 'Gestionar pacientes' %}
 						<div class="card-footer">
-							<a href="{{i.enlace}}">Ir</a>
+							<a id="gestionar_pacientes" href="#" onclick="gestionarPacientes()">Ir</a>
+
 						</div>
 						{% endif %}
+
+						{% if i.permiso == 'Gestionar doctores' %}
+						<div class="card-footer">
+							<a id="gestionar_doctores" href="#" onclick="gestionarDoctores()">Ir</a>
+
+						</div>
+						{% endif %}
+
+						{% if i.permiso == 'Video-Entrevista' %}
+						<div class="card-footer">
+							<a id="video" href="#" onclick="videoEntrevista()">Ir</a>
+
+						</div>
+						{% endif %}
+						
 					</article>
 					{% endfor %}
     				{% endif %}
@@ -97,6 +113,42 @@
 			var id = parametros.get('id');
 			var rol = parametros.get('rol');
 			var url = "/entrevista/?id=" + id + "&rol=" + rol;
+			window.location.href = url;
+		});
+	}
+
+	function gestionarPacientes() {
+		document.getElementById('gestionar_pacientes').addEventListener('click', function() {
+			var parametros = new URLSearchParams(window.location.search);
+
+		// Obtener el valor de un parámetro específico
+			var id = parametros.get('id');
+			var rol = parametros.get('rol');
+			var url = "/gestion_pacientes/?id=" + id + "&rol=" + rol;
+			window.location.href = url;
+		});
+	}
+
+	function gestionarDoctores() {
+		document.getElementById('gestionar_doctores').addEventListener('click', function() {
+			var parametros = new URLSearchParams(window.location.search);
+
+		// Obtener el valor de un parámetro específico
+			var id = parametros.get('id');
+			var rol = parametros.get('rol');
+			var url = "/gestion_doctores/?id=" + id + "&rol=" + rol;
+			window.location.href = url;
+		});
+	}
+
+	function videoEntrevista() {
+		document.getElementById('video').addEventListener('click', function() {
+			var parametros = new URLSearchParams(window.location.search);
+
+		// Obtener el valor de un parámetro específico
+			var id = parametros.get('id');
+			var rol = parametros.get('rol');
+			var url = "/video/?id=" + id + "&rol=" + rol;
 			window.location.href = url;
 		});
 	}

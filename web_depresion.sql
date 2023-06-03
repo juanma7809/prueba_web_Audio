@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-05-2023 a las 02:42:58
+-- Tiempo de generación: 03-06-2023 a las 02:31:41
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -293,7 +293,8 @@ INSERT INTO `formulario` (`id_formulario`, `nombre_formulario`, `id_paciente`, `
 (1, 'jj', 1, 12, 'nada'),
 (2, 'jj', 1, NULL, NULL),
 (3, 'Entrevista Manuela Vargas', 6, 6, 'Leve'),
-(4, 'Entrevista Manuela Vargas', 6, 1, 'Mínimo');
+(4, 'Entrevista Manuela Vargas', 6, 1, 'Mínimo'),
+(5, 'Entrevista Juan José Aroca Ariza', 1, 0, 'Mínimo');
 
 -- --------------------------------------------------------
 
@@ -358,7 +359,7 @@ CREATE TABLE `permiso` (
 --
 
 INSERT INTO `permiso` (`id_permiso`, `nombre_permiso`, `titulo`, `imagen`, `enlace`) VALUES
-(1, 'Gestionar pacientes', 'Pacientes', '/./static/Imagenes/pacientes.png', '/gestion_paciente/'),
+(1, 'Gestionar pacientes', 'Pacientes', '/./static/Imagenes/pacientes.png', '/gestion_pacientes/'),
 (4, 'Gestionar doctores', 'Doctores', '/./static/Imagenes/doctores.png', '/gestion_doctores/'),
 (5, 'Video-Entrevista', 'Entrevista', '/./static/Imagenes/entrevista.png', '/video/'),
 (6, 'Entrevista virtual', 'Entrevista', '/./static/Imagenes/entrevista.png', '/entrevista/');
@@ -409,7 +410,16 @@ INSERT INTO `preguntas_formulario` (`id_formulario_preguntas`, `id_formulario`, 
 (16, 4, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'Nunca'),
 (17, 4, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'Nunca'),
 (18, 4, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'Nunca'),
-(19, 4, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'Nunca');
+(19, 4, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'Nunca'),
+(20, 5, 'Poco interés o agrado al hacer las cosas.', 'Nunca'),
+(21, 5, 'Se ha sentido triste, deprimido o desesperado.', 'Nunca'),
+(22, 5, 'Ha tenido problemas para dormir, mantenerse despierto o duerme demasiado.', 'Nunca'),
+(23, 5, 'Se siente cansado o tiene poca energía.', 'Nunca'),
+(24, 5, 'Tiene poco o excesivo apetito.', 'Nunca'),
+(25, 5, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'Nunca'),
+(26, 5, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'Nunca'),
+(27, 5, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'Nunca'),
+(28, 5, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'Nunca');
 
 -- --------------------------------------------------------
 
@@ -492,7 +502,9 @@ INSERT INTO `rol_permisos` (`id_rol_permisos`, `id_rol`, `id_permiso`) VALUES
 (3, 1, 5),
 (4, 1, 6),
 (5, 3, 5),
-(6, 3, 6);
+(6, 3, 6),
+(7, 2, 1),
+(8, 2, 5);
 
 -- --------------------------------------------------------
 
@@ -547,10 +559,40 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`id_usuario`, `id_rol`, `nombres`, `apellidos`, `correo`, `direccion`, `telefono`, `contrasena`, `cedula`, `fecha_nacimiento`, `genero`, `activo`) VALUES
 (1, 1, 'Juan José', 'Aroca Ariza', 'juanjose.aroca@utp.edu.co', 'Tu corazón', '3228752890', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '1192713043', '2000-02-14', 'Masculino', 1),
-(3, 3, 'Camilo', 'Erira ', 'camilo.erira@utp.edu.co', 'Pasto', '911', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '10002355644', '1999-01-01', 'Masculino', 1),
-(5, 3, 'Juan Manuel', 'Restrepo Urrego', 'juanmanuel.restrepo@utp.edu.co', 'Vallenato (Diomedes)', '350000233', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '101235566', '2002-02-16', 'Masculino', 1),
-(6, 3, 'Manuela', 'Vargas', 'manu@ucp.com', 'Tu corazón', '3228752890', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '10235659', '2000-09-13', 'Femenino', 1),
-(7, 3, 'Shakira', '.', 'shakira@gmail.com', 'Piqué', '350000233', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '1000223', '1990-02-01', 'Femenino', 1);
+(3, 3, 'Camilo', 'Erira ', 'camilo.erira@utp.edu.co', 'Pasto (Nariño)', '3568979999', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '10002355644', '1999-01-01', 'Masculino', 1),
+(5, 3, 'Juan Manuel', 'Restrepo Urrego', 'juanmanuel.restrepo@utp.edu.co', 'Vallenato ', '555555555', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '555555', '2002-02-16', 'Masculino', 1),
+(6, 3, 'Manuela', 'Vargas', 'manu@ucp.com', 'Tu corazón de melón', '3228752890', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '10235659', '2000-09-13', 'Femenino', 1),
+(7, 2, 'Shakira', 'Karol G', 'shakira@gmail.com', 'Piqué', '350000233', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '10002232222', '1990-02-23', 'Femenino', 1),
+(8, 2, 'Usuariobaaf2', 'Apellidoc7136', 'usuario58bff@example.com', 'Direccióne512f', 'c4571d806', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'e6ab1b0e79', '2000-01-01', 'Masculino', 1),
+(9, 2, 'Usuarioee9de', 'Apellidod19ef', 'usuario7cff5@example.com', 'Dirección8d4bf', 'fb4c8a125', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'ac22afc13e', '2000-01-01', 'Masculino', 1),
+(10, 2, 'Usuariod1438', 'Apellidoa858f', 'usuarioe1c96@example.com', 'Direcciónab843', '9b61ecc7d', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'ed57cafccf', '2000-01-01', 'Masculino', 1),
+(11, 2, 'Usuario43526', 'Apellido6c6c1', 'usuario47ae1@example.com', 'Dirección64790', 'fd5c6dd0a', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'e8ab6fec20', '2000-01-01', 'Masculino', 1),
+(12, 2, 'Usuario731c7', 'Apellidof892f', 'usuario73fd8@example.com', 'Dirección3b6f8', '916782e61', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '72421857e9', '2000-01-01', 'Masculino', 1),
+(13, 2, 'Usuario68946', 'Apellidod81ec', 'usuariof9800@example.com', 'Dirección359f1', '988d2a8b6', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '4a245b47da', '2000-01-01', 'Masculino', 1),
+(14, 2, 'Usuariofc999', 'Apellido370e5', 'usuario8393b@example.com', 'Dirección0577f', '5ea717dca', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '5a32eb52a0', '2000-01-01', 'Masculino', 1),
+(15, 2, 'Usuario3379b', 'Apellido15e52', 'usuario4d9e4@example.com', 'Dirección42412', 'f46018afb', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'd610cfe7c5', '2000-01-01', 'Masculino', 1),
+(16, 2, 'Usuario4e8da', 'Apellido15907', 'usuarioe9fb8@example.com', 'Dirección3ff00', 'b1e802c1b', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '83b9fed2b2', '2000-01-01', 'Masculino', 1),
+(17, 2, 'Usuariof16da', 'Apellidoc5186', 'usuariof3e4f@example.com', 'Dirección10e97', '873f3d801', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '9a0dca3672', '2000-01-01', 'Masculino', 1),
+(18, 2, 'Usuario26a36', 'Apellido5fe1d', 'usuario912d7@example.com', 'Dirección4077e', '1a581c13a', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '6acfe21c2f', '2000-01-01', 'Masculino', 1),
+(19, 2, 'Usuario98293', 'Apellido9ba72', 'usuario46b6f@example.com', 'Dirección4473b', '7515ad505', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '9ea6246227', '2000-01-01', 'Masculino', 1),
+(20, 2, 'Usuarioc96f1', 'Apellido29e56', 'usuarioffc94@example.com', 'Direcciónf1da3', '459735b97', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '2a487c7458', '2000-01-01', 'Masculino', 1),
+(21, 2, 'Usuario86fa4', 'Apellido45c22', 'usuario351cd@example.com', 'Direcciónfed23', '79c481ab7', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '64258073d1', '2000-01-01', 'Masculino', 1),
+(22, 2, 'Usuariod340c', 'Apellido1bd79', 'usuario68591@example.com', 'Dirección85ebb', '396f0eb6f', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '2569229d1c', '2000-01-01', 'Masculino', 1),
+(23, 3, 'Kmilo', 'Otro', 'usuario0e514@example.com', 'Direcciónd55a6', '000b67afd', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'e5a4f50cce', '2000-01-01', 'Masculino', 1),
+(24, 3, 'Usuarioa2843', 'Apellido8358a', 'usuario7d9d6@example.com', 'Dirección1cd60', '5d1eaaba6', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '89f31520f8', '2000-01-01', 'Masculino', 1),
+(25, 3, 'Usuario798d7', 'Apellidof607c', 'usuario5a4bf@example.com', 'Dirección3ff6c', '623701ce3', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '62f836b40a', '2000-01-01', 'Masculino', 0),
+(26, 3, 'Usuariocbdd3', 'Apellido137fb', 'usuariof7555@example.com', 'Dirección714fd', 'cde35f2b0', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '2b8b6112ec', '2000-01-01', 'Masculino', 1),
+(27, 3, 'Usuarioa2c1c', 'Apellidoc35ed', 'usuario7a9de@example.com', 'Dirección3f9a0', 'a0fc8969f', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '46af415731', '2000-01-01', 'Masculino', 1),
+(28, 3, 'Usuario19db3', 'Apellidoc6100', 'usuario123c8@example.com', 'Dirección210aa', 'efa868039', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '906efb047f', '2000-01-01', 'Masculino', 1),
+(29, 3, 'Usuario0b9b5', 'Apellido77301', 'usuarioe031a@example.com', 'Dirección54957', '48293bfef', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'b65958d0a0', '2000-01-01', 'Masculino', 1),
+(30, 3, 'Usuariob0d67', 'Apellidoee722', 'usuario224ee@example.com', 'Dirección15cf2', '5ccc5d64e', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'a8d97fcf0f', '2000-01-01', 'Masculino', 1),
+(31, 3, 'Usuario6af52', 'Apellidoe6f10', 'usuario8e559@example.com', 'Direcciónd54c4', '66fd36d9e', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'f8e3654c5b', '2000-01-01', 'Masculino', 1),
+(32, 3, 'Usuario8b154', 'Apellidodfa97', 'usuariocb1ad@example.com', 'Dirección0030a', '768dc1cb1', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '00be1871b3', '2000-01-01', 'Masculino', 1),
+(33, 3, 'Usuariob8140', 'Apellido333c4', 'usuariocd079@example.com', 'Dirección5d357', '9577ead26', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'bbe61ab622', '2000-01-01', 'Masculino', 1),
+(34, 3, 'Usuario7d765', 'Apellidocb896', 'usuario1fdd5@example.com', 'Dirección65d17', 'e60a962ff', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'fb2ebc6e79', '2000-01-01', 'Masculino', 1),
+(35, 3, 'Usuario10826', 'Apellido85590', 'usuarioa549b@example.com', 'Direcciónf90c2', '87a0a638d', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '6060e5badc', '2000-01-01', 'Masculino', 1),
+(36, 3, 'Usuario77d52', 'Apellido18c94', 'usuario04c52@example.com', 'Dirección3ca0a', '2175ad490', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '7b26d067e7', '2000-01-01', 'Masculino', 1),
+(37, 3, 'Usuario6595c', 'Apellidoec405', 'usuariofec73@example.com', 'Dirección73ffe', 'e53f25d77', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'a715e9157b', '2000-01-01', 'Masculino', 1);
 
 --
 -- Índices para tablas volcadas
@@ -759,7 +801,7 @@ ALTER TABLE `django_migrations`
 -- AUTO_INCREMENT de la tabla `formulario`
 --
 ALTER TABLE `formulario`
-  MODIFY `id_formulario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_formulario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente`
@@ -777,7 +819,7 @@ ALTER TABLE `permiso`
 -- AUTO_INCREMENT de la tabla `preguntas_formulario`
 --
 ALTER TABLE `preguntas_formulario`
-  MODIFY `id_formulario_preguntas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_formulario_preguntas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `respuestas_phq9`
@@ -795,7 +837,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `rol_permisos`
 --
 ALTER TABLE `rol_permisos`
-  MODIFY `id_rol_permisos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_rol_permisos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `test_phq9`
@@ -807,7 +849,7 @@ ALTER TABLE `test_phq9`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- Restricciones para tablas volcadas

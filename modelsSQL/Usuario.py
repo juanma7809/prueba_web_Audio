@@ -6,12 +6,12 @@ class Usuario:
 
         self.conexion = conexion
 
-    def crear(self, id_rol, nombres, apellidos, correo, contrasena, cedula, fecha_nacimiento, genero):
+    def crear(self, id_rol, nombres, apellidos, correo, contrasena, cedula, fecha_nacimiento, genero, activo):
         try:
             cursor = self.conexion.cursor()
             readable_hash = hashlib.sha256(contrasena.encode()).hexdigest()
-            consulta = "INSERT INTO usuario (id_rol, nombres, apellidos, correo, contrasena, cedula, fecha_nacimiento, genero) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-            valores = (id_rol, nombres, apellidos, correo, readable_hash, cedula, fecha_nacimiento, genero)
+            consulta = "INSERT INTO usuario (id_rol, nombres, apellidos, correo, contrasena, cedula, fecha_nacimiento, genero, activo) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            valores = (id_rol, nombres, apellidos, correo, readable_hash, cedula, fecha_nacimiento, genero, activo)
             cursor.execute(consulta, valores)
             self.conexion.commit()
         except Exception as e:
@@ -47,6 +47,16 @@ class Usuario:
             self.conexion.commit()
         except Exception as e:
             print(e)
+    
+    def hab_usuario(self, id_usuario, activo):
+        try:
+            cursor = self.conexion.cursor()
+            consulta = "UPDATE usuario SET activo = %s WHERE id_usuario = %s"
+            valores = (activo, id_usuario,)
+            cursor.execute(consulta, valores)
+            self.conexion.commit()
+        except Exception as e:
+            print(e)
 
     def borrar(self):
         try:
@@ -73,7 +83,7 @@ class Usuario:
         try:
             cursor = self.conexion.cursor()
             contrasena = readable_hash = hashlib.sha256(contrasena.encode()).hexdigest()
-            consulta = "SELECT * FROM usuario WHERE correo = %s and contrasena = %s"
+            consulta = "SELECT * FROM usuario WHERE correo = %s and contrasena = %s and activo = 1"
             values = (correo, str(contrasena),)
             cursor.execute(consulta, values)
             result = cursor.fetchone()
@@ -98,7 +108,7 @@ class Usuario:
     def obtener_doctores(self):
         try:
             cursor = self.conexion.cursor()
-            consulta = "SELECT id_usuario, nombres, apellidos, cedula, correo, telefono FROM usuario WHERE id_rol = 2"
+            consulta = "SELECT id_usuario, nombres, apellidos, cedula, correo, telefono, activo FROM usuario WHERE id_rol = 2"
             cursor.execute(consulta)
             resultados = cursor.fetchall()
             return resultados
@@ -108,7 +118,7 @@ class Usuario:
     def obtener_pacientes(self):
         try:
             cursor = self.conexion.cursor()
-            consulta = "SELECT id_usuario, nombres, apellidos, cedula, correo, telefono FROM usuario WHERE id_rol = 3"
+            consulta = "SELECT id_usuario, nombres, apellidos, cedula, correo, telefono, activo FROM usuario WHERE id_rol = 3"
             cursor.execute(consulta)
             resultados = cursor.fetchall()
             return resultados

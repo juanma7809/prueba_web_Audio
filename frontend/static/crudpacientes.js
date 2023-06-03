@@ -9,15 +9,48 @@ function abrirForm(idForm){
     window.location.replace("pacientes-form.html");
 }
 
-function eliminarItem(idItem){
-    for(const i in tablaPaciente){
-        var varPaciente = JSON.parse(tablaPaciente[i]);
-        if(varPaciente.idPaciente == idItem){
-            tablaPaciente.splice(i,1);
-            localStorage.setItem("tablaPacienteStorage", JSON.stringify(tablaPaciente));
-        }
-    }
-    listar()
+function eliminarItem(idItem, activo){
+
+    var parametros = new URLSearchParams(window.location.search);
+
+    // Obtener el valor de un parámetro específico
+    var id = parametros.get('id');
+    var rol = parametros.get('rol');
+    var url = "/habilitar-deshabilitar-paciente/?id=" + id + "&rol=" + rol + "&id_usu=" + idItem + "&activo=" + activo;
+    window.location.href = url;
+}
+
+function volver() {
+    var parametros = new URLSearchParams(window.location.search);
+
+    // Obtener el valor de un parámetro específico
+    var id = parametros.get('id');
+    var rol = parametros.get('rol');
+    var url = "/dashboard/?id=" + id + "&rol=" + rol;
+    window.location.href = url;
+
+}
+
+function editarPerfil(idItem){
+
+    var parametros = new URLSearchParams(window.location.search);
+
+    // Obtener el valor de un parámetro específico
+    var id = parametros.get('id');
+    var rol = parametros.get('rol');
+    var url = "/editar_perfil/?id=" + id + "&rol=" + rol + "&id_usu=" + idItem;
+    window.location.href = url;
+}
+
+function diagnosticar(idItem) {
+    var parametros = new URLSearchParams(window.location.search);
+
+    // Obtener el valor de un parámetro específico
+    var id = parametros.get('id');
+    var rol = parametros.get('rol');
+    var url = "/diagnostico_paciente/?id=" + id + "&rol=" + rol + "&id_usu=" + idItem;
+    window.location.href = url;
+
 }
 
 function doSearch()
