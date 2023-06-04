@@ -146,13 +146,13 @@
             doc.text("\n", 10, 20);
             var infoEntrevistasLines = doc.splitTextToSize(info_entrevistas, 180);
             doc.text(infoEntrevistasLines, 10, 30);
-            doc.save("Historial-" + nombre + ".pdf");
 
             doc.addPage();
             doc.text("Diagnósticos automáticos de la Video-Entrevista", 10, 20);
             doc.text("\n", 10, 20);
             var infoModuloLines = doc.splitTextToSize(info_modulo, 180);
             doc.text(infoModuloLines, 10, 30);
+
             doc.save("Historial-" + nombre + ".pdf");
 
 
