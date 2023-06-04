@@ -1,64 +1,27 @@
-from Database import conexion
+from modelsSQL.Database import conexion
 
-class Formulario:
+class Entrevista:
     def __init__(self):
         self.conexion = conexion
     
-    def crear(self, nombre_formulario):
+    def crear(self, id_entrevistador, diagnostico, id_paciente):
         try:
             cursor = self.conexion.cursor()
-            consulta = "INSERT INTO formulario(nombre_formulario) VALUES (%s)"
-            valores = (nombre_formulario,)
+            consulta = "INSERT INTO entrevista (id_entrevistador, diagnostico, id_paciente) VALUES (%s, %s, %s)"
+            valores = (id_entrevistador, diagnostico, id_paciente,)
             cursor.execute(consulta, valores)
             self.conexion.commit()
-            cursor.close()
-            print("Formulario creado exitosamente!")
         except Exception as e:
             print(e)
     
-    def obtener_todos(self):
+    def obtener_por_id_paciente(self, id_paciente):
         try:
             cursor = self.conexion.cursor()
-            consulta = "SELECT * FROM formulario"
-            cursor.execute(consulta)
-            resultado = cursor.fetchall()
-            cursor.close()
-            return resultado
+            consulta = "SELECT * FROM entrevista WHERE id_paciente = %s"
+            values = (id_paciente,)
+            cursor.execute(consulta, values)
+            return cursor.fetchall()
         except Exception as e:
             print(e)
     
-    def obtener_por_id(self, id_formulario):
-        try:
-            cursor = self.conexion.cursor()
-            consulta = "SELECT * FROM formulario WHERE id_formulario = %s"
-            valores = (id_formulario,)
-            cursor.execute(consulta, valores)
-            resultado = cursor.fetchone()
-            cursor.close()
-            return resultado
-        except Exception as e:
-            print(e)
-    
-    def actualizar(self, atributo, nuevo_valor, id_entrevista):
-        try:
-            cursor = self.conexion.cursor()
-            consulta = f"UPDATE entrevista SET {atributo} = '{nuevo_valor}' WHERE id_entrevista = {id_entrevista}"
-            cursor.execute(consulta)
-            conexion.cnx.commit()
-        except Exception as e:
-            print(e)
-    
-    def borrar(self, id_formulario):
-        try:
-            cursor = self.conexion.conexion.cursor()
-            consulta = "DELETE FROM formulario WHERE id_formulario = %s"
-            valores = (id_formulario,)
-            cursor.execute(consulta, valores)
-            self.conexion.conexion.commit()
-            cursor.close()
-            print("Formulario eliminado exitosamente!")
-        except Exception as e:
-            print(e)
-    
-    def __del__(self):
-        self.conexion.close()
+  

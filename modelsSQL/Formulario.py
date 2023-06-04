@@ -28,6 +28,16 @@ class Formulario:
             return self.conexion.cursor.fetchone()
         except Exception as e:
             print(e)
+
+    def obtener_por_id_paciente(self, id_paciente):
+        try:
+            cursor = self.conexion.cursor()
+            consulta = "SELECT * FROM formulario WHERE id_paciente = %s"
+            values = (id_paciente,)
+            cursor.execute(consulta, values)
+            return cursor.fetchall()
+        except Exception as e:
+            print(e)
     
 
 

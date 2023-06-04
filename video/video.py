@@ -7,6 +7,7 @@ class Video(object):
 
     def __init__(self):
         self.ruta = "C:/Users/home/Desktop/webDepresion/webDepresion/video/"
+        self.key_file = 'key.key'
 
     def dividir_video_clips(self, folder, video, clip_duration, ext):
         # Cargar el archivo de video
@@ -33,11 +34,23 @@ class Video(object):
         for clip in clips:
             clip.close()
         
+    def generate_key(self):
+        # Generar clave de cifrado
+        key = Fernet.generate_key()
 
+        # Guardar la clave en un archivo
+        with open(self.key_file, 'wb') as f:
+            f.write(key)
+
+    def load_key(self):
+        # Cargar la clave desde el archivo
+        with open(self.key_file, 'rb') as f:
+            key = f.read()
+        return key
 
     def encriptar_video(self, video):
         # Generar clave de cifrado
-        key = Fernet.generate_key()
+        key = self.load_key()
         # Cargar archivo de video como bytes
         with open(video, 'rb') as f:
             video_bytes = f.read()
@@ -52,7 +65,7 @@ class Video(object):
     
     def desencriptar_video(self, video):
         # Generar clave de cifrado
-        key = Fernet.generate_key()
+        key = self.load_key()
 
         with open(video, 'rb') as f:
             encrypted_video = f.read()
@@ -64,55 +77,5 @@ class Video(object):
         with open('video_decrypted.mp4', 'wb') as f:
             f.write(decrypted_video)
 
-    def sensurar_video(self, ruta_video):
-        import cv2
-
-        # Inicializa el detector de rostros Haar
-        face_cascade = cv2.CascadeClassifier(self.ruta + "haarcascade_frontalface_default.xml")
-
-        # Carga el video
-        video = cv2.VideoCapture(ruta_video)
-
-        # Crea una máscara para ocultar los ojos
-        mask = cv2.imread(self.ruta + "mask.png", cv2.IMREAD_UNCHANGED)
-
-        # Lee los frames del video
-        while True:
-            ret, frame = video.read()
-            if not ret:
-                break
-
-            # Convierte el frame a escala de grises
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
-            # Detecta rostros en el frame
-            faces = face_cascade.detectMultiScale(gray, 1.3, 5)
-
-            # Recorre los rostros detectados
-            for (x, y, w, h) in faces:
-                # Recorta el rostro
-                face = frame[y:y + h, x:x + w]
-
-                # Redimensiona la máscara para ajustarse al tamaño del rostro
-                mask = cv2.resize(mask, (w, h), interpolation=cv2.INTER_CUBIC)
-
-                # Crea un canal alpha para la máscara
-                mask_gray = cv2.cvtColor(mask, cv2.COLOR_BGRA2GRAY)
-                _, mask_alpha = cv2.threshold(mask_gray, 0, 255, cv2.THRESH_BINARY)
-                mask = cv2.merge((mask_alpha, mask_alpha, mask_alpha))
-
-                # Aplica la máscara sobre el rostro
-                face = cv2.bitwise_and(face, mask)
-
-                # Reemplaza el rostro en el frame original
-                frame[y:y + h, x:x + w] = face
-
-            # Muestra el frame resultante
-            cv2.imshow("Frame", frame)
-            if cv2.waitKey(1) & 0xFF == ord("q"):
-                break
-
-        # Libera la cámara y destruye las ventanas
-        video.release()
-        cv2.destroyAllWindows()
+   
 

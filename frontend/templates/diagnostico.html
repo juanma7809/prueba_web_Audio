@@ -14,8 +14,7 @@
 </head>
 
 <body className='snippet-body'>
-
-    {% csrf_token %}
+    
     {% if d %}
     <div class="container rounded bg-white mt-5 mb-5">
         <div class="row">
@@ -42,11 +41,11 @@
                     <div class="row mt-2">
                         <div class="col-md-6"><label class="labels">Nombres</label><input type="text"
                                 class="form-control" placeholder="Nombres" value="{{d.nombres}}" name="nombres"
-                                disabled>
+                                disabled id="nombres">
                         </div>
                         <div class="col-md-6"><label class="labels">Apellidos</label><input type="text"
                                 class="form-control" value="{{d.apellidos}}" placeholder="Apellidos" name="apellidos"
-                                disabled></div>
+                                disabled id="apellidos"></div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12"><label class="labels">Correo electrónico</label><input type="email"
@@ -80,20 +79,31 @@
                 <div class="p-3 py-5">
                     <div class="d-flex justify-content-between align-items-center experience"><span>Ver
                             Diagnóstico</span><span class="border px-3 p-1 add-experience"><i
-                                class="fa fa-plus"></i>&nbsp;Diagnosticar</span></div><br>
-                    <div class="col-md-12"><label class="labels">Diagnostico de la entevista virtual (Test PHQ-9)
-                        </label><textarea type="" class="form-control" value="" style="WIDTH: 228px; HEIGHT: 80px"
-                            disabled></textarea>
+                                class="fa fa-plus"></i>&nbsp;<button class="btn btn-primary profile-button"
+                                onclick="imprimir()">Ver Diagnóstico</button></span></div><br>
+                    <div class="col-md-12"><label class="labels">Diagnóstico de la entevista virtual (Test PHQ-9)
+                        </label><textarea type="" class="form-control" value="" style="WIDTH: 370px; HEIGHT: 80px"
+                            disabled id="info_forms">{{d.info_forms}}</textarea>
                     </div> <br>
-                    <div class="col-md-12"><label class="labels">Diagnostico de la Video-Entrevista
-                        </label><textarea type="" class="form-control" value="" style="WIDTH: 228px; HEIGHT: 80px"
-                            disabled></textarea>
+                    <div class="col-md-12"><label class="labels">Diagnóstico de la Video-Entrevista
+                        </label><textarea type="" class="form-control" value="" style="WIDTH: 370px; HEIGHT: 80px"
+                            disabled id="info_modulo">{{d.info_modulo}}</textarea>
                     </div> <br>
-                    <div class="col-md-12"><label class="labels">En este apartado podrá crear o actualizar el
-                            diagnostico del paciente
-                        </label><textarea type="" class="form-control" value=""
-                            style="WIDTH: 228px; HEIGHT: 200px"></textarea>
+                    <div class="col-md-12"><label class="labels">Diagnóstico hecho por profesionales
+                        </label><textarea type="" class="form-control" value="" style="WIDTH: 370px; HEIGHT: 80px"
+                            disabled id="info_entrevistas">{{d.info_entrevistas}}</textarea>
                     </div> <br>
+    
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="col-md-12"><label class="labels">En este apartado podrá crear o actualizar el
+                                diagnóstico del paciente
+                            </label><textarea type="" class="form-control" value=""
+                                style="WIDTH: 370px; HEIGHT: 100px" name="diagnostico"></textarea>
+                        </div> <br>
+                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button"
+                            type="submit">Enviar Diagnostico</button></div>
+                    </form>
 
                 </div>
             </div>
@@ -104,9 +114,7 @@
 
     <script type='text/javascript'
         src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/js/bootstrap.bundle.min.js'></script>
-    <script type='text/javascript' src='#'></script>
-    <script type='text/javascript' src='#'></script>
-    <script type='text/javascript' src='#'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.min.js"></script>
     <script type='text/javascript'>
 
         function pacientes() {
@@ -120,6 +128,36 @@
             window.location.href = url;
 
         }
+
+        function imprimir() {
+            var nombre = document.getElementById("nombres").value + " " + document.getElementById("apellidos").value;
+            var info_forms = document.getElementById("info_forms").value;
+            var info_entrevistas = document.getElementById("info_entrevistas").value;
+            var info_modulo = document.getElementById("info_modulo").value;
+            var doc = new jsPDF();
+
+            doc.text("Historial del paciente: " + nombre, 10, 10);
+            doc.text("\n", 10, 20);
+            doc.text("Diagnósticos de entrevistas virtuales", 10, 20);
+            doc.text(info_forms, 10, 40);
+
+            doc.addPage();
+            doc.text("Diagnósticos brindados por profesionales", 10, 20);
+            doc.text("\n", 10, 20);
+            var infoEntrevistasLines = doc.splitTextToSize(info_entrevistas, 180);
+            doc.text(infoEntrevistasLines, 10, 30);
+            doc.save("Historial-" + nombre + ".pdf");
+
+            doc.addPage();
+            doc.text("Diagnósticos automáticos de la Video-Entrevista", 10, 20);
+            doc.text("\n", 10, 20);
+            var infoModuloLines = doc.splitTextToSize(info_modulo, 180);
+            doc.text(infoModuloLines, 10, 30);
+            doc.save("Historial-" + nombre + ".pdf");
+
+
+        }
+        
     </script>
 
 </body>

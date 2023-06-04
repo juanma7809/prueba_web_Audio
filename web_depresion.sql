@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-06-2023 a las 02:31:41
+-- Tiempo de generación: 04-06-2023 a las 21:02:36
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -266,10 +266,22 @@ INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALU
 --
 
 CREATE TABLE `entrevista` (
-  `id_entrevista` int(11) DEFAULT NULL,
-  `entrevistador` varchar(255) DEFAULT NULL,
-  `fecha_entrevista` varchar(255) DEFAULT NULL
+  `id_entrevista` int(11) NOT NULL,
+  `id_entrevistador` int(11) NOT NULL,
+  `fecha_entrevista` timestamp NOT NULL DEFAULT current_timestamp(),
+  `diagnostico` text NOT NULL,
+  `id_paciente` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `entrevista`
+--
+
+INSERT INTO `entrevista` (`id_entrevista`, `id_entrevistador`, `fecha_entrevista`, `diagnostico`, `id_paciente`) VALUES
+(1, 7, '2023-06-03 21:14:51', 'Esta mela\r\n', 6),
+(2, 7, '2023-06-03 21:42:49', 'Sigue melisisma', 6),
+(4, 7, '2023-06-03 21:43:28', 'Dolor de cabeza', 3),
+(17, 38, '2023-06-04 18:55:29', 'Este man no tiene nada', 5);
 
 -- --------------------------------------------------------
 
@@ -282,19 +294,19 @@ CREATE TABLE `formulario` (
   `nombre_formulario` varchar(255) DEFAULT NULL,
   `id_paciente` int(11) NOT NULL,
   `puntos` int(11) DEFAULT NULL,
-  `diagnostico` text DEFAULT NULL
+  `diagnostico` text DEFAULT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `formulario`
 --
 
-INSERT INTO `formulario` (`id_formulario`, `nombre_formulario`, `id_paciente`, `puntos`, `diagnostico`) VALUES
-(1, 'jj', 1, 12, 'nada'),
-(2, 'jj', 1, NULL, NULL),
-(3, 'Entrevista Manuela Vargas', 6, 6, 'Leve'),
-(4, 'Entrevista Manuela Vargas', 6, 1, 'Mínimo'),
-(5, 'Entrevista Juan José Aroca Ariza', 1, 0, 'Mínimo');
+INSERT INTO `formulario` (`id_formulario`, `nombre_formulario`, `id_paciente`, `puntos`, `diagnostico`, `fecha`) VALUES
+(4, 'Entrevista Manuela Vargas', 6, 1, 'Mínimo', '2023-06-03 19:59:41'),
+(6, 'Entrevista juan .', 39, 18, 'Moderado a grave', '2023-06-03 19:59:41'),
+(7, 'Entrevista Juan Manuel Restrepo Urrego', 5, 4, 'Mínimo', '2023-06-03 20:38:17'),
+(8, 'Entrevista Camilo Erira ', 3, 15, 'Moderado a grave', '2023-06-03 21:43:56');
 
 -- --------------------------------------------------------
 
@@ -321,11 +333,21 @@ CREATE TABLE `paciente` (
 --
 
 CREATE TABLE `paciente_audio` (
-  `id_paciente_audio` int(11) DEFAULT NULL,
+  `id_paciente_audio` int(11) NOT NULL,
   `id_paciente` int(11) DEFAULT NULL,
-  `id_audio` int(11) DEFAULT NULL,
-  `id_entrevista` int(11) DEFAULT NULL
+  `id_audio` text DEFAULT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
+  `diagnostico` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `paciente_audio`
+--
+
+INSERT INTO `paciente_audio` (`id_paciente_audio`, `id_paciente`, `id_audio`, `fecha`, `diagnostico`) VALUES
+(3, 3, 'f136d00413f7e5b150bbb31c7d6b701b8752a3b5', '2023-06-04 18:37:15', 'Alto nivel de depresión'),
+(4, 6, 'f136d00413f7e5b150bbb31c7d6b701b8752a3b5', '2023-06-04 18:51:20', 'Bajo nivel de depresión'),
+(5, 5, 'f136d00413f7e5b150bbb31c7d6b701b8752a3b5', '2023-06-04 18:57:02', 'Alto nivel de depresión');
 
 -- --------------------------------------------------------
 
@@ -334,11 +356,21 @@ CREATE TABLE `paciente_audio` (
 --
 
 CREATE TABLE `paciente_video` (
-  `id_paciente_video` int(11) DEFAULT NULL,
+  `id_paciente_video` int(11) NOT NULL,
   `id_paciente` int(11) DEFAULT NULL,
-  `id_video` int(11) DEFAULT NULL,
-  `id_entrevista` int(11) DEFAULT NULL
+  `id_video` text DEFAULT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
+  `diagnostico` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `paciente_video`
+--
+
+INSERT INTO `paciente_video` (`id_paciente_video`, `id_paciente`, `id_video`, `fecha`, `diagnostico`) VALUES
+(3, 3, 'f136d00413f7e5b150bbb31c7d6b701b8752a3b5', '2023-06-04 18:37:15', 'Bajo nivel de depresión'),
+(4, 6, 'f136d00413f7e5b150bbb31c7d6b701b8752a3b5', '2023-06-04 18:51:20', 'Alto nivel de depresión'),
+(5, 5, 'f136d00413f7e5b150bbb31c7d6b701b8752a3b5', '2023-06-04 18:57:02', 'Bajo nivel de depresión');
 
 -- --------------------------------------------------------
 
@@ -419,7 +451,43 @@ INSERT INTO `preguntas_formulario` (`id_formulario_preguntas`, `id_formulario`, 
 (25, 5, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'Nunca'),
 (26, 5, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'Nunca'),
 (27, 5, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'Nunca'),
-(28, 5, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'Nunca');
+(28, 5, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'Nunca'),
+(29, 6, 'Poco interés o agrado al hacer las cosas.', 'Más de la mitad de los días'),
+(30, 6, 'Se ha sentido triste, deprimido o desesperado.', 'Más de la mitad de los días'),
+(31, 6, 'Ha tenido problemas para dormir, mantenerse despierto o duerme demasiado.', 'Casi todos los días'),
+(32, 6, 'Se siente cansado o tiene poca energía.', 'Varios días'),
+(33, 6, 'Tiene poco o excesivo apetito.', 'Más de la mitad de los días'),
+(34, 6, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'Varios días'),
+(35, 6, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'Más de la mitad de los días'),
+(36, 6, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'Más de la mitad de los días'),
+(37, 6, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'Casi todos los días'),
+(38, 7, 'Poco interés o agrado al hacer las cosas.', 'Más de la mitad de los días'),
+(39, 7, 'Se ha sentido triste, deprimido o desesperado.', 'Más de la mitad de los días'),
+(40, 7, 'Ha tenido problemas para dormir, mantenerse despierto o duerme demasiado.', 'Nunca'),
+(41, 7, 'Se siente cansado o tiene poca energía.', 'Nunca'),
+(42, 7, 'Tiene poco o excesivo apetito.', 'Nunca'),
+(43, 7, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'Nunca'),
+(44, 7, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'Nunca'),
+(45, 7, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'Nunca'),
+(46, 7, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'Nunca'),
+(47, 8, 'Poco interés o agrado al hacer las cosas.', 'Más de la mitad de los días'),
+(48, 8, 'Se ha sentido triste, deprimido o desesperado.', 'Más de la mitad de los días'),
+(49, 8, 'Ha tenido problemas para dormir, mantenerse despierto o duerme demasiado.', 'Casi todos los días'),
+(50, 8, 'Se siente cansado o tiene poca energía.', 'Casi todos los días'),
+(51, 8, 'Tiene poco o excesivo apetito.', 'Casi todos los días'),
+(52, 8, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'Más de la mitad de los días'),
+(53, 8, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'Nunca'),
+(54, 8, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'Nunca'),
+(55, 8, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'Nunca'),
+(56, 9, 'Poco interés o agrado al hacer las cosas.', 'Más de la mitad de los días'),
+(57, 9, 'Se ha sentido triste, deprimido o desesperado.', 'Más de la mitad de los días'),
+(58, 9, 'Ha tenido problemas para dormir, mantenerse despierto o duerme demasiado.', 'Nunca'),
+(59, 9, 'Se siente cansado o tiene poca energía.', 'Casi todos los días'),
+(60, 9, 'Tiene poco o excesivo apetito.', 'Casi todos los días'),
+(61, 9, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'Más de la mitad de los días'),
+(62, 9, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'Más de la mitad de los días'),
+(63, 9, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'Más de la mitad de los días'),
+(64, 9, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'Nunca');
 
 -- --------------------------------------------------------
 
@@ -503,8 +571,7 @@ INSERT INTO `rol_permisos` (`id_rol_permisos`, `id_rol`, `id_permiso`) VALUES
 (4, 1, 6),
 (5, 3, 5),
 (6, 3, 6),
-(7, 2, 1),
-(8, 2, 5);
+(7, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -546,7 +613,7 @@ CREATE TABLE `usuario` (
   `correo` varchar(255) DEFAULT NULL,
   `direccion` varchar(255) NOT NULL,
   `telefono` varchar(255) NOT NULL,
-  `contrasena` varchar(255) DEFAULT NULL,
+  `contrasena` varchar(500) DEFAULT NULL,
   `cedula` varchar(255) DEFAULT NULL,
   `fecha_nacimiento` varchar(255) DEFAULT NULL,
   `genero` varchar(255) NOT NULL,
@@ -558,11 +625,11 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `id_rol`, `nombres`, `apellidos`, `correo`, `direccion`, `telefono`, `contrasena`, `cedula`, `fecha_nacimiento`, `genero`, `activo`) VALUES
-(1, 1, 'Juan José', 'Aroca Ariza', 'juanjose.aroca@utp.edu.co', 'Tu corazón', '3228752890', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '1192713043', '2000-02-14', 'Masculino', 1),
-(3, 3, 'Camilo', 'Erira ', 'camilo.erira@utp.edu.co', 'Pasto (Nariño)', '3568979999', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '10002355644', '1999-01-01', 'Masculino', 1),
+(1, 1, 'Super', 'Admin', 'juanjose.aroca@utp.edu.co', 'Tu corazón', '3228752890', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '1192713043', '2000-02-14', 'Masculino', 1),
+(3, 3, 'Camilo', 'Erira ', 'camilo.erira@utp.edu.co', 'Ipiales', '3568979999', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '100023556', '1999-01-01', 'Masculino', 1),
 (5, 3, 'Juan Manuel', 'Restrepo Urrego', 'juanmanuel.restrepo@utp.edu.co', 'Vallenato ', '555555555', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '555555', '2002-02-16', 'Masculino', 1),
 (6, 3, 'Manuela', 'Vargas', 'manu@ucp.com', 'Tu corazón de melón', '3228752890', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '10235659', '2000-09-13', 'Femenino', 1),
-(7, 2, 'Shakira', 'Karol G', 'shakira@gmail.com', 'Piqué', '350000233', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '10002232222', '1990-02-23', 'Femenino', 1),
+(7, 2, 'Shakira', 'Karol G', 'shakira@gmail.com', 'Barcelona', '350000233', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '10002232222', '1990-02-23', 'Femenino', 1),
 (8, 2, 'Usuariobaaf2', 'Apellidoc7136', 'usuario58bff@example.com', 'Direccióne512f', 'c4571d806', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'e6ab1b0e79', '2000-01-01', 'Masculino', 1),
 (9, 2, 'Usuarioee9de', 'Apellidod19ef', 'usuario7cff5@example.com', 'Dirección8d4bf', 'fb4c8a125', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'ac22afc13e', '2000-01-01', 'Masculino', 1),
 (10, 2, 'Usuariod1438', 'Apellidoa858f', 'usuarioe1c96@example.com', 'Direcciónab843', '9b61ecc7d', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'ed57cafccf', '2000-01-01', 'Masculino', 1),
@@ -580,7 +647,7 @@ INSERT INTO `usuario` (`id_usuario`, `id_rol`, `nombres`, `apellidos`, `correo`,
 (22, 2, 'Usuariod340c', 'Apellido1bd79', 'usuario68591@example.com', 'Dirección85ebb', '396f0eb6f', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '2569229d1c', '2000-01-01', 'Masculino', 1),
 (23, 3, 'Kmilo', 'Otro', 'usuario0e514@example.com', 'Direcciónd55a6', '000b67afd', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'e5a4f50cce', '2000-01-01', 'Masculino', 1),
 (24, 3, 'Usuarioa2843', 'Apellido8358a', 'usuario7d9d6@example.com', 'Dirección1cd60', '5d1eaaba6', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '89f31520f8', '2000-01-01', 'Masculino', 1),
-(25, 3, 'Usuario798d7', 'Apellidof607c', 'usuario5a4bf@example.com', 'Dirección3ff6c', '623701ce3', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '62f836b40a', '2000-01-01', 'Masculino', 0),
+(25, 3, 'Usuario798d7', 'Apellidof607c', 'usuario5a4bf@example.com', 'Dirección3ff6c', '623701ce3', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '62f836b40a', '2000-01-01', 'Masculino', 1),
 (26, 3, 'Usuariocbdd3', 'Apellido137fb', 'usuariof7555@example.com', 'Dirección714fd', 'cde35f2b0', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '2b8b6112ec', '2000-01-01', 'Masculino', 1),
 (27, 3, 'Usuarioa2c1c', 'Apellidoc35ed', 'usuario7a9de@example.com', 'Dirección3f9a0', 'a0fc8969f', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '46af415731', '2000-01-01', 'Masculino', 1),
 (28, 3, 'Usuario19db3', 'Apellidoc6100', 'usuario123c8@example.com', 'Dirección210aa', 'efa868039', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '906efb047f', '2000-01-01', 'Masculino', 1),
@@ -592,7 +659,10 @@ INSERT INTO `usuario` (`id_usuario`, `id_rol`, `nombres`, `apellidos`, `correo`,
 (34, 3, 'Usuario7d765', 'Apellidocb896', 'usuario1fdd5@example.com', 'Dirección65d17', 'e60a962ff', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'fb2ebc6e79', '2000-01-01', 'Masculino', 1),
 (35, 3, 'Usuario10826', 'Apellido85590', 'usuarioa549b@example.com', 'Direcciónf90c2', '87a0a638d', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '6060e5badc', '2000-01-01', 'Masculino', 1),
 (36, 3, 'Usuario77d52', 'Apellido18c94', 'usuario04c52@example.com', 'Dirección3ca0a', '2175ad490', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '7b26d067e7', '2000-01-01', 'Masculino', 1),
-(37, 3, 'Usuario6595c', 'Apellidoec405', 'usuariofec73@example.com', 'Dirección73ffe', 'e53f25d77', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'a715e9157b', '2000-01-01', 'Masculino', 1);
+(37, 3, 'Usuario6595c', 'Apellidoec405', 'usuariofec73@example.com', 'Dirección73ffe', 'e53f25d77', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', 'a715e9157b', '2000-01-01', 'Masculino', 1),
+(38, 2, 'Ana María', 'López', 'anamayi@utp.edu.co', 'Pereira', '3333', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '102369999', '1990-01-01', 'Femenino', 1),
+(39, 3, 'juan', '.', 'juan@gmail.com', 'Tu corazón', '55555', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '102359887898', '2000-01-01', 'Masculino', 1),
+(40, 2, 'jose', 'jose', 'jose@gmail.com', '', '', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '1000000000000', '1999-01-01', 'Masculino', 1);
 
 --
 -- Índices para tablas volcadas
@@ -678,6 +748,12 @@ ALTER TABLE `django_session`
   ADD KEY `django_session_expire_date_a5c62663` (`expire_date`);
 
 --
+-- Indices de la tabla `entrevista`
+--
+ALTER TABLE `entrevista`
+  ADD PRIMARY KEY (`id_entrevista`);
+
+--
 -- Indices de la tabla `formulario`
 --
 ALTER TABLE `formulario`
@@ -688,6 +764,18 @@ ALTER TABLE `formulario`
 --
 ALTER TABLE `paciente`
   ADD PRIMARY KEY (`id_paciente`);
+
+--
+-- Indices de la tabla `paciente_audio`
+--
+ALTER TABLE `paciente_audio`
+  ADD PRIMARY KEY (`id_paciente_audio`);
+
+--
+-- Indices de la tabla `paciente_video`
+--
+ALTER TABLE `paciente_video`
+  ADD PRIMARY KEY (`id_paciente_video`);
 
 --
 -- Indices de la tabla `permiso`
@@ -798,16 +886,34 @@ ALTER TABLE `django_migrations`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
+-- AUTO_INCREMENT de la tabla `entrevista`
+--
+ALTER TABLE `entrevista`
+  MODIFY `id_entrevista` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
 -- AUTO_INCREMENT de la tabla `formulario`
 --
 ALTER TABLE `formulario`
-  MODIFY `id_formulario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_formulario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente`
 --
 ALTER TABLE `paciente`
   MODIFY `id_paciente` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `paciente_audio`
+--
+ALTER TABLE `paciente_audio`
+  MODIFY `id_paciente_audio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de la tabla `paciente_video`
+--
+ALTER TABLE `paciente_video`
+  MODIFY `id_paciente_video` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `permiso`
@@ -819,7 +925,7 @@ ALTER TABLE `permiso`
 -- AUTO_INCREMENT de la tabla `preguntas_formulario`
 --
 ALTER TABLE `preguntas_formulario`
-  MODIFY `id_formulario_preguntas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id_formulario_preguntas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT de la tabla `respuestas_phq9`
@@ -849,7 +955,7 @@ ALTER TABLE `test_phq9`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- Restricciones para tablas volcadas

@@ -19,7 +19,12 @@ from modelsSQL.RespuestasPHQ9 import RespuestasPHQ9
 from modelsSQL.Formulario import Formulario
 from modelsSQL.PreguntasFormulario import PreguntaFormulario
 from modelsSQL.DiagnosticoPHQ9 import DiagnosticoPHQ9
+from modelsSQL.Entrevista import Entrevista
+from modelsSQL.PacienteAudio import PacienteAudio
+from modelsSQL.PacienteVideo import PacienteVideo
 from utilidades.Envio_correo import *
+from API.Audio import Audio as APIAudio
+from API.Video import Video as APIVideo
 
 # Create your views here.
 
@@ -118,7 +123,7 @@ def recuperar_contrasena(request):
             nombre = nombre[0] + " " +  nombre[1]
             nueva = enviar_correo_recuperacion_contrasena(
             destino = 'juanjose.aroca@utp.edu.co',
-            contrasena = '',
+            contrasena = '12mfy45-',
             correo = request.POST['user'],
             usuario = nombre)
 
@@ -365,6 +370,9 @@ def diagnostico(request):
     id = request.GET.get('id')
     rol = request.GET.get('rol')
     id_usu = request.GET.get('id_usu')
+    e = Entrevista()
+    pa = PacienteAudio()
+    pv = PacienteVideo()
     
     
     datos = u.obtener_por_id(id_usu)
@@ -374,6 +382,60 @@ def diagnostico(request):
         nombre_rol = "Doctor"
     elif datos[1] == 3:
         nombre_rol = "Paciente"
+    
+    f = Formulario()
+    forms = f.obtener_por_id_paciente(id_usu)
+
+    info_forms = ""
+
+    if len(forms) > 0:
+        for f in forms:
+            info = f[1] + "\n"
+            info += "Fecha de realización: " + str(f[5]) + "\n"
+            info += "Diagnostico: " + f[4] + "\n"
+            info += "Puntos: " + str(f[3]) + "\n"
+            info += "----------------------------" + "\n"
+
+            info_forms += info
+    
+    entrevistas = e.obtener_por_id_paciente(id_usu)
+    info_en = ""
+
+    if len(entrevistas) > 0:
+        for e in entrevistas:
+            info = "Entrevista presencial de " + datos[2] + " " + datos[3] + "\n"
+            datos_entrevistador = u.obtener_por_id(e[1])
+            info += "Realizada por el profesional: " + datos_entrevistador[2] + " " +  datos_entrevistador[3] + "\n"
+            info += "Fecha de realización: " + str(e[2]) + "\n"
+            info += "Diagnostico: " + e[3] + "\n"
+            info += "----------------------------" + "\n"
+
+            info_en += info
+
+    
+
+    info_modulo = ""
+    respuestas_audios = pa.obtener_por_id_paciente(id_usu)
+    print(respuestas_audios)
+    if respuestas_audios:
+        for e in respuestas_audios:
+            info = "Detección por medio de audio \n" 
+            info += "Entrevista por video de " + datos[2] + " " + datos[3] + "\n"
+            info += "Fecha de realización: " +  str(e[3]) + "\n"
+            info += "Diagnóstico: " + e[4] + "\n"
+            info += "----------------------------" + "\n"
+            info_modulo += info
+    
+    respuestas_videos = pv.obtener_por_id_paciente(id_usu)
+    if respuestas_videos:
+        for e in respuestas_videos:
+            info = "Detección por medio de video \n" 
+            info += "Entrevista por video de " + datos[2] + " " + datos[3] + "\n"
+            info += "Fecha de realización: " +  str(e[3]) + "\n"
+            info += "Diagnóstico: " + e[4] + "\n"
+            info += "----------------------------" + "\n"
+            info_modulo += info
+    
 
     data = {
         "nombres":  datos[2],
@@ -384,18 +446,95 @@ def diagnostico(request):
         "cedula": datos[8],
         "fecha_nacimiento": datos[9],
         "genero": datos[10],
-        "rol": nombre_rol
+        "rol": nombre_rol,
+        "info_forms": info_forms,
+        "info_entrevistas": info_en,
+        "info_modulo": info_modulo
 
     }
+
 
     context = {
         "d": data
     }
 
+    if request.method == 'POST' and request.POST['diagnostico']:
+        e = Entrevista()
+        u = Usuario()
+        e.crear(
+            id_entrevistador=id,
+            diagnostico=request.POST['diagnostico'],
+            id_paciente=id_usu
+        )
+        
+        datos = u.obtener_por_id(id_usu)
+        if datos[1] == 1:
+            nombre_rol ="Admin"
+        elif datos[1] == 2:
+            nombre_rol = "Doctor"
+        elif datos[1] == 3:
+            nombre_rol = "Paciente"
+        
+        f = Formulario()
+        forms = f.obtener_por_id_paciente(id_usu)
+
+        info_forms = ""
+
+        if len(forms) > 0:
+            for f in forms:
+                info = f[1] + "\n"
+                info += "Fecha de realización: " + str(f[5]) + "\n"
+                info += "Diagnostico: " + f[4] + "\n"
+                info += "Puntos: " + str(f[3]) + "\n"
+                info += "----------------------------" + "\n"
+
+                info_forms += info
+
+        entrevistas = e.obtener_por_id_paciente(id_usu)
+        info_en = ""
+
+        if len(entrevistas) > 0:
+            for e in entrevistas:
+                info = "Entrevista presencial de " + datos[2] + " " + datos[3] + "\n"
+                datos_entrevistador = u.obtener_por_id(e[1])
+                info += "Realizada por el profesional: " + datos_entrevistador[2] + " " + datos_entrevistador[3] + "\n"
+                info += "Fecha de realización: " + str(e[2]) + "\n"
+                info += "Diagnostico: " + e[3] + "\n"
+                info += "----------------------------" + "\n"
+
+                info_en += info
+
+
+        data = {
+            "nombres":  datos[2],
+            "apellidos": datos[3],
+            "correo": datos[4],
+            "direccion": datos[5],
+            "telefono": datos[6],
+            "cedula": datos[8],
+            "fecha_nacimiento": datos[9],
+            "genero": datos[10],
+            "rol": nombre_rol,
+            "info_forms": info_forms,
+            "info_entrevistas": info_en,
+            "info_modulo": info_modulo
+
+        }
+
+        context = {
+            "d": data
+        }
+
+
+        return render(request, 'diagnostico.html', context)
+
+
+
     
     return render(request, 'diagnostico.html', context)
     
 def upload_video(request):
+    id = request.GET.get('id')
     if request.method == 'POST' and request.FILES['video']:
         video = request.FILES['video']
         sha1_hash = hashlib.sha1()
@@ -440,12 +579,12 @@ def upload_video(request):
         os.remove('videos/video.webm')
         os.remove(f'videos/{filename}.webm')
 
-        preprocesar(filename)
+        preprocesar(filename, id)
         return render(request, 'index.html')
     return render(request, 'index.html')
 
 
-def preprocesar(hash):
+def preprocesar(hash, id):
     v = Video()
 
     # Se divide el video en pequeños clips de 180 s (3 min)
@@ -480,22 +619,19 @@ def preprocesar(hash):
     for t in textos:
         print(t)
         ti.guardar_texto(t, hash)
-        #os.remove(t)
+        os.remove(t)
+    
+
+    #Vinculación con los modulos de preprocesamiento de video
+    api_audio = APIAudio()
+    respuesta_audio = api_audio.obtener_datos_audios(audios)
+    pa = PacienteAudio()
+    pa.crear(id, hash, respuesta_audio)
+    api_video = APIVideo()
+    respuesta_video = api_video.obtener_datos_videos("videos/"+hash+".mp4")
+    pv = PacienteVideo()
+    pv.crear(id, hash, respuesta_video)
+    
 
 
-# def verificar_permiso(rol_nombre, permiso_nombre):
-#     try:
-#         # Obtener el rol por su nombre
-#         id_rol = Rol.objects.obtener_por_nombre(nombre=rol_nombre)[0]
-        
-#         # Obtener el permiso por su nombre
-#         id_permiso = Permiso.objects.obtener_por_nombre(nombre=permiso_nombre)[0]
-        
-#         # Verificar si el rol tiene asignado el permiso
-#         if RolPermisos.objects.validar_permiso(rol=id_rol, permiso=id_permiso):
-#             return True
-#         else:
-#             return False
-        
-#     except (Rol.DoesNotExist, Permiso.DoesNotExist, RolPermisos.DoesNotExist):
-#         return False
+
