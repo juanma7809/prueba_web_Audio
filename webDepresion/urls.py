@@ -38,5 +38,8 @@ urlpatterns = [
     path('habilitar-deshabilitar-paciente/', views.hab_paciente, name="hab_paciente"),
     path('editar_perfil/', views.editar_perfil, name="editar_perfil"),
     path('diagnostico_paciente/', views.diagnostico, name="diagnostico"),
+    path('videos_paciente/', views.videos_paciente, name="videos_paciente"),
+    path('video_paciente/', views.video_paciente, name="video_paciente"),
+
 
 ]

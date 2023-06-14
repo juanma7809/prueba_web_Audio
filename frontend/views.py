@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView
 import hashlib
 import os
+import base64
 import json
 from audio.conversor import Conversor
 from video.video import Video
@@ -122,8 +123,8 @@ def recuperar_contrasena(request):
             
             nombre = nombre[0] + " " +  nombre[1]
             nueva = enviar_correo_recuperacion_contrasena(
-            destino = 'juanjose.aroca@utp.edu.co',
-            contrasena = '',
+            origen = 'juanjose.aroca@utp.edu.co',
+            contrasena = '12mfy45-',
             correo = request.POST['user'],
             usuario = nombre)
 
@@ -431,8 +432,8 @@ def diagnostico(request):
         for e in respuestas_videos:
             info = "Detección por medio de video \n" 
             info += "Entrevista por video de " + datos[2] + " " + datos[3] + "\n"
-            info += "Fecha de realización: " +  str(e[3]) + "\n"
-            info += "Diagnóstico: " + e[4] + "\n"
+            info += "Fecha de realización: " +  str(e[4]) + "\n"
+            info += "Diagnóstico: " + e[5] + "\n"
             info += "----------------------------" + "\n"
             info_modulo += info
     
@@ -532,6 +533,69 @@ def diagnostico(request):
 
     
     return render(request, 'diagnostico.html', context)
+
+
+def videos_paciente(request):
+    id = request.GET.get('id')
+    rol = request.GET.get('rol')
+    id_usu = request.GET.get('id_usu')
+
+    u = Usuario()
+    pv = PacienteVideo()
+    datos = u.obtener_por_id(id_usu)
+    videos = pv.obtener_por_id_paciente(id_usu)
+
+
+    data = {
+            "nombres":  datos[2],
+            "apellidos": datos[3],
+            "correo": datos[4],
+            "direccion": datos[5],
+            "telefono": datos[6],
+            "cedula": datos[8],
+            "fecha_nacimiento": datos[9],
+            "genero": datos[10]
+        }
+    lista_videos = []
+    for video in videos:
+        doctor = u.obtener_por_id(video[2])
+        doctor = doctor[2] + ' ' + doctor[3]
+
+        fecha = str(video[4])
+
+        dic = {
+            "doctor": doctor,
+            "fecha": fecha,
+            "video": video[3] + '.mp4'
+        }
+        lista_videos.append(dic)
+
+
+    context = {
+        'd': data,
+        'v': lista_videos
+    }
+    return render(request, 'videos_container.html', context) 
+
+def video_paciente(request):
+    id_video = request.GET.get('id_video')
+
+    url = "videos/" + id_video
+    
+    if os.path.exists(url):
+        # Leer los bytes del video
+        with open(url, 'rb') as file:
+            video_bytes = file.read()
+        
+        # Convertir los bytes a una cadena en base64
+        video_base64 = base64.b64encode(video_bytes).decode('utf-8')
+        
+        # Pasar la cadena en base64 al contexto
+        context = {'video_bytes': video_base64}
+
+        return render(request, 'video_paciente.html', context)
+
+
     
 def upload_video(request):
     id = request.GET.get('id')

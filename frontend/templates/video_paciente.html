@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - youtube.com/codingnepal -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Custom Video Player JavaScript | CodingNepal</title>
+    <link rel="stylesheet" href="{% static 'estilos/style_video_paciente.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- These 3 links are only for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  </head>
+{% if video_bytes %}
+  <body>
+    <div class="container show-controls">
+        <video controls>
+            <source src="data:video/mp4;base64,{{ video_bytes }}" type="video/mp4">
+        </video>
+    </div>
+
+  </body>
+
+{% endif %}
+</html>

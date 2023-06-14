@@ -27,3 +27,15 @@ class PacienteVideo:
             return resultado
         except Exception as e:
             print(e)
+    
+    def obtener_videos_por_id_paciente(self, id_paciente):
+        try:
+            cursor = self.conexion.cursor()
+            consulta = "SELECT id_video FROM paciente_video WHERE id_paciente = %s"
+            valores = (id_paciente,)
+            cursor.execute(consulta, valores)
+            resultado = cursor.fetchall()
+            cursor.close()
+            return resultado
+        except Exception as e:
+            print(e)

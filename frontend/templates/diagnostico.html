@@ -65,6 +65,8 @@
                         <div class="col-md-12"><label class="labels">Fecha nacimiento</label><input type="date"
                                 class="form-control" value="{{d.fecha_nacimiento}}" name="fecha_nacimiento" disabled>
                         </div>
+                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button"
+                            onclick="videos_paciente()">Ver Videos Paciente</button></div>
                     </div>
                     <div class="mt-5 text-center"><button class="btn btn-primary profile-button"
                             onclick="pacientes()">Volver</button></div>
@@ -127,6 +129,18 @@
             var url = "/dashboard/?id=" + id + "&rol=" + rol;
             window.location.href = url;
 
+        }
+
+
+        function videos_paciente() {
+            var parametros = new URLSearchParams(window.location.search);
+
+            // Obtener el valor de un parámetro específico
+            var id = parametros.get('id');
+            var rol = parametros.get('rol');
+            var id_usu = parametros.get('id_usu');
+            var url = "/videos_paciente/?id=" + id + "&rol=" + rol + "&id_usu=" + id_usu;
+            window.location.href = url;
         }
 
         function imprimir() {

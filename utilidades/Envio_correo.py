@@ -8,9 +8,9 @@ def generar_contrasena(longitud):
     contrasena = ''.join(random.choice(caracteres) for _ in range(longitud))
     return contrasena
 
-def enviar_correo_recuperacion_contrasena(destino, contrasena, correo, usuario):
+def enviar_correo_recuperacion_contrasena(origen, contrasena, correo, usuario):
         # Define email sender and receiver
-        email_sender = destino
+        email_sender = origen
         email_password = contrasena
         email_receiver = correo
 

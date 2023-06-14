@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Video-Entrevistas del paciente</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="{% static 'estilos/style_videos_container.css' %}">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+{% if d %}
+<div class=" container">
+  <header class="main-header">
+    <img class="logo" src="{% static 'Imagenes/video_logo.png' %}">
+    <h1 class="name">Video-Entrevistas<span> {{d.nombres}} {{d.apellidos}}</span></h1>
+  </header>
+
+  <div class="gallery">
+
+    {% if v %}
+    {% for i in v %}
+    <div class="photo-container">
+      <div class="photo slide">
+        <img src="{% static 'Imagenes/video_mini.png' %}" alt="Up in the Air">
+        <div class="photo-overlay">
+          <h2>Video-Entrevista</h2>
+          <p>Realizado en acompañamiento del profesional: {{i.doctor}}</p>
+          <p>Fecha: {{i.fecha}}</p>
+          <a href="/video_paciente/?id_video={{i.video}}" class="button">Ver</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+    {% endif %}
+  </div>
+  </div>
+  {% endif %}
+  <!-- partial -->
+
+  </body>
+
+</html>
