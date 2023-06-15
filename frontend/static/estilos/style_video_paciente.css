@@ -7,10 +7,16 @@
   font-family: 'Poppins', sans-serif;
 }
 body{
+
   min-height: 100vh;
-  background: #E3F2FD;
+  background: rgba(30,29,31,1);
+background: -moz-linear-gradient(-45deg, rgb(241, 239, 243) 0%, rgb(9, 53, 115) 100%);
+background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(30,29,31,1)), color-stop(100%, rgb(9, 53, 115)));
+background: -webkit-linear-gradient(-45deg, rgb(241, 239, 243) 0%, rgb(9, 53, 115) 100%);
+background: -o-linear-gradient(-45deg, rgb(241, 239, 243) 0%, rgb(9, 53, 115) 100%);
+background: -ms-linear-gradient(-45deg, rgb(241, 239, 243) 0%, rgb(9, 53, 115) 100%);
 }
-body, .container, .video-controls, .video-timer, .options{
+body, .container, .video-timer, .options{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -41,11 +47,7 @@ body, .container, .video-controls, .video-timer, .options{
   bottom: -15px;
   transition: all 0.08s ease;
 }
-.container.show-controls .wrapper{
-  opacity: 1;
-  bottom: 0;
-  transition: all 0.13s ease;
-}
+
 .wrapper::before{
   content: "";
   bottom: 0;
@@ -99,18 +101,7 @@ body, .container, .video-controls, .video-timer, .options{
 .video-timeline:hover .progress-area span{
   display: block;
 }
-.wrapper .video-controls{
-  padding: 5px 20px 10px;
-}
-.video-controls .options{
-  width: 100%;
-}
-.video-controls .options:first-child{
-  justify-content: flex-start;
-}
-.video-controls .options:last-child{
-  justify-content: flex-end;
-}
+
 .options button{
   height: 40px;
   width: 40px;
@@ -197,9 +188,6 @@ body, .container, .video-controls, .video-timer, .options{
 }
 
 @media screen and (max-width: 540px) {
-  .wrapper .video-controls{
-    padding: 3px 10px 7px;
-  }
   .options input, .progress-area span{
     display: none!important;
   }

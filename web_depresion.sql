@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-06-2023 a las 05:41:59
+-- Tiempo de generación: 15-06-2023 a las 06:11:13
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -308,7 +308,8 @@ INSERT INTO `formulario` (`id_formulario`, `nombre_formulario`, `id_paciente`, `
 (6, 'Entrevista juan .', 39, 18, 'Moderado a grave', '2023-06-03 19:59:41'),
 (7, 'Entrevista Juan Manuel Restrepo Urrego', 5, 4, 'Mínimo', '2023-06-03 20:38:17'),
 (8, 'Entrevista Camilo Erira ', 3, 15, 'Moderado a grave', '2023-06-03 21:43:56'),
-(10, 'Entrevista Camilo Erira ', 3, 0, 'Mínimo', '2023-06-13 15:08:14');
+(10, 'Entrevista Camilo Erira ', 3, 0, 'Mínimo', '2023-06-13 15:08:14'),
+(11, 'Entrevista Camilo Erira ', 3, 1, 'Mínimo', '2023-06-15 02:58:33');
 
 -- --------------------------------------------------------
 
@@ -337,6 +338,7 @@ CREATE TABLE `paciente` (
 CREATE TABLE `paciente_audio` (
   `id_paciente_audio` int(11) NOT NULL,
   `id_paciente` int(11) DEFAULT NULL,
+  `id_doctor` int(11) NOT NULL,
   `id_audio` text DEFAULT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
   `diagnostico` text NOT NULL
@@ -346,9 +348,14 @@ CREATE TABLE `paciente_audio` (
 -- Volcado de datos para la tabla `paciente_audio`
 --
 
-INSERT INTO `paciente_audio` (`id_paciente_audio`, `id_paciente`, `id_audio`, `fecha`, `diagnostico`) VALUES
-(6, 3, '2fd252958f12c1f4b53de13b42533dd7aa4ba066', '2023-06-14 01:42:03', 'Bajo nivel de depresión'),
-(7, 3, '678872f2e53ba3e888f689fab377e9eff7425ca6', '2023-06-14 03:36:52', 'Bajo nivel de depresión');
+INSERT INTO `paciente_audio` (`id_paciente_audio`, `id_paciente`, `id_doctor`, `id_audio`, `fecha`, `diagnostico`) VALUES
+(6, 3, 0, '2fd252958f12c1f4b53de13b42533dd7aa4ba066', '2023-06-14 01:42:03', 'Bajo nivel de depresión'),
+(7, 3, 0, '678872f2e53ba3e888f689fab377e9eff7425ca6', '2023-06-14 03:36:52', 'Bajo nivel de depresión'),
+(8, 3, 0, '8a46d0abbcfeefd86b9b52f05344376535cf12e6', '2023-06-15 02:22:25', 'Alto nivel de depresión'),
+(9, 3, 38, 'fc524609b2e6ff2578384accb6db0f3441260b7a', '2023-06-15 02:55:57', 'Bajo nivel de depresión'),
+(10, 3, 38, 'cbefd489a87411da906095211d2859b26d3ced87', '2023-06-15 02:57:18', 'Bajo nivel de depresión'),
+(11, 3, 38, 'cb7df7a5082f074802373aa392bec728c975552f', '2023-06-15 02:57:44', 'Alto nivel de depresión'),
+(12, 6, 38, '58fe68333937323c350190c037598806b8812a99', '2023-06-15 02:59:46', 'Bajo nivel de depresión');
 
 -- --------------------------------------------------------
 
@@ -359,7 +366,7 @@ INSERT INTO `paciente_audio` (`id_paciente_audio`, `id_paciente`, `id_audio`, `f
 CREATE TABLE `paciente_video` (
   `id_paciente_video` int(11) NOT NULL,
   `id_paciente` int(11) NOT NULL,
-  `id_doctor` int(11) NOT NULL,
+  `id_doctor` int(11) NOT NULL DEFAULT 38,
   `id_video` text DEFAULT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp(),
   `diagnostico` text NOT NULL
@@ -371,7 +378,12 @@ CREATE TABLE `paciente_video` (
 
 INSERT INTO `paciente_video` (`id_paciente_video`, `id_paciente`, `id_doctor`, `id_video`, `fecha`, `diagnostico`) VALUES
 (6, 3, 38, '2fd252958f12c1f4b53de13b42533dd7aa4ba066', '2023-06-14 01:42:03', 'Alto nivel de depresión'),
-(7, 3, 38, '678872f2e53ba3e888f689fab377e9eff7425ca6', '2023-06-14 03:36:52', 'Alto nivel de depresión');
+(7, 3, 38, '678872f2e53ba3e888f689fab377e9eff7425ca6', '2023-06-14 03:36:52', 'Alto nivel de depresión'),
+(8, 3, 38, '8a46d0abbcfeefd86b9b52f05344376535cf12e6', '2023-06-15 02:22:25', 'Bajo nivel de depresión'),
+(9, 3, 38, 'fc524609b2e6ff2578384accb6db0f3441260b7a', '2023-06-15 02:55:57', 'Alto nivel de depresión'),
+(10, 3, 38, 'cbefd489a87411da906095211d2859b26d3ced87', '2023-06-15 02:57:18', 'Alto nivel de depresión'),
+(11, 3, 38, 'cb7df7a5082f074802373aa392bec728c975552f', '2023-06-15 02:57:44', 'Bajo nivel de depresión'),
+(12, 6, 38, '58fe68333937323c350190c037598806b8812a99', '2023-06-15 02:59:46', 'Alto nivel de depresión');
 
 -- --------------------------------------------------------
 
@@ -497,7 +509,16 @@ INSERT INTO `preguntas_formulario` (`id_formulario_preguntas`, `id_formulario`, 
 (70, 10, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'Nunca'),
 (71, 10, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'Nunca'),
 (72, 10, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'Nunca'),
-(73, 10, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'Nunca');
+(73, 10, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'Nunca'),
+(74, 11, 'Poco interés o agrado al hacer las cosas.', 'Nunca'),
+(75, 11, 'Se ha sentido triste, deprimido o desesperado.', 'Nunca'),
+(76, 11, 'Ha tenido problemas para dormir, mantenerse despierto o duerme demasiado.', 'Varios días'),
+(77, 11, 'Se siente cansado o tiene poca energía.', 'Nunca'),
+(78, 11, 'Tiene poco o excesivo apetito.', 'Nunca'),
+(79, 11, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'Nunca'),
+(80, 11, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'Nunca'),
+(81, 11, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'Nunca'),
+(82, 11, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'Nunca');
 
 -- --------------------------------------------------------
 
@@ -579,7 +600,6 @@ INSERT INTO `rol_permisos` (`id_rol_permisos`, `id_rol`, `id_permiso`) VALUES
 (2, 1, 4),
 (3, 1, 5),
 (4, 1, 6),
-(5, 3, 5),
 (6, 3, 6),
 (7, 2, 1);
 
@@ -906,7 +926,7 @@ ALTER TABLE `entrevista`
 -- AUTO_INCREMENT de la tabla `formulario`
 --
 ALTER TABLE `formulario`
-  MODIFY `id_formulario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_formulario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente`
@@ -918,13 +938,13 @@ ALTER TABLE `paciente`
 -- AUTO_INCREMENT de la tabla `paciente_audio`
 --
 ALTER TABLE `paciente_audio`
-  MODIFY `id_paciente_audio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_paciente_audio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente_video`
 --
 ALTER TABLE `paciente_video`
-  MODIFY `id_paciente_video` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_paciente_video` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `permiso`
@@ -936,7 +956,7 @@ ALTER TABLE `permiso`
 -- AUTO_INCREMENT de la tabla `preguntas_formulario`
 --
 ALTER TABLE `preguntas_formulario`
-  MODIFY `id_formulario_preguntas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id_formulario_preguntas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT de la tabla `respuestas_phq9`

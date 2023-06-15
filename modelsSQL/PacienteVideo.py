@@ -4,11 +4,11 @@ class PacienteVideo:
     def __init__(self):
         self.conexion = conexion
 
-    def crear(self, id_paciente, id_video, diagnostico):
+    def crear(self, id_paciente, id_doctor, id_video, diagnostico):
         try:
             cursor = self.conexion.cursor()
-            consulta = "INSERT INTO paciente_video (id_paciente, id_video, diagnostico) VALUES (%s, %s, %s)"
-            valores = (id_paciente, id_video, diagnostico)
+            consulta = "INSERT INTO paciente_video (id_paciente, id_doctor, id_video, diagnostico) VALUES (%s, %s, %s, %s)"
+            valores = (id_paciente, id_doctor, id_video, diagnostico)
             cursor.execute(consulta, valores)
             self.conexion.commit()
             cursor.close()

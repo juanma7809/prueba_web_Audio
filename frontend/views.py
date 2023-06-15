@@ -417,13 +417,12 @@ def diagnostico(request):
 
     info_modulo = ""
     respuestas_audios = pa.obtener_por_id_paciente(id_usu)
-    print(respuestas_audios)
     if respuestas_audios:
         for e in respuestas_audios:
             info = "Detección por medio de audio \n" 
             info += "Entrevista por video de " + datos[2] + " " + datos[3] + "\n"
-            info += "Fecha de realización: " +  str(e[3]) + "\n"
-            info += "Diagnóstico: " + e[4] + "\n"
+            info += "Fecha de realización: " +  str(e[4]) + "\n"
+            info += "Diagnóstico: " + e[5] + "\n"
             info += "----------------------------" + "\n"
             info_modulo += info
     
@@ -598,7 +597,8 @@ def video_paciente(request):
 
     
 def upload_video(request):
-    id = request.GET.get('id')
+    id_usu = request.GET.get('id_usu')
+    id_doctor = request.GET.get('id')
     if request.method == 'POST' and request.FILES['video']:
         video = request.FILES['video']
         sha1_hash = hashlib.sha1()
@@ -643,12 +643,12 @@ def upload_video(request):
         os.remove('videos/video.webm')
         os.remove(f'videos/{filename}.webm')
 
-        preprocesar(filename, id)
+        preprocesar(filename, id_usu, id_doctor)
         return render(request, 'index.html')
     return render(request, 'index.html')
 
 
-def preprocesar(hash, id):
+def preprocesar(hash, id_usu, id_doctor):
     v = Video()
 
     # Se divide el video en pequeños clips de 180 s (3 min)
@@ -660,7 +660,6 @@ def preprocesar(hash, id):
     # Retorna una lista con los audios
     audios = con.convert_all_mp4_to_wav("wavs-" + hash)
 
-    print(audios)
     textos = process_audio_files(audios)
 
 
@@ -681,7 +680,6 @@ def preprocesar(hash, id):
     
     ti = TextoNoSQL()
     for t in textos:
-        print(t)
         ti.guardar_texto(t, hash)
         os.remove(t)
     
@@ -690,11 +688,11 @@ def preprocesar(hash, id):
     api_audio = APIAudio()
     respuesta_audio = api_audio.obtener_datos_audios(audios)
     pa = PacienteAudio()
-    pa.crear(id, hash, respuesta_audio)
+    pa.crear(id_usu, id_doctor, hash, respuesta_audio)
     api_video = APIVideo()
     respuesta_video = api_video.obtener_datos_videos("videos/"+hash+".mp4")
     pv = PacienteVideo()
-    pv.crear(id, hash, respuesta_video)
+    pv.crear(id_usu, id_doctor, hash, respuesta_video)
     
 
 

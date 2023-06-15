@@ -15,7 +15,7 @@
 {% if video_bytes %}
   <body>
     <div class="container show-controls">
-        <video controls>
+        <video controls controlsList="nodownload">
             <source src="data:video/mp4;base64,{{ video_bytes }}" type="video/mp4">
         </video>
     </div>
