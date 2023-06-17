@@ -375,7 +375,7 @@ def diagnostico(request):
     pa = PacienteAudio()
     pv = PacienteVideo()
     
-    
+
     datos = u.obtener_por_id(id_usu)
     if datos[1] == 1:
         nombre_rol ="Admin"
@@ -403,36 +403,64 @@ def diagnostico(request):
     info_en = ""
 
     if len(entrevistas) > 0:
+        diagnosticos = []
+        doctores = []
         for e in entrevistas:
             info = "Entrevista presencial de " + datos[2] + " " + datos[3] + "\n"
             datos_entrevistador = u.obtener_por_id(e[1])
             info += "Realizada por el profesional: " + datos_entrevistador[2] + " " +  datos_entrevistador[3] + "\n"
             info += "Fecha de realización: " + str(e[2]) + "\n"
-            info += "Diagnostico: " + e[3] + "\n"
+            result = "Sí" if e[5] == 1 else "No"
+            info += "Tiene depresión: " + result + "\n"
+            info += "Comentarios del diagnóstico: " + e[3] + "\n"
             info += "----------------------------" + "\n"
-
+            diagnosticos.append(e[5])
+            doctores.append(e[1])
             info_en += info
-
     
+        puede_editar = "Si"
+        if len(doctores) > 0:
+            for doc in doctores:
+                if int(id) == doc and len(diagnosticos) < 3:
+                    puede_editar = "No"
+                    break
+
+        if len(diagnosticos) == 3:
+
+            count_ones = diagnosticos.count(1)
+            count_zeros = diagnosticos.count(0)
+
+            if count_ones >= 2:
+                resultado_final = "Sí tiene depresión"
+            elif count_zeros >= 2:
+                resultado_final = "No tiene depresión"
+        
+        else:
+            resultado_final = "No hay suficientes registros de entrevistas para determinar un diagnóstico (Mínimo 3)"
+
+            
+    else:
+        resultado_final = "No hay suficientes registros de entrevistas para determinar un diagnóstico (Mínimo 3)"
+        puede_editar = "Si"
 
     info_modulo = ""
     respuestas_audios = pa.obtener_por_id_paciente(id_usu)
     if respuestas_audios:
-        for e in respuestas_audios:
+        for ra in respuestas_audios:
             info = "Detección por medio de audio \n" 
             info += "Entrevista por video de " + datos[2] + " " + datos[3] + "\n"
-            info += "Fecha de realización: " +  str(e[4]) + "\n"
-            info += "Diagnóstico: " + e[5] + "\n"
+            info += "Fecha de realización: " +  str(ra[4]) + "\n"
+            info += "Diagnóstico: " + ra[5] + "\n"
             info += "----------------------------" + "\n"
             info_modulo += info
     
     respuestas_videos = pv.obtener_por_id_paciente(id_usu)
     if respuestas_videos:
-        for e in respuestas_videos:
+        for rv in respuestas_videos:
             info = "Detección por medio de video \n" 
             info += "Entrevista por video de " + datos[2] + " " + datos[3] + "\n"
-            info += "Fecha de realización: " +  str(e[4]) + "\n"
-            info += "Diagnóstico: " + e[5] + "\n"
+            info += "Fecha de realización: " +  str(rv[4]) + "\n"
+            info += "Diagnóstico: " + rv[5] + "\n"
             info += "----------------------------" + "\n"
             info_modulo += info
     
@@ -449,7 +477,9 @@ def diagnostico(request):
         "rol": nombre_rol,
         "info_forms": info_forms,
         "info_entrevistas": info_en,
-        "info_modulo": info_modulo
+        "info_modulo": info_modulo,
+        "diagnostico_final": resultado_final,
+        "puede_editar": puede_editar
 
     }
 
@@ -464,7 +494,8 @@ def diagnostico(request):
         e.crear(
             id_entrevistador=id,
             diagnostico=request.POST['diagnostico'],
-            id_paciente=id_usu
+            id_paciente=id_usu, 
+            diagnostico_depresion=int(request.POST['diagnostico_depresion'])
         )
         
         datos = u.obtener_por_id(id_usu)
@@ -494,16 +525,43 @@ def diagnostico(request):
         info_en = ""
 
         if len(entrevistas) > 0:
+            diagnosticos = []
+            doctores = []
             for e in entrevistas:
                 info = "Entrevista presencial de " + datos[2] + " " + datos[3] + "\n"
                 datos_entrevistador = u.obtener_por_id(e[1])
-                info += "Realizada por el profesional: " + datos_entrevistador[2] + " " + datos_entrevistador[3] + "\n"
+                info += "Realizada por el profesional: " + datos_entrevistador[2] + " " +  datos_entrevistador[3] + "\n"
                 info += "Fecha de realización: " + str(e[2]) + "\n"
-                info += "Diagnostico: " + e[3] + "\n"
+                result = "Sí" if e[5] == 1 else "No"
+                info += "Tiene depresión: " + result + "\n"
+                info += "Comentarios del diagnóstico: " + e[3] + "\n"
                 info += "----------------------------" + "\n"
-
+                diagnosticos.append(e[5])
+                doctores.append(e[1])
                 info_en += info
+        
+            puede_editar = "Si"
+            if len(doctores) > 0:
+                for doc in doctores:
+                    if int(id) == doc and len(diagnosticos) < 3:
+                        puede_editar = "No"
+                        break
+            
+                if len(diagnosticos) == 3:
 
+                    count_ones = diagnosticos.count(1)
+                    count_zeros = diagnosticos.count(0)
+
+                    if count_ones >= 2:
+                        resultado_final = "Sí tiene depresión"
+                    elif count_zeros >= 2:
+                        resultado_final =  "No tiene depresión"
+                
+                else:
+                    resultado_final = "No hay suficientes registros de entrevistas para determinar un diagnóstico"
+        else:
+            resultado_final = "No hay suficientes registros de entrevistas para determinar un diagnóstico (Mínimo 3)"
+            puede_editar = "Si"
 
         data = {
             "nombres":  datos[2],
@@ -517,7 +575,9 @@ def diagnostico(request):
             "rol": nombre_rol,
             "info_forms": info_forms,
             "info_entrevistas": info_en,
-            "info_modulo": info_modulo
+            "info_modulo": info_modulo,
+            "diagnostico_final": resultado_final,
+            "puede_editar": puede_editar
 
         }
 

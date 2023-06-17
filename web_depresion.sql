@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-06-2023 a las 06:11:13
+-- Tiempo de generación: 18-06-2023 a las 00:50:21
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -270,19 +270,38 @@ CREATE TABLE `entrevista` (
   `id_entrevistador` int(11) NOT NULL,
   `fecha_entrevista` timestamp NOT NULL DEFAULT current_timestamp(),
   `diagnostico` text NOT NULL,
-  `id_paciente` int(11) NOT NULL
+  `id_paciente` int(11) NOT NULL,
+  `diagnostico_depresion` bit(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `entrevista`
 --
 
-INSERT INTO `entrevista` (`id_entrevista`, `id_entrevistador`, `fecha_entrevista`, `diagnostico`, `id_paciente`) VALUES
-(1, 7, '2023-06-03 21:14:51', 'Esta mela\r\n', 6),
-(2, 7, '2023-06-03 21:42:49', 'Sigue melisisma', 6),
-(4, 7, '2023-06-03 21:43:28', 'Dolor de cabeza', 3),
-(17, 38, '2023-06-04 18:55:29', 'Este man no tiene nada', 5),
-(18, 41, '2023-06-13 14:45:55', 'Esta mejor', 5);
+INSERT INTO `entrevista` (`id_entrevista`, `id_entrevistador`, `fecha_entrevista`, `diagnostico`, `id_paciente`, `diagnostico_depresion`) VALUES
+(1, 7, '2023-06-03 21:14:51', 'Esta mela\r\n', 6, b'0'),
+(2, 7, '2023-06-03 21:42:49', 'Sigue melisisma', 6, b'0'),
+(4, 7, '2023-06-03 21:43:28', 'Dolor de cabeza', 6, b'0'),
+(17, 38, '2023-06-04 18:55:29', 'Este man no tiene nada', 5, b'0'),
+(18, 41, '2023-06-13 14:45:55', 'Esta mejor', 5, b'0'),
+(19, 38, '2023-06-17 21:06:04', 'Empeoró', 6, b'1'),
+(20, 38, '2023-06-17 22:00:42', 'Empeoró', 5, b'1'),
+(21, 38, '2023-06-17 22:01:25', 'Empeoró', 6, b'0'),
+(22, 38, '2023-06-17 22:02:17', 'Empeoró', 6, b'1'),
+(24, 38, '2023-06-17 22:10:04', 'volvió', 5, b'1'),
+(25, 38, '2023-06-17 22:10:14', 'melo', 5, b'1'),
+(26, 38, '2023-06-17 22:10:19', 'no ', 5, b'1'),
+(27, 38, '2023-06-17 22:34:56', 'ya', 3, b'0'),
+(28, 7, '2023-06-17 22:35:43', 'lol', 3, b'1'),
+(29, 41, '2023-06-17 22:36:34', 'lohjhhjbh', 3, b'0'),
+(30, 41, '2023-06-17 22:38:26', 'kkkj', 3, b'0'),
+(31, 7, '2023-06-17 22:39:37', 'Sí', 3, b'1'),
+(32, 38, '2023-06-17 22:40:04', 'jjjj', 3, b'1'),
+(33, 38, '2023-06-17 22:43:41', 'jjjj', 3, b'1'),
+(34, 38, '2023-06-17 22:44:19', 'gaaa', 5, b'0'),
+(35, 38, '2023-06-17 22:45:13', 'No', 6, b'0'),
+(36, 7, '2023-06-17 22:45:51', 'i', 6, b'1'),
+(37, 41, '2023-06-17 22:46:30', 'dd', 6, b'1');
 
 -- --------------------------------------------------------
 
@@ -309,7 +328,8 @@ INSERT INTO `formulario` (`id_formulario`, `nombre_formulario`, `id_paciente`, `
 (7, 'Entrevista Juan Manuel Restrepo Urrego', 5, 4, 'Mínimo', '2023-06-03 20:38:17'),
 (8, 'Entrevista Camilo Erira ', 3, 15, 'Moderado a grave', '2023-06-03 21:43:56'),
 (10, 'Entrevista Camilo Erira ', 3, 0, 'Mínimo', '2023-06-13 15:08:14'),
-(11, 'Entrevista Camilo Erira ', 3, 1, 'Mínimo', '2023-06-15 02:58:33');
+(11, 'Entrevista Camilo Erira ', 3, 1, 'Mínimo', '2023-06-15 02:58:33'),
+(12, 'Entrevista Camilo Erira ', 3, 3, 'Mínimo', '2023-06-16 21:33:26');
 
 -- --------------------------------------------------------
 
@@ -355,7 +375,8 @@ INSERT INTO `paciente_audio` (`id_paciente_audio`, `id_paciente`, `id_doctor`, `
 (9, 3, 38, 'fc524609b2e6ff2578384accb6db0f3441260b7a', '2023-06-15 02:55:57', 'Bajo nivel de depresión'),
 (10, 3, 38, 'cbefd489a87411da906095211d2859b26d3ced87', '2023-06-15 02:57:18', 'Bajo nivel de depresión'),
 (11, 3, 38, 'cb7df7a5082f074802373aa392bec728c975552f', '2023-06-15 02:57:44', 'Alto nivel de depresión'),
-(12, 6, 38, '58fe68333937323c350190c037598806b8812a99', '2023-06-15 02:59:46', 'Bajo nivel de depresión');
+(12, 6, 38, '58fe68333937323c350190c037598806b8812a99', '2023-06-15 02:59:46', 'Bajo nivel de depresión'),
+(13, 3, 38, '972665ece25d8d9e2c2dee9e56285ca964169e9d', '2023-06-16 21:32:08', 'Bajo nivel de depresión');
 
 -- --------------------------------------------------------
 
@@ -383,7 +404,8 @@ INSERT INTO `paciente_video` (`id_paciente_video`, `id_paciente`, `id_doctor`, `
 (9, 3, 38, 'fc524609b2e6ff2578384accb6db0f3441260b7a', '2023-06-15 02:55:57', 'Alto nivel de depresión'),
 (10, 3, 38, 'cbefd489a87411da906095211d2859b26d3ced87', '2023-06-15 02:57:18', 'Alto nivel de depresión'),
 (11, 3, 38, 'cb7df7a5082f074802373aa392bec728c975552f', '2023-06-15 02:57:44', 'Bajo nivel de depresión'),
-(12, 6, 38, '58fe68333937323c350190c037598806b8812a99', '2023-06-15 02:59:46', 'Alto nivel de depresión');
+(12, 6, 38, '58fe68333937323c350190c037598806b8812a99', '2023-06-15 02:59:46', 'Alto nivel de depresión'),
+(13, 3, 38, '972665ece25d8d9e2c2dee9e56285ca964169e9d', '2023-06-16 21:32:08', 'Bajo nivel de depresión');
 
 -- --------------------------------------------------------
 
@@ -518,7 +540,16 @@ INSERT INTO `preguntas_formulario` (`id_formulario_preguntas`, `id_formulario`, 
 (79, 11, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'Nunca'),
 (80, 11, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'Nunca'),
 (81, 11, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'Nunca'),
-(82, 11, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'Nunca');
+(82, 11, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'Nunca'),
+(83, 12, 'Poco interés o agrado al hacer las cosas.', 'Nunca'),
+(84, 12, 'Se ha sentido triste, deprimido o desesperado.', 'Varios días'),
+(85, 12, 'Ha tenido problemas para dormir, mantenerse despierto o duerme demasiado.', 'Varios días'),
+(86, 12, 'Se siente cansado o tiene poca energía.', 'Nunca'),
+(87, 12, 'Tiene poco o excesivo apetito.', 'Nunca'),
+(88, 12, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'Varios días'),
+(89, 12, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'Nunca'),
+(90, 12, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'Nunca'),
+(91, 12, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'Nunca');
 
 -- --------------------------------------------------------
 
@@ -655,7 +686,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `id_rol`, `nombres`, `apellidos`, `correo`, `direccion`, `telefono`, `contrasena`, `cedula`, `fecha_nacimiento`, `genero`, `activo`) VALUES
-(1, 1, 'Juan ', 'Jose', 'juanjose.aroca@utp.edu.co', 'cr 7 no 23-12', '3228752890', '2a2bdce39e466bac8c982ab2383f266fcbeb07ddaddd92a8e3e3ff07bef73377', '1192713043', '2000-02-14', 'Masculino', 1),
+(1, 1, 'Juan ', 'Jose', 'juanjose.aroca@utp.edu.co', 'cr 7 no 23-12', '3228752890', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '1192713043', '2000-02-14', 'Masculino', 1),
 (3, 3, 'Camilo', 'Erira ', 'camilo.erira@utp.edu.co', 'Pasto', '3568979999', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '100023556', '1999-01-01', 'Masculino', 1),
 (5, 3, 'Juan Manuel', 'Restrepo Urrego', 'juanmanuel.restrepo@utp.edu.co', 'Vallenato ', '555555555', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '555555', '2002-02-16', 'Masculino', 1),
 (6, 3, 'Manuela', 'Vargas', 'manu@ucp.com', 'Tu corazón de melón', '3228752890', '5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5', '10235659', '2000-09-13', 'Femenino', 1),
@@ -920,13 +951,13 @@ ALTER TABLE `django_migrations`
 -- AUTO_INCREMENT de la tabla `entrevista`
 --
 ALTER TABLE `entrevista`
-  MODIFY `id_entrevista` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_entrevista` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT de la tabla `formulario`
 --
 ALTER TABLE `formulario`
-  MODIFY `id_formulario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_formulario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente`
@@ -938,13 +969,13 @@ ALTER TABLE `paciente`
 -- AUTO_INCREMENT de la tabla `paciente_audio`
 --
 ALTER TABLE `paciente_audio`
-  MODIFY `id_paciente_audio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_paciente_audio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente_video`
 --
 ALTER TABLE `paciente_video`
-  MODIFY `id_paciente_video` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_paciente_video` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `permiso`
@@ -956,7 +987,7 @@ ALTER TABLE `permiso`
 -- AUTO_INCREMENT de la tabla `preguntas_formulario`
 --
 ALTER TABLE `preguntas_formulario`
-  MODIFY `id_formulario_preguntas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `id_formulario_preguntas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
 
 --
 -- AUTO_INCREMENT de la tabla `respuestas_phq9`
