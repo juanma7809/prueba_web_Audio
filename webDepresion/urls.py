@@ -40,6 +40,7 @@ urlpatterns = [
     path('diagnostico_paciente/', views.diagnostico, name="diagnostico"),
     path('videos_paciente/', views.videos_paciente, name="videos_paciente"),
     path('video_paciente/', views.video_paciente, name="video_paciente"),
+    path('entrevista_virtual/', views.entrevista_virtual, name="entrevista_virtual"),
 
 
 ]

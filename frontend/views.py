@@ -8,6 +8,7 @@ from audio.conversor import Conversor
 from video.video import Video
 import ffmpeg
 import subprocess
+import string
 from audio.analizador import *
 from modelsNoSQL.Video import VideoNoSQL
 from modelsNoSQL.Audio import AudioNoSQL
@@ -655,16 +656,25 @@ def video_paciente(request):
         return render(request, 'video_paciente.html', context)
 
 
+def entrevista_virtual(request):
+    context = {
+        'd': {}
+    }
+    
+    return render(request, 'entrevista_virtual.html', context)
     
 def upload_video(request):
     id_usu = request.GET.get('id_usu')
     id_doctor = request.GET.get('id')
+    
     if request.method == 'POST' and request.FILES['video']:
         video = request.FILES['video']
         sha1_hash = hashlib.sha1()
-
-
-        with open('videos/video.webm', 'wb+') as destination:
+        caracteres = string.ascii_letters + string.digits
+        id_rand = ''.join(random.choice(caracteres) for _ in range(20))
+        nom_rand = 'videos/' + id_rand + '.webm'
+       
+        with open(nom_rand, 'wb+') as destination:
             for chunk in video.chunks():
                 sha1_hash.update(chunk)
                 destination.write(chunk)
@@ -700,7 +710,7 @@ def upload_video(request):
         # # Ejecuta la conversión
         # ffmpeg.run(output_stream)
 
-        os.remove('videos/video.webm')
+        os.remove(nom_rand)
         os.remove(f'videos/{filename}.webm')
 
         preprocesar(filename, id_usu, id_doctor)
