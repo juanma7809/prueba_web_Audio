@@ -72,6 +72,14 @@
                                 class="form-control" value="{{d.fecha_nacimiento}}" name="fecha_nacimiento" disabled>
                         </div>
 
+                        <div class="mt-5 text-center"><button class="btn btn-primary profile-button"
+                            onclick="formulario_doctor()">Realizar test PHQ-9</button>
+                        
+                            <button class="btn btn-primary profile-button"
+                            onclick="">Ver formulario de profesionales</button>
+                        
+                        </div>
+
                     </div>
 
 
@@ -119,7 +127,9 @@
                             </select>
                         </div> <br>
                         <div class="mt-5 text-center"><button class="btn btn-primary profile-button"
-                                type="submit">Enviar Diagnostico</button></div>
+                                type="submit">Enviar Diagnostico</button>
+                        
+                        </div>
                     </form>
                     {% endif %}
 
@@ -165,6 +175,17 @@
             window.location.href = url;
         }
 
+        function formulario_doctor() {
+            var parametros = new URLSearchParams(window.location.search);
+
+            // Obtener el valor de un parámetro específico
+            var id = parametros.get('id');
+            var rol = parametros.get('rol');
+            var id_usu = parametros.get('id_usu');
+            var url = "/formulario_doctor/?id=" + id + "&rol=" + rol + "&id_usu=" + id_usu;
+            window.location.href = url;
+        }
+
         function entrevistas_paciente() {
             var parametros = new URLSearchParams(window.location.search);
 
@@ -185,7 +206,7 @@
 
             doc.text("Historial del paciente: " + nombre, 10, 10);
             doc.text("\n", 10, 20);
-            doc.text("Diagnósticos de entrevistas virtuales", 10, 20);
+            doc.text("Diagnósticos de formularios virtuales del paciente", 10, 20);
             doc.text(info_forms, 10, 40);
 
             doc.addPage();

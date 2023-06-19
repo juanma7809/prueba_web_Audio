@@ -44,6 +44,6 @@ urlpatterns = [
     path('entrevista_completa/', views.entrevista_completa, name="entrevista_completa"),
     path('entrevistas_virtuales_paciente/', views.entrevistas_virtuales_paciente, name="entrevistas_virtuales_paciente"),
     path('datos_entrevista/', views.datos_entrevista, name="datos_entrevista"),
-
+    path('formulario_doctor/', views.formulario_doctor, name="formulario_doctor"),
 
 ]

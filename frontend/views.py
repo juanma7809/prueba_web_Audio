@@ -20,6 +20,8 @@ from modelsSQL.Permiso import Permiso
 from modelsSQL.TestPHQ9 import TestPHQ9
 from modelsSQL.RespuestasPHQ9 import RespuestasPHQ9
 from modelsSQL.Formulario import Formulario
+from modelsSQL.FormularioDoctor import FormularioDoctor
+from modelsSQL.RespuestasFormularioDoctor import RespuestasFormularioDoctor
 from modelsSQL.PreguntasFormulario import PreguntaFormulario
 from modelsSQL.DiagnosticoPHQ9 import DiagnosticoPHQ9
 from modelsSQL.Entrevista import Entrevista
@@ -243,6 +245,61 @@ def entrevista(request):
 
         return redirect('/dashboard/?id={}&rol={}'.format(id, rol))
     return render(request, 'test.html', context)
+
+def formulario_doctor(request):
+    id = request.GET.get('id')
+    id_usu = request.GET.get('id_usu')
+    rol = request.GET.get('rol')
+    t = TestPHQ9()
+    r = RespuestasPHQ9()
+    preguntas = t.obtener_todos()
+    lista_preguntas = []
+
+    for tupla in preguntas:
+        id_pregunta, pregunta = tupla
+        diccionario = {"id": id_pregunta, "pregunta": pregunta, "num_id": "num_" + str(id_pregunta), "pre_id": "pre_" + str(id_pregunta), "res_id": "res_" + str(id_pregunta)}
+        lista_preguntas.append(diccionario)
+    
+    
+    context = {
+        'p': lista_preguntas,
+    }
+
+    if request.method == 'POST':
+        lista_valores = [request.POST["num_"+str(i)] for i in range(1,10) ]
+        lista_preguntas = [i['pregunta'] for i in lista_preguntas ]
+        lista_respuestas = [request.POST["res_"+str(i)] for i in range(1,10) ]
+        
+
+        puntos = 0
+        for i in lista_valores:
+            puntos += int(i)
+        
+        u = Usuario()
+        datos_usuario = u.obtener_por_id(id_usu)
+        nombre = datos_usuario[2] + " " + datos_usuario[3]
+        form = FormularioDoctor()
+        id_form = form.crear("Entrevista " + nombre, id_usu)
+
+        rfd = RespuestasFormularioDoctor()
+        for i in range(9):
+            rfd.crear(id_usu, id_form, lista_preguntas[i], lista_respuestas[i])
+            
+
+        for i in lista_valores:
+            puntos += int(i)
+
+        puntos /= 2
+        d = DiagnosticoPHQ9()
+
+        diagnostico = d.obtener_diagnostico(str(puntos))
+
+        form.actualizar_diagnostico(str(puntos), diagnostico, id_form)
+
+
+        return redirect('/dashboard/?id={}&rol={}'.format(id, rol))
+    return render(request, 'formulario_doctor.html', context)
+
 
 def pacientes(request):
     rol = request.GET.get('rol')

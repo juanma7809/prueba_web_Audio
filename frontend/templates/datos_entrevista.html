@@ -23,7 +23,7 @@
     		{% for i in d %}
 			<label for="dropdown" id="current-role-label">
 				<h2>{{i.pregunta}}</h2>
-                <textarea disabled >{{i.respuesta}}</textarea>
+                <textarea disabled name="{{i.res_id}}" >{{i.respuesta}}</textarea>
 			</label>
 			{% endfor %}
     		{% endif %}
