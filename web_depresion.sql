@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-06-2023 a las 00:50:21
+-- Tiempo de generación: 19-06-2023 a las 04:36:23
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -306,6 +306,25 @@ INSERT INTO `entrevista` (`id_entrevista`, `id_entrevistador`, `fecha_entrevista
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `entrevista_virtual`
+--
+
+CREATE TABLE `entrevista_virtual` (
+  `id_entrevista_virtual` int(11) NOT NULL,
+  `id_paciente` int(11) NOT NULL,
+  `fecha_entrevista` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `entrevista_virtual`
+--
+
+INSERT INTO `entrevista_virtual` (`id_entrevista_virtual`, `id_paciente`, `fecha_entrevista`) VALUES
+(1, 3, '2023-06-19 02:18:32');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `formulario`
 --
 
@@ -376,7 +395,12 @@ INSERT INTO `paciente_audio` (`id_paciente_audio`, `id_paciente`, `id_doctor`, `
 (10, 3, 38, 'cbefd489a87411da906095211d2859b26d3ced87', '2023-06-15 02:57:18', 'Bajo nivel de depresión'),
 (11, 3, 38, 'cb7df7a5082f074802373aa392bec728c975552f', '2023-06-15 02:57:44', 'Alto nivel de depresión'),
 (12, 6, 38, '58fe68333937323c350190c037598806b8812a99', '2023-06-15 02:59:46', 'Bajo nivel de depresión'),
-(13, 3, 38, '972665ece25d8d9e2c2dee9e56285ca964169e9d', '2023-06-16 21:32:08', 'Bajo nivel de depresión');
+(13, 3, 38, '972665ece25d8d9e2c2dee9e56285ca964169e9d', '2023-06-16 21:32:08', 'Bajo nivel de depresión'),
+(14, 24, 41, '041dbd167b7d9a141c10c4ce5df03d50a56c1e19', '2023-06-18 16:56:51', 'Alto nivel de depresión'),
+(15, 3, 38, '5fbee479c0530c1caa5896aa1bf67719461baf97', '2023-06-18 16:56:51', 'Bajo nivel de depresión'),
+(16, 24, 41, '6109c90a662a1782c1468820df10f3998874c9ca', '2023-06-18 17:09:50', 'Bajo nivel de depresión'),
+(17, 3, 38, '3550f74428d96f3dc275c20298134eb54ff0ccc0', '2023-06-18 17:09:51', 'Alto nivel de depresión'),
+(18, 6, 7, 'd60633ab095fd6807d6479ee80b0fb575f115262', '2023-06-18 17:09:53', 'Bajo nivel de depresión');
 
 -- --------------------------------------------------------
 
@@ -405,7 +429,12 @@ INSERT INTO `paciente_video` (`id_paciente_video`, `id_paciente`, `id_doctor`, `
 (10, 3, 38, 'cbefd489a87411da906095211d2859b26d3ced87', '2023-06-15 02:57:18', 'Alto nivel de depresión'),
 (11, 3, 38, 'cb7df7a5082f074802373aa392bec728c975552f', '2023-06-15 02:57:44', 'Bajo nivel de depresión'),
 (12, 6, 38, '58fe68333937323c350190c037598806b8812a99', '2023-06-15 02:59:46', 'Alto nivel de depresión'),
-(13, 3, 38, '972665ece25d8d9e2c2dee9e56285ca964169e9d', '2023-06-16 21:32:08', 'Bajo nivel de depresión');
+(13, 3, 38, '972665ece25d8d9e2c2dee9e56285ca964169e9d', '2023-06-16 21:32:08', 'Bajo nivel de depresión'),
+(14, 24, 41, '041dbd167b7d9a141c10c4ce5df03d50a56c1e19', '2023-06-18 16:56:51', 'Alto nivel de depresión'),
+(15, 3, 38, '5fbee479c0530c1caa5896aa1bf67719461baf97', '2023-06-18 16:56:51', 'Bajo nivel de depresión'),
+(16, 24, 41, '6109c90a662a1782c1468820df10f3998874c9ca', '2023-06-18 17:09:50', 'Alto nivel de depresión'),
+(17, 3, 38, '3550f74428d96f3dc275c20298134eb54ff0ccc0', '2023-06-18 17:09:51', 'Alto nivel de depresión'),
+(18, 6, 7, 'd60633ab095fd6807d6479ee80b0fb575f115262', '2023-06-18 17:09:53', 'Bajo nivel de depresión');
 
 -- --------------------------------------------------------
 
@@ -429,7 +458,8 @@ INSERT INTO `permiso` (`id_permiso`, `nombre_permiso`, `titulo`, `imagen`, `enla
 (1, 'Gestionar pacientes', 'Pacientes', '/./static/Imagenes/pacientes.png', '/gestion_pacientes/'),
 (4, 'Gestionar doctores', 'Doctores', '/./static/Imagenes/doctores.png', '/gestion_doctores/'),
 (5, 'Video-Entrevista', 'Entrevista', '/./static/Imagenes/entrevista.png', '/video/'),
-(6, 'Entrevista virtual', 'Entrevista', '/./static/Imagenes/entrevista.png', '/entrevista/');
+(6, 'Formulario paciente', 'Entrevista', '/./static/Imagenes/entrevista.png', '/entrevista/'),
+(7, 'Entrevista Virtual', 'Pacientes', '/./static/Imagenes/psicologo.png', '/entrevista_virtual/');
 
 -- --------------------------------------------------------
 
@@ -441,6 +471,59 @@ CREATE TABLE `pregunta` (
   `id_pregunta` int(11) DEFAULT NULL,
   `pregunta` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `preguntas_asociadas_phq9`
+--
+
+CREATE TABLE `preguntas_asociadas_phq9` (
+  `id_pregunta` int(11) NOT NULL,
+  `id_pregunta_asociada` int(11) NOT NULL,
+  `pregunta` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `preguntas_asociadas_phq9`
+--
+
+INSERT INTO `preguntas_asociadas_phq9` (`id_pregunta`, `id_pregunta_asociada`, `pregunta`) VALUES
+(1, 1, '¿Qué cosas te gusta hacer para divertirte?'),
+(2, 1, '¿Cuál es el trabajo de tus sueños?'),
+(3, 1, '¿Cuál es una de tus experiencias más memorables?'),
+(4, 2, '¿Qué cosas te gusta hacer para divertirte?'),
+(5, 2, '¿Qué haces para relajarte?'),
+(6, 2, '¿Cómo estás controlando tu temperamento?'),
+(7, 2, '¿Cómo te sentiste en ese momento?'),
+(8, 2, '¿Te han diagnosticado depresión?'),
+(9, 2, '¿Creías que tenías un problema antes de descubrirlo?'),
+(10, 3, '¿Qué haces para relajarte?'),
+(11, 3, '¿Qué tan fácil es para ti dormir bien?'),
+(12, 3, '¿Cómo eres cuando no duermes bien?'),
+(13, 3, '¿Cómo eres cuando duermes bien?'),
+(14, 3, '¿Cómo era su sueño en ese tiempo que estaba deprimido?'),
+(15, 4, '¿Qué cosas te gusta hacer para divertirte?'),
+(16, 4, '¿Qué tan fácil es para ti dormir bien?'),
+(17, 5, '¿Qué tanto cambió su apetito?'),
+(18, 5, '¿Qué tan fácil es para ti comer bien?'),
+(19, 5, '¿Cómo te alimentas regularmente?'),
+(20, 5, '¿Qué puedo causarte la falta de apetito?'),
+(21, 5, '¿Qué puedo causarte comer en exceso?'),
+(22, 6, '¿Te consideras un introvertido?'),
+(23, 6, '¿Cuándo fue la última vez que discutiste con alguien y de qué se trataba?'),
+(24, 6, '¿Quién ha sido una influencia positiva en tu vida?'),
+(25, 6, '¿Qué tan cerca estás de tu familia?'),
+(26, 6, '¿Cuáles son algunas cosas que te hacen realmente enojar?'),
+(27, 6, '¿Te has metido en problemas?'),
+(28, 6, '¿Quién es alguien que ha sido una influencia negativa en tu vida?'),
+(29, 7, '¿Qué haces cuando estás molesto?'),
+(30, 7, '¿Tiene dificultades para realizar sus actividades cotidianas?'),
+(31, 8, '¿Cómo te describiría tu mejor amigo?'),
+(32, 9, '¿Cuándo fue la última vez que discutiste con alguien y de qué se trataba?'),
+(33, 9, '¿Qué haces cuando estás molesto?'),
+(34, 9, '¿Hay algo de lo que te arrepientas?'),
+(35, 9, '¿Cuándo fue la última vez que te sentiste realmente feliz?');
 
 -- --------------------------------------------------------
 
@@ -554,6 +637,34 @@ INSERT INTO `preguntas_formulario` (`id_formulario_preguntas`, `id_formulario`, 
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `respuestas_entrevista_virtual`
+--
+
+CREATE TABLE `respuestas_entrevista_virtual` (
+  `id_respuesta` int(11) NOT NULL,
+  `id_entrevista` int(11) NOT NULL,
+  `pregunta` text NOT NULL,
+  `respuesta` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `respuestas_entrevista_virtual`
+--
+
+INSERT INTO `respuestas_entrevista_virtual` (`id_respuesta`, `id_entrevista`, `pregunta`, `respuesta`) VALUES
+(1, 1, '¿Qué cosas te gusta hacer para divertirte?', 'melo'),
+(2, 1, '¿Qué haces para relajarte?', 'dhkjdkjfkjf'),
+(3, 1, '¿Qué haces para relajarte?', 'jkfjkdfjfdkjdfk'),
+(4, 1, '¿Qué tan fácil es para ti dormir bien?', 'kfjkgjfkjfkjfkdfjkdfj'),
+(5, 1, '¿Qué tanto cambió su apetito?', 'lklklklklkklklklklklklklk'),
+(6, 1, '¿Te consideras un introvertido?', 'lklkkllklklkll'),
+(7, 1, '¿Tiene dificultades para realizar sus actividades cotidianas?', 'lklklklklklklklklk'),
+(8, 1, '¿Cómo te describiría tu mejor amigo?', 'kkklklklklklklklklkl'),
+(9, 1, '¿Cuándo fue la última vez que te sentiste realmente feliz?', 'lklklklklk');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `respuestas_phq9`
 --
 
@@ -632,7 +743,8 @@ INSERT INTO `rol_permisos` (`id_rol_permisos`, `id_rol`, `id_permiso`) VALUES
 (3, 1, 5),
 (4, 1, 6),
 (6, 3, 6),
-(7, 2, 1);
+(7, 2, 1),
+(9, 3, 7);
 
 -- --------------------------------------------------------
 
@@ -816,6 +928,12 @@ ALTER TABLE `entrevista`
   ADD PRIMARY KEY (`id_entrevista`);
 
 --
+-- Indices de la tabla `entrevista_virtual`
+--
+ALTER TABLE `entrevista_virtual`
+  ADD PRIMARY KEY (`id_entrevista_virtual`);
+
+--
 -- Indices de la tabla `formulario`
 --
 ALTER TABLE `formulario`
@@ -846,10 +964,22 @@ ALTER TABLE `permiso`
   ADD PRIMARY KEY (`id_permiso`);
 
 --
+-- Indices de la tabla `preguntas_asociadas_phq9`
+--
+ALTER TABLE `preguntas_asociadas_phq9`
+  ADD PRIMARY KEY (`id_pregunta`);
+
+--
 -- Indices de la tabla `preguntas_formulario`
 --
 ALTER TABLE `preguntas_formulario`
   ADD PRIMARY KEY (`id_formulario_preguntas`);
+
+--
+-- Indices de la tabla `respuestas_entrevista_virtual`
+--
+ALTER TABLE `respuestas_entrevista_virtual`
+  ADD PRIMARY KEY (`id_respuesta`);
 
 --
 -- Indices de la tabla `respuestas_phq9`
@@ -954,6 +1084,12 @@ ALTER TABLE `entrevista`
   MODIFY `id_entrevista` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
+-- AUTO_INCREMENT de la tabla `entrevista_virtual`
+--
+ALTER TABLE `entrevista_virtual`
+  MODIFY `id_entrevista_virtual` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `formulario`
 --
 ALTER TABLE `formulario`
@@ -969,25 +1105,37 @@ ALTER TABLE `paciente`
 -- AUTO_INCREMENT de la tabla `paciente_audio`
 --
 ALTER TABLE `paciente_audio`
-  MODIFY `id_paciente_audio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_paciente_audio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente_video`
 --
 ALTER TABLE `paciente_video`
-  MODIFY `id_paciente_video` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_paciente_video` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `permiso`
 --
 ALTER TABLE `permiso`
-  MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `preguntas_asociadas_phq9`
+--
+ALTER TABLE `preguntas_asociadas_phq9`
+  MODIFY `id_pregunta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas_formulario`
 --
 ALTER TABLE `preguntas_formulario`
   MODIFY `id_formulario_preguntas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=92;
+
+--
+-- AUTO_INCREMENT de la tabla `respuestas_entrevista_virtual`
+--
+ALTER TABLE `respuestas_entrevista_virtual`
+  MODIFY `id_respuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `respuestas_phq9`
@@ -1005,7 +1153,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `rol_permisos`
 --
 ALTER TABLE `rol_permisos`
-  MODIFY `id_rol_permisos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_rol_permisos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `test_phq9`

@@ -7,6 +7,9 @@ MESSAGE_INPUT = getEl('message-input'),
 MESSAGE_INPUT_FIELD = getEl('message-input-field'),
 CHAT_BOT_MOOD = getEl('chat-bot-mood'),
 CHAT_BOT_MOOD_VALUE = getEl('chat-bot-mood-value');
+PREGUNTA = 0
+RESPUESTAS = []
+PREGUNTAS = []
 
 const STATE = {
   isUserSendingMessage: false,
@@ -363,15 +366,29 @@ const enableInputField = () => {
 };
 
 const getChatbotMessageText = () => {
-  if (STATE.chatbotMessageIndex === 0) {
-    return getRandGreeting();
-  } else
-  {
-    return getRandConvo();
+  if (PREGUNTA > 9) {
+    alert("Entrevista completa")
+    var parametros = new URLSearchParams(window.location.search);
+    var id = parametros.get('id');
+    var rol = parametros.get('rol');
+    RESPUESTAS.shift()
+    PREGUNTAS.shift()
+    var lista = RESPUESTAS.join(',')
+    var listaP = PREGUNTAS.join(',')
+    var url = "/entrevista_completa/?id=" + id + "&rol=" + rol + "&lista=" + lista + "&listaP=" + listaP;
+    window.location.href = url;
+
+  } else {
+    let pregunta = document.getElementById('' + PREGUNTA).value
+    PREGUNTA += 1
+    PREGUNTAS.push(pregunta)
+    return pregunta
   }
 };
 
-const sendChatbotMessage = () => {
+
+
+function sendChatbotMessage() {
   const text = getChatbotMessageText();
   STATE.isChatBotSendingMessage = true;
   addChatMessage(text, true);
@@ -380,10 +397,11 @@ const sendChatbotMessage = () => {
     STATE.isChatBotSendingMessage = false;
     toggleInput();
   }, 4000);
-};
+}
 
 const sendUserMessage = () => {
   const text = MESSAGE_INPUT_FIELD.value;
+  RESPUESTAS.push(text)
   STATE.isUserSendingMessage = true;
   addChatMessage(text, false);
   setTimeout(() => {

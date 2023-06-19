@@ -24,7 +24,11 @@ from modelsSQL.DiagnosticoPHQ9 import DiagnosticoPHQ9
 from modelsSQL.Entrevista import Entrevista
 from modelsSQL.PacienteAudio import PacienteAudio
 from modelsSQL.PacienteVideo import PacienteVideo
+from modelsSQL.PreguntasAsociadas import PreguntasAsociadas
+from modelsSQL.EntrevistaVirtual import EntrevistaVirtual
+from modelsSQL.RespuestasEntrevistaVirtual import RespuestasEntrevistaVirtual
 from utilidades.Envio_correo import *
+from urllib.parse import unquote
 from API.Audio import Audio as APIAudio
 from API.Video import Video as APIVideo
 
@@ -657,12 +661,33 @@ def video_paciente(request):
 
 
 def entrevista_virtual(request):
+    pap = PreguntasAsociadas()
+    preguntas_aleatorias = pap.obtener_9_aleatoriamente()
+
     context = {
-        'd': {}
+        'd': preguntas_aleatorias
     }
     
     return render(request, 'entrevista_virtual.html', context)
-    
+
+def entrevista_completa(request):
+    try:
+        id = request.GET.get('id')
+        rol = request.GET.get('rol')
+        lista = request.GET.get('lista')
+        listaP = request.GET.get('listaP')
+        lista = lista.split(',')
+        listaP = listaP.split(',')
+        ev = EntrevistaVirtual()
+        id_entrevista = ev.crear(id)
+        rev = RespuestasEntrevistaVirtual()
+        print('aca')
+        for i in range(10):
+            rev.crear(id_entrevista, unquote(listaP[i]), unquote(lista[i]))
+    except:
+        pass
+    return render(request, 'entrevista_completa.html')
+
 def upload_video(request):
     id_usu = request.GET.get('id_usu')
     id_doctor = request.GET.get('id')

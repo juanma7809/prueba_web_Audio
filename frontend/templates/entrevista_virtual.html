@@ -1,45 +1,58 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - Emotional Chatbot</title>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet"><link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.0.1/css/all.css'>
+  <title>Entrevista virtual</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400" rel="stylesheet">
+  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.0.1/css/all.css'>
   <link rel="stylesheet" href="{% static 'estilos/style_entrevista_virtual.css' %}">
 
 </head>
-<body>
-<!-- partial:index.partial.html -->
-<div id="chat-wrapper">
-  <div id="chat-bot-mood">
-    <div id="chat-bot-mood-icon">
+{% if d %}
 
-    </div>
-    <div id="chat-bot-mood-label">
-      <h1 id="chat-bot-mood-text">Asistente Virtual</h1>
-      <h1 id="chat-bot-mood-value">Ethan</h1>
-    </div>
-  </div>
-  <div id="letter-pool"></div>
-  <div id="temp-letter-pool"></div>
-  <div id="letter-overlay"></div>
-  <div id="chat-message-window">
-    <div id="message-input-wrapper">
-      <div id="message-input">
-        <input id="message-input-field" type="text" placeholder="Escriba su respuesta" maxlength="100"/>
-        <div id="send-message-button"><i class="far fa-arrow-alt-circle-right"></i></div>
+<body>
+  <!-- partial:index.partial.html -->
+  <div id="chat-wrapper">
+    <div id="chat-bot-mood">
+      <div id="chat-bot-mood-icon">
+
+      </div>
+      <div id="chat-bot-mood-label">
+        <h1 id="chat-bot-mood-text">Asistente Virtual</h1>
+        <h1 id="chat-bot-mood-value">Ethan</h1>
+        {% for i in d %}
+        <input id="0" hidden value="Hola mi nombre es Ethan, seré tu entrevistador virtual, ¿estas listo para empezar nuestra entrevista?"></input>
+        <input id="{{i.id}}" hidden value="{{i.pregunta}}"></input>
+        {% endfor %}
       </div>
     </div>
-    <div class="scroll-bar" id="chat-message-column-wrapper">
-      <div class="static" id="chat-message-column"></div>
+
+
+    <div id="letter-pool"></div>
+    <div id="temp-letter-pool"></div>
+    <div id="letter-overlay"></div>
+    <div id="chat-message-window">
+      <div id="message-input-wrapper">
+        <div id="message-input">
+          <input id="message-input-field" type="text" placeholder="Escriba su respuesta" maxlength="100" />
+          <div id="send-message-button"><i class="far fa-arrow-alt-circle-right"></i></div>
+        </div>
+      </div>
+      <div class="scroll-bar" id="chat-message-column-wrapper">
+        <div class="static" id="chat-message-column"></div>
+      </div>
     </div>
   </div>
-</div>
-<!-- partial -->
+  <!-- partial -->
   <script src='https://codepen.io/Hyperplexed/pen/QOvrzd/0299c8b36352c72cbfe8df48b47b54ca.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js'>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.min.js'>
 
-</script><script  src="{% static 'script_entrevista_virtual.js' %}"></script>
+  </script>
+  <script src="{% static 'script_entrevista_virtual.js' %}"></script>
 
 </body>
+{% endif %}
+
 </html>

@@ -1,47 +1,49 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Dashboard</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-<link rel="stylesheet" href="{% static 'estilos/style_dashboard.css' %}">
+	<meta charset="UTF-8">
+	<title>Dashboard</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+	<link rel="stylesheet" href="{% static 'estilos/style_dashboard.css' %}">
 
 </head>
+
 <body>
-<!-- partial:index.partial.html -->
-<header class="header">
-	<div class="header-content responsive-wrapper">
-		<div class="header-logo">
-			<a href="#">
-				<div>
-					<img src="{% static '/Imagenes/LogoNuevo.png' %}" width="45" height="45">
-				</div>
+	<!-- partial:index.partial.html -->
+	<header class="header">
+		<div class="header-content responsive-wrapper">
+			<div class="header-logo">
+				<a href="#">
+					<div>
+						<img src="{% static '/Imagenes/LogoNuevo.png' %}" width="45" height="45">
+					</div>
+				</a>
+			</div>
+			<div class="header-navigation">
+				<nav class="header-navigation-links">
+					<a href="#"> Inicio </a>
+					<a href="/"> Cerrar sesión </a>
+					<a href="#" onclick="modificarCuenta()" id="modificar"> Modificar cuenta </a>
+				</nav>
+
+			</div>
+			<a href="#" class="button">
+				<i class="ph-list-bold"></i>
+				<span>Menu</span>
 			</a>
 		</div>
-		<div class="header-navigation">
-			<nav class="header-navigation-links">
-				<a href="#"> Inicio </a>
-				<a href="/"> Cerrar sesión </a>
-				<a  href="#" onclick="modificarCuenta()"  id="modificar"> Modificar cuenta </a>
-			</nav>
-
-		</div>
-		<a href="#" class="button">
-			<i class="ph-list-bold"></i>
-			<span>Menu</span>
-		</a>
-	</div>
-</header>
-<main class="main">
+	</header>
+	<main class="main">
 
 		<div class="content">
 
 			<div class="content-main">
 				<div class="card-grid">
-					{% if d %}  
-    				{% for i in d %}
+					{% if d %}
+					{% for i in d %}
 					<article class="card">
 						<div class="card-header">
 							<div>
@@ -52,7 +54,7 @@
 						<div class="card-body">
 							<p>{{i.permiso}}</p>
 						</div>
-						{% if i.permiso == 'Entrevista virtual' %}
+						{% if i.permiso == 'Formulario paciente' %}
 						<div class="card-footer">
 							<a id="entrevista" href="#" onclick="test()">Ir</a>
 
@@ -79,69 +81,87 @@
 
 						</div>
 						{% endif %}
-						
+
+						{% if i.permiso == 'Entrevista Virtual' %}
+						<div class="card-footer">
+							<a id="entrevista_virtual" href="#" onclick="entrevistaVirtual()">Ir</a>
+						</div>
+						{% endif %}
+
 					</article>
 					{% endfor %}
-    				{% endif %}
-					
+					{% endif %}
+
 				</div>
 			</div>
 		</div>
-	</div>
-</main>
-<!-- partial -->
-  <script src='https://unpkg.com/phosphor-icons'></script>
-  <script  src="{% static 'script_dashboard.js' %}"></script>
-  <script type="text/javascript">
-	function modificarCuenta() {
-		document.getElementById('modificar').addEventListener('click', function() {
+		</div>
+	</main>
+	<!-- partial -->
+	<script src='https://unpkg.com/phosphor-icons'></script>
+	<script src="{% static 'script_dashboard.js' %}"></script>
+	<script type="text/javascript">
+		function modificarCuenta() {
+			document.getElementById('modificar').addEventListener('click', function () {
+				var parametros = new URLSearchParams(window.location.search);
+
+				// Obtener el valor de un parámetro específico
+				var id = parametros.get('id');
+				var rol = parametros.get('rol');
+				var url = "/perfil/?id=" + id + "&rol=" + rol;
+				window.location.href = url;
+			});
+		}
+
+		function test() {
+			document.getElementById('entrevista').addEventListener('click', function () {
+				var parametros = new URLSearchParams(window.location.search);
+
+				// Obtener el valor de un parámetro específico
+				var id = parametros.get('id');
+				var rol = parametros.get('rol');
+				var url = "/entrevista/?id=" + id + "&rol=" + rol;
+				window.location.href = url;
+			});
+		}
+
+		function gestionarPacientes() {
+			document.getElementById('gestionar_pacientes').addEventListener('click', function () {
+				var parametros = new URLSearchParams(window.location.search);
+
+				// Obtener el valor de un parámetro específico
+				var id = parametros.get('id');
+				var rol = parametros.get('rol');
+				var url = "/gestion_pacientes/?id=" + id + "&rol=" + rol;
+				window.location.href = url;
+			});
+		}
+
+		function gestionarDoctores() {
+			document.getElementById('gestionar_doctores').addEventListener('click', function () {
+				var parametros = new URLSearchParams(window.location.search);
+
+				// Obtener el valor de un parámetro específico
+				var id = parametros.get('id');
+				var rol = parametros.get('rol');
+				var url = "/gestion_doctores/?id=" + id + "&rol=" + rol;
+				window.location.href = url;
+			});
+		}
+
+		function entrevistaVirtual() {
+
 			var parametros = new URLSearchParams(window.location.search);
 
-		// Obtener el valor de un parámetro específico
+			// Obtener el valor de un parámetro específico
 			var id = parametros.get('id');
 			var rol = parametros.get('rol');
-			var url = "/perfil/?id=" + id + "&rol=" + rol;
+			var url = "/entrevista_virtual/?id=" + id + "&rol=" + rol;
 			window.location.href = url;
-		});
-	}
+		}
 
-	function test() {
-		document.getElementById('entrevista').addEventListener('click', function() {
-			var parametros = new URLSearchParams(window.location.search);
-
-		// Obtener el valor de un parámetro específico
-			var id = parametros.get('id');
-			var rol = parametros.get('rol');
-			var url = "/entrevista/?id=" + id + "&rol=" + rol;
-			window.location.href = url;
-		});
-	}
-
-	function gestionarPacientes() {
-		document.getElementById('gestionar_pacientes').addEventListener('click', function() {
-			var parametros = new URLSearchParams(window.location.search);
-
-		// Obtener el valor de un parámetro específico
-			var id = parametros.get('id');
-			var rol = parametros.get('rol');
-			var url = "/gestion_pacientes/?id=" + id + "&rol=" + rol;
-			window.location.href = url;
-		});
-	}
-
-	function gestionarDoctores() {
-		document.getElementById('gestionar_doctores').addEventListener('click', function() {
-			var parametros = new URLSearchParams(window.location.search);
-
-		// Obtener el valor de un parámetro específico
-			var id = parametros.get('id');
-			var rol = parametros.get('rol');
-			var url = "/gestion_doctores/?id=" + id + "&rol=" + rol;
-			window.location.href = url;
-		});
-	}
-
-  </script>
+	</script>
 
 </body>
+
 </html>
