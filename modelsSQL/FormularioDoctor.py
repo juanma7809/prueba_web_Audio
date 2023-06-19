@@ -6,11 +6,11 @@ class FormularioDoctor:
         self.conexion = conexion
 
 
-    def crear(self, nombre, id):
+    def crear(self, nombre, id_paciente, id_doctor):
         try:
             cursor = self.conexion.cursor()
-            consulta = "INSERT INTO formulario_doctor (nombre_formulario, id_paciente) VALUES (%s, %s)"
-            values = (nombre, id)
+            consulta = "INSERT INTO formulario_doctor (nombre_formulario, id_paciente, id_doctor) VALUES (%s, %s, %s)"
+            values = (nombre, id_paciente, id_doctor)
             cursor.execute(consulta, values)
             self.conexion.commit()
             consulta =  "SELECT LAST_INSERT_ID()"
@@ -32,7 +32,7 @@ class FormularioDoctor:
     def obtener_por_id_paciente(self, id_paciente):
         try:
             cursor = self.conexion.cursor()
-            consulta = "SELECT * FROM formulario WHERE id_paciente = %s"
+            consulta = "SELECT * FROM formulario_doctor WHERE id_paciente = %s"
             values = (id_paciente,)
             cursor.execute(consulta, values)
             return cursor.fetchall()

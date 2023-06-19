@@ -279,7 +279,7 @@ def formulario_doctor(request):
         datos_usuario = u.obtener_por_id(id_usu)
         nombre = datos_usuario[2] + " " + datos_usuario[3]
         form = FormularioDoctor()
-        id_form = form.crear("Entrevista " + nombre, id_usu)
+        id_form = form.crear("Entrevista " + nombre, id_usu, id)
 
         rfd = RespuestasFormularioDoctor()
         for i in range(9):
@@ -804,6 +804,72 @@ def datos_entrevista(request):
     }
 
     return render(request, 'datos_entrevista.html', context)
+
+def formularios_doctor(request):
+    id = request.GET.get('id')
+    rol = request.GET.get('rol')
+    id_usu = request.GET.get('id_usu')
+
+    u = Usuario()
+    pv = FormularioDoctor()
+    datos = u.obtener_por_id(id_usu)
+    videos = pv.obtener_por_id_paciente(id_usu)
+
+
+    data = {
+            "nombres":  datos[2],
+            "apellidos": datos[3],
+            "correo": datos[4],
+            "direccion": datos[5],
+            "telefono": datos[6],
+            "cedula": datos[8],
+            "fecha_nacimiento": datos[9],
+            "genero": datos[10]
+        }
+    lista_videos = []
+    for video in videos:
+        doctor = u.obtener_por_id(video[3])
+        doctor = doctor[2] + ' ' + doctor[3]
+
+        fecha = str(video[6])
+
+        dic = {
+            "doctor": doctor,
+            "fecha": fecha,
+            "entrevista": video[0],
+            "puntos": video[4],
+            "diagnostico": video[5]
+            
+        }
+        lista_videos.append(dic)
+
+
+    context = {
+        'd': data,
+        'e': lista_videos
+    }
+    return render(request, 'formularios_doctor.html', context)
+
+def datos_formulario(request):
+    id_entrevista = request.GET.get('id_entrevista')
+    rev = RespuestasFormularioDoctor()
+    datos = rev.obtener_por_id_formulario(id_entrevista)
+    
+
+    list_dic = []
+    for d in datos:
+        list_dic.append(
+            {
+                'pregunta': d[3],
+                'respuesta': d[4]
+            }
+        )
+    
+    context = {
+        'd': list_dic
+    }
+
+    return render(request, 'datos_formulario.html', context)
 
 def upload_video(request):
     id_usu = request.GET.get('id_usu')

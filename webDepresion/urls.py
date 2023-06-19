@@ -45,5 +45,7 @@ urlpatterns = [
     path('entrevistas_virtuales_paciente/', views.entrevistas_virtuales_paciente, name="entrevistas_virtuales_paciente"),
     path('datos_entrevista/', views.datos_entrevista, name="datos_entrevista"),
     path('formulario_doctor/', views.formulario_doctor, name="formulario_doctor"),
+    path('formularios_doctor/', views.formularios_doctor, name="formularios_doctor"),
+    path('datos_formulario/', views.datos_formulario, name="datos_formulario"),
 
 ]

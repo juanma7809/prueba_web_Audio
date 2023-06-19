@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Entrevista virtual</title>
+  <link rel="stylesheet" href="{% static 'estilos/style_test.css' %}">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+
+<main>
+	<h1 id="title">Datos de la entrevista del paciente</h1>
+	
+	<div class="survey-form-container">
+		
+		<form action="" method="post" id="survey-form" enctype="multipart/form-data">
+			{% csrf_token %}
+			<p id="description">Acá encontrará las preguntas que se le generaron al paciente con sus respectivas respuestas</p>
+			
+			{% if d %}  
+    		{% for i in d %}
+			<label for="dropdown" id="current-role-label">
+				<h2>{{i.pregunta}}</h2>
+                <textarea disabled name="{{i.res_id}}" >{{i.respuesta}}</textarea>
+			</label>
+			{% endfor %}
+    		{% endif %}
+		</form>
+	</div>
+</main>
+<!-- partial -->
+  
+</body>
+</html>

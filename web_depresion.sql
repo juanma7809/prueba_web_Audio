@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-06-2023 a las 17:11:36
+-- Tiempo de generación: 20-06-2023 a las 00:43:20
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -302,7 +302,12 @@ INSERT INTO `entrevista` (`id_entrevista`, `id_entrevistador`, `fecha_entrevista
 (35, 38, '2023-06-17 22:45:13', 'No', 6, b'0'),
 (36, 7, '2023-06-17 22:45:51', 'i', 6, b'1'),
 (37, 41, '2023-06-17 22:46:30', 'dd', 6, b'1'),
-(38, 38, '2023-06-19 15:04:34', 'no', 6, b'0');
+(38, 38, '2023-06-19 15:04:34', 'no', 6, b'0'),
+(39, 41, '2023-06-19 22:38:57', 'ldlkdlkdlk', 3, b'0'),
+(40, 7, '2023-06-19 22:39:18', 'llklk', 3, b'1'),
+(41, 7, '2023-06-19 22:39:27', 'llklk', 3, b'1'),
+(42, 38, '2023-06-19 22:40:53', 'lll', 3, b'1'),
+(43, 41, '2023-06-19 22:41:14', 'lll', 3, b'0');
 
 -- --------------------------------------------------------
 
@@ -323,7 +328,8 @@ CREATE TABLE `entrevista_virtual` (
 INSERT INTO `entrevista_virtual` (`id_entrevista_virtual`, `id_paciente`, `fecha_entrevista`) VALUES
 (1, 3, '2023-06-19 02:18:32'),
 (2, 3, '2023-06-19 14:24:28'),
-(3, 6, '2023-06-19 15:03:15');
+(3, 6, '2023-06-19 15:03:15'),
+(4, 5, '2023-06-19 19:37:51');
 
 -- --------------------------------------------------------
 
@@ -352,6 +358,32 @@ INSERT INTO `formulario` (`id_formulario`, `nombre_formulario`, `id_paciente`, `
 (10, 'Entrevista Camilo Erira ', 3, 0, 'Mínimo', '2023-06-13 15:08:14'),
 (11, 'Entrevista Camilo Erira ', 3, 1, 'Mínimo', '2023-06-15 02:58:33'),
 (12, 'Entrevista Camilo Erira ', 3, 3, 'Mínimo', '2023-06-16 21:33:26');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `formulario_doctor`
+--
+
+CREATE TABLE `formulario_doctor` (
+  `id_formulario` int(11) NOT NULL,
+  `nombre_formulario` varchar(255) DEFAULT NULL,
+  `id_paciente` int(11) NOT NULL,
+  `id_doctor` int(11) NOT NULL,
+  `puntos` int(11) DEFAULT NULL,
+  `diagnostico` text DEFAULT NULL,
+  `fecha` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `formulario_doctor`
+--
+
+INSERT INTO `formulario_doctor` (`id_formulario`, `nombre_formulario`, `id_paciente`, `id_doctor`, `puntos`, `diagnostico`, `fecha`) VALUES
+(18, 'Entrevista Juan Manuel Restrepo Urrego', 5, 38, 18, 'Moderado a grave', '2023-06-19 21:13:58'),
+(19, 'Entrevista Juan Manuel Restrepo Urrego', 5, 38, 9, 'Leve', '2023-06-19 21:16:48'),
+(20, 'Entrevista Juan Manuel Restrepo Urrego', 5, 41, 23, 'Grave', '2023-06-19 22:31:04'),
+(21, 'Entrevista Camilo Erira ', 3, 41, 10, 'Moderado', '2023-06-19 22:37:51');
 
 -- --------------------------------------------------------
 
@@ -403,7 +435,8 @@ INSERT INTO `paciente_audio` (`id_paciente_audio`, `id_paciente`, `id_doctor`, `
 (15, 3, 38, '5fbee479c0530c1caa5896aa1bf67719461baf97', '2023-06-18 16:56:51', 'Bajo nivel de depresión'),
 (16, 24, 41, '6109c90a662a1782c1468820df10f3998874c9ca', '2023-06-18 17:09:50', 'Bajo nivel de depresión'),
 (17, 3, 38, '3550f74428d96f3dc275c20298134eb54ff0ccc0', '2023-06-18 17:09:51', 'Alto nivel de depresión'),
-(18, 6, 7, 'd60633ab095fd6807d6479ee80b0fb575f115262', '2023-06-18 17:09:53', 'Bajo nivel de depresión');
+(18, 6, 7, 'd60633ab095fd6807d6479ee80b0fb575f115262', '2023-06-18 17:09:53', 'Bajo nivel de depresión'),
+(19, 24, 41, '78adf9b8c39d27b664618c520e61d38c5649c194', '2023-06-19 19:54:15', 'Alto nivel de depresión');
 
 -- --------------------------------------------------------
 
@@ -432,7 +465,8 @@ INSERT INTO `paciente_video` (`id_paciente_video`, `id_paciente`, `id_doctor`, `
 (10, 3, 38, 'cbefd489a87411da906095211d2859b26d3ced87', '2023-06-15 02:57:18', 'Alto nivel de depresión'),
 (11, 3, 38, 'cb7df7a5082f074802373aa392bec728c975552f', '2023-06-15 02:57:44', 'Bajo nivel de depresión'),
 (12, 6, 38, '58fe68333937323c350190c037598806b8812a99', '2023-06-15 02:59:46', 'Alto nivel de depresión'),
-(13, 3, 38, '972665ece25d8d9e2c2dee9e56285ca964169e9d', '2023-06-16 21:32:08', 'Bajo nivel de depresión');
+(13, 3, 38, '972665ece25d8d9e2c2dee9e56285ca964169e9d', '2023-06-16 21:32:08', 'Bajo nivel de depresión'),
+(19, 24, 41, '78adf9b8c39d27b664618c520e61d38c5649c194', '2023-06-19 19:54:15', 'Bajo nivel de depresión');
 
 -- --------------------------------------------------------
 
@@ -676,7 +710,99 @@ INSERT INTO `respuestas_entrevista_virtual` (`id_respuesta`, `id_entrevista`, `p
 (24, 3, '¿Cuáles son algunas cosas que te hacen realmente enojar?', 'hipocresia'),
 (25, 3, '¿Tiene dificultades para realizar sus actividades cotidianas?', 'No'),
 (26, 3, '¿Cómo te describiría tu mejor amigo?', 'Como una mujer muy extrovertida'),
-(27, 3, '¿Hay algo de lo que te arrepientas?', 'No');
+(27, 3, '¿Hay algo de lo que te arrepientas?', 'No'),
+(28, 4, '¿Cuál es el trabajo de tus sueños?', 'Programador de google'),
+(29, 4, '¿Qué cosas te gusta hacer para divertirte?', 'muchas cosas'),
+(30, 4, '¿Qué tan fácil es para ti dormir bien?', 'Dificil'),
+(31, 4, '¿Qué cosas te gusta hacer para divertirte?', 'Jugar'),
+(32, 4, '¿Qué puedo causarte comer en exceso?', 'Nada'),
+(33, 4, '¿Qué tan cerca estás de tu familia?', 'Muy cerca'),
+(34, 4, '¿Qué haces cuando estás molesto?', 'No hablo'),
+(35, 4, '¿Cómo te describiría tu mejor amigo?', 'EL mejor'),
+(36, 4, '¿Cuándo fue la última vez que discutiste con alguien y de qué se trataba?', 'ayer');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `respuestas_formulario_doctor`
+--
+
+CREATE TABLE `respuestas_formulario_doctor` (
+  `id_respuesta` int(11) NOT NULL,
+  `id_paciente` int(11) NOT NULL,
+  `id_formulario_doctor` int(11) NOT NULL,
+  `pregunta` text NOT NULL,
+  `respuesta` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `respuestas_formulario_doctor`
+--
+
+INSERT INTO `respuestas_formulario_doctor` (`id_respuesta`, `id_paciente`, `id_formulario_doctor`, `pregunta`, `respuesta`) VALUES
+(1, 24, 15, 'Poco interés o agrado al hacer las cosas.', 'kk'),
+(2, 24, 15, 'Se ha sentido triste, deprimido o desesperado.', 'kjk'),
+(3, 24, 15, 'Ha tenido problemas para dormir, mantenerse despierto o duerme demasiado.', 'kklklkl'),
+(4, 24, 15, 'Se siente cansado o tiene poca energía.', 'lklkl'),
+(5, 24, 15, 'Tiene poco o excesivo apetito.', 'llklk'),
+(6, 24, 15, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'kkjkjkjkjkjk'),
+(7, 24, 15, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'kjkjkj'),
+(8, 24, 15, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'lklkl'),
+(9, 24, 15, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'kklklkl'),
+(10, 24, 16, 'Poco interés o agrado al hacer las cosas.', 'kk'),
+(11, 24, 16, 'Se ha sentido triste, deprimido o desesperado.', 'kjk'),
+(12, 24, 16, 'Ha tenido problemas para dormir, mantenerse despierto o duerme demasiado.', 'kklklkl'),
+(13, 24, 16, 'Se siente cansado o tiene poca energía.', 'lklkl'),
+(14, 24, 16, 'Tiene poco o excesivo apetito.', 'llklk'),
+(15, 24, 16, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'kkjkjkjkjkjk'),
+(16, 24, 16, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'kjkjkj'),
+(17, 24, 16, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'lklkl'),
+(18, 24, 16, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'kklklkl'),
+(19, 24, 17, 'Poco interés o agrado al hacer las cosas.', 'kk'),
+(20, 24, 17, 'Se ha sentido triste, deprimido o desesperado.', 'kjk'),
+(21, 24, 17, 'Ha tenido problemas para dormir, mantenerse despierto o duerme demasiado.', 'kklklkl'),
+(22, 24, 17, 'Se siente cansado o tiene poca energía.', 'lklkl'),
+(23, 24, 17, 'Tiene poco o excesivo apetito.', 'llklk'),
+(24, 24, 17, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'kkjkjkjkjkjk'),
+(25, 24, 17, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'kjkjkj'),
+(26, 24, 17, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'lklkl'),
+(27, 24, 17, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'kklklkl'),
+(28, 5, 18, 'Poco interés o agrado al hacer las cosas.', 'lkllk'),
+(29, 5, 18, 'Se ha sentido triste, deprimido o desesperado.', 'lklk'),
+(30, 5, 18, 'Ha tenido problemas para dormir, mantenerse despierto o duerme demasiado.', 'lklk'),
+(31, 5, 18, 'Se siente cansado o tiene poca energía.', 'lklkl'),
+(32, 5, 18, 'Tiene poco o excesivo apetito.', 'klklk'),
+(33, 5, 18, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'lklklk'),
+(34, 5, 18, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'lklklkl'),
+(35, 5, 18, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'lklklklk'),
+(36, 5, 18, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'lklklk'),
+(37, 5, 19, 'Poco interés o agrado al hacer las cosas.', 'lklkl'),
+(38, 5, 19, 'Se ha sentido triste, deprimido o desesperado.', 'lklkl'),
+(39, 5, 19, 'Ha tenido problemas para dormir, mantenerse despierto o duerme demasiado.', 'lklklkl'),
+(40, 5, 19, 'Se siente cansado o tiene poca energía.', 'pklklk'),
+(41, 5, 19, 'Tiene poco o excesivo apetito.', 'lklklk'),
+(42, 5, 19, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'llklklk'),
+(43, 5, 19, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'llklkl'),
+(44, 5, 19, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'lklklk'),
+(45, 5, 19, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'lklklk'),
+(46, 5, 20, 'Poco interés o agrado al hacer las cosas.', 'lskdlkdl'),
+(47, 5, 20, 'Se ha sentido triste, deprimido o desesperado.', 'lkdlkdl'),
+(48, 5, 20, 'Ha tenido problemas para dormir, mantenerse despierto o duerme demasiado.', 'kjelkealkl'),
+(49, 5, 20, 'Se siente cansado o tiene poca energía.', 'leklekleak'),
+(50, 5, 20, 'Tiene poco o excesivo apetito.', 'kejlejl'),
+(51, 5, 20, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'klaeklkael'),
+(52, 5, 20, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'lklkdlkd'),
+(53, 5, 20, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'laklkaelke'),
+(54, 5, 20, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'lklkdlkd'),
+(55, 3, 21, 'Poco interés o agrado al hacer las cosas.', 'lkaslklk'),
+(56, 3, 21, 'Se ha sentido triste, deprimido o desesperado.', 'lkdlskdlk'),
+(57, 3, 21, 'Ha tenido problemas para dormir, mantenerse despierto o duerme demasiado.', 'kldlkdlk'),
+(58, 3, 21, 'Se siente cansado o tiene poca energía.', 'klkelkdlk'),
+(59, 3, 21, 'Tiene poco o excesivo apetito.', 'kelweklwek'),
+(60, 3, 21, 'Se ha sentido mal consigo mismo, ha sentido que usted es un fracaso o ha sentido que se ha fallado a sí mismo o a su familia.', 'lkelwkel'),
+(61, 3, 21, 'Ha tenido problemas para concentrarse en actividades como leer el periódico o ver televisión.', 'kldskldkl'),
+(62, 3, 21, 'Se mueve o habla tan despacio que otras personas pueden darse cuenta. Está tan inquieto o intranquilo que da vueltas de un lugar a otro más que de costumbre.', 'dlksldkldk'),
+(63, 3, 21, 'Ha pensado que estaría mejor muerto o ha deseado hacerse daño de alguna forma.', 'dlklsdkldk');
 
 -- --------------------------------------------------------
 
@@ -956,6 +1082,12 @@ ALTER TABLE `formulario`
   ADD PRIMARY KEY (`id_formulario`);
 
 --
+-- Indices de la tabla `formulario_doctor`
+--
+ALTER TABLE `formulario_doctor`
+  ADD PRIMARY KEY (`id_formulario`);
+
+--
 -- Indices de la tabla `paciente`
 --
 ALTER TABLE `paciente`
@@ -995,6 +1127,12 @@ ALTER TABLE `preguntas_formulario`
 -- Indices de la tabla `respuestas_entrevista_virtual`
 --
 ALTER TABLE `respuestas_entrevista_virtual`
+  ADD PRIMARY KEY (`id_respuesta`);
+
+--
+-- Indices de la tabla `respuestas_formulario_doctor`
+--
+ALTER TABLE `respuestas_formulario_doctor`
   ADD PRIMARY KEY (`id_respuesta`);
 
 --
@@ -1097,19 +1235,25 @@ ALTER TABLE `django_migrations`
 -- AUTO_INCREMENT de la tabla `entrevista`
 --
 ALTER TABLE `entrevista`
-  MODIFY `id_entrevista` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id_entrevista` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT de la tabla `entrevista_virtual`
 --
 ALTER TABLE `entrevista_virtual`
-  MODIFY `id_entrevista_virtual` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_entrevista_virtual` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `formulario`
 --
 ALTER TABLE `formulario`
   MODIFY `id_formulario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de la tabla `formulario_doctor`
+--
+ALTER TABLE `formulario_doctor`
+  MODIFY `id_formulario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente`
@@ -1121,13 +1265,13 @@ ALTER TABLE `paciente`
 -- AUTO_INCREMENT de la tabla `paciente_audio`
 --
 ALTER TABLE `paciente_audio`
-  MODIFY `id_paciente_audio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_paciente_audio` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `paciente_video`
 --
 ALTER TABLE `paciente_video`
-  MODIFY `id_paciente_video` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id_paciente_video` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `permiso`
@@ -1151,7 +1295,13 @@ ALTER TABLE `preguntas_formulario`
 -- AUTO_INCREMENT de la tabla `respuestas_entrevista_virtual`
 --
 ALTER TABLE `respuestas_entrevista_virtual`
-  MODIFY `id_respuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_respuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
+--
+-- AUTO_INCREMENT de la tabla `respuestas_formulario_doctor`
+--
+ALTER TABLE `respuestas_formulario_doctor`
+  MODIFY `id_respuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
 
 --
 -- AUTO_INCREMENT de la tabla `respuestas_phq9`
