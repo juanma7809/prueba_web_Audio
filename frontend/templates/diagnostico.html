@@ -32,7 +32,9 @@
                         class="text-black-50">{{d.genero}}</span><span> </span></div>
                 {% endif %}
                 <div class="mt-5 text-center"><button class="btn btn-primary profile-button"
-                        onclick="videos_paciente()">Ver Videos Paciente</button></div>
+                        onclick="videos_paciente()">Ver Videos del paciente</button></div>
+                <div class="mt-5 text-center"><button class="btn btn-primary profile-button"
+                        onclick="entrevistas_paciente()">Ver entrevistas virtuales del paciente</button></div>
                 <div class="mt-5 text-center"><button class="btn btn-primary profile-button"
                         onclick="pacientes()">Volver</button></div>
             </div>
@@ -81,10 +83,11 @@
 
             <div class="col-md-4">
                 <div class="p-3 py-5">
-                    <div class="d-flex justify-content-between align-items-center experience"><span>Diagnóstico del paciente</span><span class="border px-3 p-1 add-experience"><i
+                    <div class="d-flex justify-content-between align-items-center experience"><span>Diagnóstico del
+                            paciente</span><span class="border px-3 p-1 add-experience"><i
                                 class="fa fa-plus"></i>&nbsp;<button class="btn btn-primary profile-button"
                                 onclick="imprimir()">Ver Diagnóstico</button></span></div><br>
-                    <div hidden class="col-md-12"><label class="labels">Diagnóstico de la entevista virtual (Test PHQ-9)
+                    <div hidden class="col-md-12"><label class="labels">Diagnóstico del formulario virtual del paciente (Test PHQ-9)
                         </label><textarea type="" class="form-control" value="" style="WIDTH: 370px; HEIGHT: 80px"
                             disabled id="info_forms">{{d.info_forms}}</textarea>
                     </div> <br>
@@ -96,9 +99,9 @@
                         </label><textarea type="" class="form-control" value="" style="WIDTH: 370px; HEIGHT: 80px"
                             disabled id="info_entrevistas">{{d.info_entrevistas}}</textarea>
                     </div> <br>
-                    <div  class="col-md-12"><label class="labels">Diagnóstico final determinado por 3 profesionales
-                    </label><textarea type="" class="form-control" value="" style="WIDTH: 370px; HEIGHT: 60px"
-                        disabled id="diagnostico_final">{{d.diagnostico_final}}</textarea>
+                    <div class="col-md-12"><label class="labels">Diagnóstico final determinado por 3 profesionales
+                        </label><textarea type="" class="form-control" value="" style="WIDTH: 370px; HEIGHT: 60px"
+                            disabled id="diagnostico_final">{{d.diagnostico_final}}</textarea>
                     </div> <br>
 
                     {% if d.puede_editar == 'Si' %}
@@ -109,11 +112,11 @@
                                 name="diagnostico"></textarea>
                         </div> <br>
                         <div class="col-md-12"><label class="labels">Seleccione si el paciente tiene o no depresión
-                        </label> <br>
-                        <select name="diagnostico_depresion" id="">
-                            <option value="1">SÍ</option>
-                            <option value="0">NO</option>
-                        </select>
+                            </label> <br>
+                            <select name="diagnostico_depresion" id="">
+                                <option value="1">SÍ</option>
+                                <option value="0">NO</option>
+                            </select>
                         </div> <br>
                         <div class="mt-5 text-center"><button class="btn btn-primary profile-button"
                                 type="submit">Enviar Diagnostico</button></div>
@@ -121,8 +124,8 @@
                     {% endif %}
 
                     {% if d.puede_editar == 'No' %}
-                    <div  class="col-md-12"><label class="labels">Usted ya ha diagnosticado a este paciente
-                    </label>
+                    <div class="col-md-12"><label class="labels">Usted ya ha diagnosticado a este paciente
+                        </label>
                     </div> <br>
                     {% endif %}
 
@@ -159,6 +162,17 @@
             var rol = parametros.get('rol');
             var id_usu = parametros.get('id_usu');
             var url = "/videos_paciente/?id=" + id + "&rol=" + rol + "&id_usu=" + id_usu;
+            window.location.href = url;
+        }
+
+        function entrevistas_paciente() {
+            var parametros = new URLSearchParams(window.location.search);
+
+            // Obtener el valor de un parámetro específico
+            var id = parametros.get('id');
+            var rol = parametros.get('rol');
+            var id_usu = parametros.get('id_usu');
+            var url = "/entrevistas_virtuales_paciente/?id=" + id + "&rol=" + rol + "&id_usu=" + id_usu;
             window.location.href = url;
         }
 

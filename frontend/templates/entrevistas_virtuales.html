@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Entrevistas virtuales</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="{% static 'estilos/style_videos_container.css' %}">
+
+</head>
+
+<body>
+  <!-- partial:index.partial.html -->
+  {% if d %}
+  <div class=" container">
+    <header class="main-header">
+      <img class="logo" id="logo" src="{% static 'Imagenes/chatbot.png' %}">
+      <h1 class="name">Entrevistas virtuales<span> {{d.nombres}} {{d.apellidos}}</span></h1>
+    </header>
+
+    <div class="gallery">
+
+      {% if e %}
+      {% for i in e %}
+      <div class="photo-container">
+        <div class="photo slide">
+          <img src="{% static 'Imagenes/psicologo1.png' %}"  alt="Up in the Air">
+          <div class="photo-overlay">
+            <h2>Entrevista virtual</h2>
+            <p>Realizado en acompañamiento del profesional: Entrevistador virtual (Ethan)</p>
+            <p>Fecha: {{i.fecha}}</p>
+            <a href="/datos_entrevista/?id_entrevista={{i.entrevista}}" class="button">Ver</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
+  {% endif %}
+  <!-- partial -->
+
+</body>
+<script type="text/javascript">
+  function videoEntrevista() {
+    var parametros = new URLSearchParams(window.location.search);
+
+    // Obtener el valor de un parámetro específico
+    var id = parametros.get('id');
+    var rol = parametros.get('rol');
+    var id_usu = parametros.get('id_usu');
+    var url = "/video/?id=" + id + "&rol=" + rol + "&id_usu=" + id_usu;
+    window.location.href = url;
+  }
+</script>
+
+</html>

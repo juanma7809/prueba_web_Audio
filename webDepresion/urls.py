@@ -42,6 +42,8 @@ urlpatterns = [
     path('video_paciente/', views.video_paciente, name="video_paciente"),
     path('entrevista_virtual/', views.entrevista_virtual, name="entrevista_virtual"),
     path('entrevista_completa/', views.entrevista_completa, name="entrevista_completa"),
+    path('entrevistas_virtuales_paciente/', views.entrevistas_virtuales_paciente, name="entrevistas_virtuales_paciente"),
+    path('datos_entrevista/', views.datos_entrevista, name="datos_entrevista"),
 
 
 ]

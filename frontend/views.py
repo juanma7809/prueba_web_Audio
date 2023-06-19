@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 import hashlib
 import os
 import base64
+import time
 import json
 from audio.conversor import Conversor
 from video.video import Video
@@ -688,6 +689,65 @@ def entrevista_completa(request):
         pass
     return render(request, 'entrevista_completa.html')
 
+def entrevistas_virtuales_paciente(request):
+    id = request.GET.get('id')
+    rol = request.GET.get('rol')
+    id_usu = request.GET.get('id_usu')
+
+    u = Usuario()
+    ev = EntrevistaVirtual()
+    datos = u.obtener_por_id(id_usu)
+    entrevistas = ev.obtener_por_id_paciente(id_usu)
+
+
+    data = {
+            "nombres":  datos[2],
+            "apellidos": datos[3],
+            "correo": datos[4],
+            "direccion": datos[5],
+            "telefono": datos[6],
+            "cedula": datos[8],
+            "fecha_nacimiento": datos[9],
+            "genero": datos[10]
+        }
+    lista_entrevistas = []
+    for entrevista in entrevistas:
+
+        fecha = str(entrevista[2])
+
+        dic = {
+            "fecha": fecha,
+            "entrevista": entrevista[0]
+        }
+        lista_entrevistas.append(dic)
+
+    context = {
+        'd': data,
+        'e': lista_entrevistas
+    }
+    return render(request, 'entrevistas_virtuales.html', context)
+
+def datos_entrevista(request):
+    id_entrevista = request.GET.get('id_entrevista')
+    rev = RespuestasEntrevistaVirtual()
+    datos = rev.obtener_por_id(id_entrevista)
+    
+
+    list_dic = []
+    for d in datos:
+        list_dic.append(
+            {
+                'pregunta': d[2],
+                'respuesta': d[3]
+            }
+        )
+    
+    context = {
+        'd': list_dic
+    }
+
+    return render(request, 'datos_entrevista.html', context)
+
 def upload_video(request):
     id_usu = request.GET.get('id_usu')
     id_doctor = request.GET.get('id')
@@ -738,7 +798,15 @@ def upload_video(request):
         os.remove(nom_rand)
         os.remove(f'videos/{filename}.webm')
 
+        tiempo_inicial = time.process_time()
         preprocesar(filename, id_usu, id_doctor)
+        
+        tiempo_final = time.process_time()
+
+        # Calcular el tiempo transcurrido en tics
+        tiempo_transcurrido = tiempo_final - tiempo_inicial
+
+        print("Tiempo transcurrido:", tiempo_transcurrido, "tics")
         return render(request, 'index.html')
     return render(request, 'index.html')
 
@@ -763,8 +831,8 @@ def preprocesar(hash, id_usu, id_doctor):
     v.encriptar_video("videos/"+hash+".mp4")
 
     #Guardar video en base de datos No SQL
-    vi = VideoNoSQL()
-    vi.guardar_video_encriptado("videos/"+hash+".mp4_encrypted.mp4", hash)
+    #vi = VideoNoSQL()
+    #vi.guardar_video_encriptado("videos/"+hash+".mp4_encrypted.mp4", hash)
 
     #Guardar audios en base de datos No SQL
     audio_names = [(f, n) for n, f in enumerate(os.listdir(audios), start=1) if f.endswith('.wav')]

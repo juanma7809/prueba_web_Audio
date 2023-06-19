@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-06-2023 a las 04:36:23
+-- Tiempo de generación: 19-06-2023 a las 17:11:36
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.0.28
 
@@ -301,7 +301,8 @@ INSERT INTO `entrevista` (`id_entrevista`, `id_entrevistador`, `fecha_entrevista
 (34, 38, '2023-06-17 22:44:19', 'gaaa', 5, b'0'),
 (35, 38, '2023-06-17 22:45:13', 'No', 6, b'0'),
 (36, 7, '2023-06-17 22:45:51', 'i', 6, b'1'),
-(37, 41, '2023-06-17 22:46:30', 'dd', 6, b'1');
+(37, 41, '2023-06-17 22:46:30', 'dd', 6, b'1'),
+(38, 38, '2023-06-19 15:04:34', 'no', 6, b'0');
 
 -- --------------------------------------------------------
 
@@ -320,7 +321,9 @@ CREATE TABLE `entrevista_virtual` (
 --
 
 INSERT INTO `entrevista_virtual` (`id_entrevista_virtual`, `id_paciente`, `fecha_entrevista`) VALUES
-(1, 3, '2023-06-19 02:18:32');
+(1, 3, '2023-06-19 02:18:32'),
+(2, 3, '2023-06-19 14:24:28'),
+(3, 6, '2023-06-19 15:03:15');
 
 -- --------------------------------------------------------
 
@@ -429,12 +432,7 @@ INSERT INTO `paciente_video` (`id_paciente_video`, `id_paciente`, `id_doctor`, `
 (10, 3, 38, 'cbefd489a87411da906095211d2859b26d3ced87', '2023-06-15 02:57:18', 'Alto nivel de depresión'),
 (11, 3, 38, 'cb7df7a5082f074802373aa392bec728c975552f', '2023-06-15 02:57:44', 'Bajo nivel de depresión'),
 (12, 6, 38, '58fe68333937323c350190c037598806b8812a99', '2023-06-15 02:59:46', 'Alto nivel de depresión'),
-(13, 3, 38, '972665ece25d8d9e2c2dee9e56285ca964169e9d', '2023-06-16 21:32:08', 'Bajo nivel de depresión'),
-(14, 24, 41, '041dbd167b7d9a141c10c4ce5df03d50a56c1e19', '2023-06-18 16:56:51', 'Alto nivel de depresión'),
-(15, 3, 38, '5fbee479c0530c1caa5896aa1bf67719461baf97', '2023-06-18 16:56:51', 'Bajo nivel de depresión'),
-(16, 24, 41, '6109c90a662a1782c1468820df10f3998874c9ca', '2023-06-18 17:09:50', 'Alto nivel de depresión'),
-(17, 3, 38, '3550f74428d96f3dc275c20298134eb54ff0ccc0', '2023-06-18 17:09:51', 'Alto nivel de depresión'),
-(18, 6, 7, 'd60633ab095fd6807d6479ee80b0fb575f115262', '2023-06-18 17:09:53', 'Bajo nivel de depresión');
+(13, 3, 38, '972665ece25d8d9e2c2dee9e56285ca964169e9d', '2023-06-16 21:32:08', 'Bajo nivel de depresión');
 
 -- --------------------------------------------------------
 
@@ -660,7 +658,25 @@ INSERT INTO `respuestas_entrevista_virtual` (`id_respuesta`, `id_entrevista`, `p
 (6, 1, '¿Te consideras un introvertido?', 'lklkkllklklkll'),
 (7, 1, '¿Tiene dificultades para realizar sus actividades cotidianas?', 'lklklklklklklklklk'),
 (8, 1, '¿Cómo te describiría tu mejor amigo?', 'kkklklklklklklklklkl'),
-(9, 1, '¿Cuándo fue la última vez que te sentiste realmente feliz?', 'lklklklklk');
+(9, 1, '¿Cuándo fue la última vez que te sentiste realmente feliz?', 'lklklklklk'),
+(10, 2, '¿Cuál es una de tus experiencias más memorables?', 'ok'),
+(11, 2, '¿Creías que tenías un problema antes de descubrirlo?', 'si'),
+(12, 2, '¿Qué tan fácil es para ti dormir bien?', 'no'),
+(13, 2, '¿Qué cosas te gusta hacer para divertirte?', 'mm'),
+(14, 2, '¿Qué puedo causarte comer en exceso?', 'si'),
+(15, 2, '¿Te consideras un introvertido?', 'bien'),
+(16, 2, '¿Tiene dificultades para realizar sus actividades cotidianas?', 'jnjnjnjnjnjn'),
+(17, 2, '¿Cómo te describiría tu mejor amigo?', 'jjjjjjjj'),
+(18, 2, '¿Hay algo de lo que te arrepientas?', 'kklklklk'),
+(19, 3, '¿Cuál es el trabajo de tus sueños?', 'Psicologa'),
+(20, 3, '¿Cómo estás controlando tu temperamento?', 'No lo controlo'),
+(21, 3, '¿Qué tan fácil es para ti dormir bien?', 'ummm un poco complejo'),
+(22, 3, '¿Qué tan fácil es para ti dormir bien?', 'Se repitió'),
+(23, 3, '¿Qué puedo causarte comer en exceso?', 'indigestón'),
+(24, 3, '¿Cuáles son algunas cosas que te hacen realmente enojar?', 'hipocresia'),
+(25, 3, '¿Tiene dificultades para realizar sus actividades cotidianas?', 'No'),
+(26, 3, '¿Cómo te describiría tu mejor amigo?', 'Como una mujer muy extrovertida'),
+(27, 3, '¿Hay algo de lo que te arrepientas?', 'No');
 
 -- --------------------------------------------------------
 
@@ -1081,13 +1097,13 @@ ALTER TABLE `django_migrations`
 -- AUTO_INCREMENT de la tabla `entrevista`
 --
 ALTER TABLE `entrevista`
-  MODIFY `id_entrevista` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id_entrevista` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT de la tabla `entrevista_virtual`
 --
 ALTER TABLE `entrevista_virtual`
-  MODIFY `id_entrevista_virtual` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_entrevista_virtual` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `formulario`
@@ -1135,7 +1151,7 @@ ALTER TABLE `preguntas_formulario`
 -- AUTO_INCREMENT de la tabla `respuestas_entrevista_virtual`
 --
 ALTER TABLE `respuestas_entrevista_virtual`
-  MODIFY `id_respuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_respuesta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT de la tabla `respuestas_phq9`

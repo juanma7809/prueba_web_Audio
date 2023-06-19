@@ -18,11 +18,11 @@ class RespuestasEntrevistaVirtual:
 
 
 
-    def obtener_por_id_paciente(self, id_entrevista):
+    def obtener_por_id(self, id_entrevista):
         try:
             cursor = self.conexion.cursor()
             consulta = "SELECT * FROM respuestas_entrevista_virtual WHERE id_entrevista = %s"
-            values = (id_entrevista)
+            values = (id_entrevista,)
             cursor.execute(consulta, values)
             return cursor.fetchall()
         except Exception as e:
